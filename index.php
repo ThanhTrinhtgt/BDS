@@ -9,11 +9,13 @@ include_once 'Core/init.php';
 
 $router = new Router();
 $app = App::getInstance();
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-//var_dump(method_exists('BDS\Controller\IndexController', 'index'));
+$loader = new FilesystemLoader('View');
+$twig = new \Twig\Environment($loader, ['cache' => false]);
 
-//$index = new IndexController();
-
-
+$html = $twig->render('index.tpl');
+echo $html;
 mysqli_close($app->db);
 ?>
