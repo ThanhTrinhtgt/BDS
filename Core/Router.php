@@ -2,6 +2,9 @@
 
 namespace BDS;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class Router 
 {
 	public $route 		= '';
@@ -28,5 +31,19 @@ class Router
 
 			//vd($this->arr_route);
 		}
+	}
+
+	public function render($data = [])
+	{
+
+		//exit;
+		
+		$loader = new FilesystemLoader('View');
+		$twig   = new \Twig\Environment($loader, ['cache' => false]);
+		$data   = array_merge(['layout' => 'layout.tpl', 'title' => 'BDS Thanh Trinh'], $data);
+
+		$html = $twig->render('index.tpl', $data);
+
+		echo $html;
 	}
 }

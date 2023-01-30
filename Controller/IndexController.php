@@ -1,10 +1,10 @@
 <?php 
 namespace BDS\Controller;
 
-class IndexController
+class IndexController extends BaseController
 {
 	public function index()
 	{
-
+		
 	}
 }

@@ -9,13 +9,7 @@ include_once 'Core/init.php';
 
 $router = new Router();
 $app = App::getInstance();
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
-$loader = new FilesystemLoader('View');
-$twig = new \Twig\Environment($loader, ['cache' => false]);
-
-$html = $twig->render('index.tpl');
-echo $html;
+$router->render();
 mysqli_close($app->db);
 ?>
