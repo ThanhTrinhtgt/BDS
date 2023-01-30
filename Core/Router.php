@@ -33,7 +33,7 @@ class Router
 		}
 	}
 
-	public function render($data = [])
+	public function render($data = [], $templateName = '')
 	{
 
 		//exit;
@@ -41,8 +41,9 @@ class Router
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
 		$data   = array_merge(['layout' => 'layout.tpl', 'title' => 'BDS Thanh Trinh'], $data);
+		if (empty($templateName)) $templateName = 'index.tpl';
 
-		$html = $twig->render('index.tpl', $data);
+		$html = $twig->render($templateName, $data);
 
 		echo $html;
 	}
