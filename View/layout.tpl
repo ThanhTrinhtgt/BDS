@@ -2,11 +2,15 @@
 <html>
     <head>
         {% block head %}
-            <link rel="stylesheet" href="style.css"/>
             <title>{{ title }}</title>
+            {% include "dist/css/main.tpl" %}
         {% endblock %}
     </head>
     <body>
+        <div id="head">
+            {% include "element/menu.tpl" %}
+            {% include "element/search-bar.tpl" %}
+        </div>
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">
             {% block footer %}
@@ -14,5 +18,5 @@
             {% endblock %}
         </div>
     </body>
-    {% include "js/main.js" %}
+    {% include "dist/js/main.tpl" %}
 </html>

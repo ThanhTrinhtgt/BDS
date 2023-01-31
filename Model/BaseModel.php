@@ -13,12 +13,38 @@ class BaseModel extends \stdClass
 		// code...
 	}
 
-	public static function select()
+	public static function select($query = [])
 	{
-		$app = App::getInstance();
-		$data = [];
+		$app    = App::getInstance();
+		$data   = [];
+		$select = '*';
+		$where  = '';
 
-		$q = mysqli_query($app->db, "SELECT * FROM `".static::$table."`");
+		if ($query) {
+			if ($query['select']) {
+				$select = '';
+
+				foreach ($query['select'] as $field) {
+					if (in_array($field, static::fields)) {
+						$select .= !empty($select) ? ",$field" : $field;
+					}
+
+					if (empty($select)) $select = '*';
+				}
+			}
+
+			if ($query['where']) {
+				foreach ($query['where'] as $search => $val) {
+					if (in_array($search, static::fields)) {
+						$where .= !empty($select) ? " AND `$search` = '$val'" : " `$search` = '$val'";
+					}
+
+					if (empty($where)) $where = '1';
+				}
+			}
+		}
+
+		$q = mysqli_query($app->db, "SELECT $select FROM `".static::$table."` WHERE $where");
 		
 		while($row = mysqli_fetch_assoc($q)) {
 			$item = [];

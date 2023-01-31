@@ -11,5 +11,6 @@ $router = new Router();
 $app = App::getInstance();
 
 $router->render();
+
 mysqli_close($app->db);
 ?>

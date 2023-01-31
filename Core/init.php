@@ -20,6 +20,8 @@ function vd($value = '', $cont = false)
 
 function pr($value = '', $cont = false)
 {
-	echo '<print>'.print_r($value).'</print>';
+	echo '<pre>';
+	echo print_r($value);
+	echo '</pre>';
 	if (!$cont) exit();
 }
