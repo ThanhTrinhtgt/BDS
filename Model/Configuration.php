@@ -12,10 +12,12 @@ class Configuration extends BaseModel
 
 	public function getList($key = '')
 	{
-		$query = [];
+		$query = [
+			'select' => ['id', 'name', 'key']
+		];
 
 		if (!empty($key)) {
-			$query['where'] = [$key];
+			$query['where'] = ['key' => $key];
 		}
 
 		return self::select($query);

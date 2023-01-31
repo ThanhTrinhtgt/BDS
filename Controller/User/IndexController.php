@@ -7,6 +7,6 @@ class IndexController extends BaseController
 {
 	public function index()
 	{
-		echo 'fsafasfsasa';
+		$this->setDefaultData();
 	}
 }

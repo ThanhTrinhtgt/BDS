@@ -20,23 +20,23 @@ class BaseModel extends \stdClass
 		$select = '*';
 		$where  = '';
 
-		if ($query) {
-			if ($query['select']) {
+		if (!empty($query)) {
+			if (!empty($query['select'])) {
 				$select = '';
 
 				foreach ($query['select'] as $field) {
-					if (in_array($field, static::fields)) {
-						$select .= !empty($select) ? ",$field" : $field;
+					if (in_array($field, static::$fields)) {
+						$select .= !empty($select) ? ",`$field`" : "`$field`";
 					}
 
 					if (empty($select)) $select = '*';
 				}
 			}
 
-			if ($query['where']) {
+			if (!empty($query['where'])) {
 				foreach ($query['where'] as $search => $val) {
-					if (in_array($search, static::fields)) {
-						$where .= !empty($select) ? " AND `$search` = '$val'" : " `$search` = '$val'";
+					if (in_array($search, static::$fields)) {
+						$where .= !empty($where) ? " AND `$search` = '$val'" : " `$search` = '$val'";
 					}
 
 					if (empty($where)) $where = '1';
@@ -46,16 +46,18 @@ class BaseModel extends \stdClass
 
 		$q = mysqli_query($app->db, "SELECT $select FROM `".static::$table."` WHERE $where");
 		
-		while($row = mysqli_fetch_assoc($q)) {
-			$item = [];
-			
-			foreach (static::$fields as $field) {
-				if (isset($row[$field])) {
-					$item[$field] = $row[$field];
+		if ($q) {
+			while($row = mysqli_fetch_assoc($q)) {
+				$item = [];
+				
+				foreach (static::$fields as $field) {
+					if (isset($row[$field])) {
+						$item[$field] = $row[$field];
+					}
 				}
-			}
 
-			$data[] = $item;
+				$data[] = $item;
+			}
 		}
 
 		return $data;

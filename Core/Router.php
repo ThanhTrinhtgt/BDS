@@ -41,6 +41,7 @@ class Router
 		
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
+
 		$data   = array_merge(['layout' => 'layout.tpl', 'title' => 'BDS Thanh Trinh'], $this->data_render);
 
 		$html = $twig->render($this->getTemplateName(), $data);
@@ -70,9 +71,9 @@ class Router
 			$this->action = 'index';
 		} 
 
-		call_user_func_array([new $class, $this->action], []);
-
 		$obj = new $class;
+
+		call_user_func_array([$obj, $this->action], []);
 
 		$this->data_render = $obj->data;
 		$this->templateName = $obj->templateName;

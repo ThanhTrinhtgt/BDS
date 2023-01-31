@@ -3,13 +3,13 @@
     <head>
         {% block head %}
             <title>{{ title }}</title>
-            {% include "dist/css/main.tpl" %}
+            {% include "dist/css/main.tpl" with {'ver': '0.001'} %}
         {% endblock %}
     </head>
     <body>
         <div id="head">
             {% include "element/menu.tpl" %}
-            {% include "element/search-bar.tpl" %}
+            {% include "element/search-bar.tpl" with {'list_search' : list_search} %}
         </div>
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">

@@ -1,14 +1,9 @@
-<ul class="nav">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled">Disabled</a>
-  </li>
+<ul class="nav" id="bds-search-bar">
+  {% if list_search is not empty %}
+    {% for item in list_search %}
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">{{ item.name }}</a>
+      </li>
+    {% endfor %}
+  {% endif %}
 </ul>
