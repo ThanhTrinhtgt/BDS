@@ -1,3 +1,5 @@
 #bds-search-bar{
 	background: rgba(0, 0, 0, 0.3);
+	width:  fit-content;
+	margin: 10px auto;
 }

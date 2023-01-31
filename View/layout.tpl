@@ -3,7 +3,7 @@
     <head>
         {% block head %}
             <title>{{ title }}</title>
-            {% include "dist/css/main.tpl" with {'ver': '0.001'} %}
+            {% include "dist/css/main.tpl" with {'ver': date().timestamp} %}
         {% endblock %}
     </head>
     <body>
