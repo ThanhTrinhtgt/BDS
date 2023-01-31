@@ -8,12 +8,13 @@ use BDS\Helper;
 
 class Router 
 {
-	protected $route 	  = '';
-	protected $arr_route   = [];
-	protected $module      = 'User'; #User || Admin
-	protected $controller  = '';
-	protected $action  	  = '';
-	protected $data_render = [];
+	protected $route 	    = '';
+	protected $arr_route    = [];
+	protected $module       = 'User'; #User || Admin
+	protected $controller   = '';
+	protected $action  	    = '';
+	protected $data_render  = [];
+	protected $templateName = '';
 
 	public function __construct() {
 		if (!empty($_SERVER['PATH_INFO'])) {
@@ -34,18 +35,28 @@ class Router
 		$this->analysModule();
 	}
 
-	public function render($templateName = '')
+	public function render()
 	{
 		$this->detectModule();
 		
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
 		$data   = array_merge(['layout' => 'layout.tpl', 'title' => 'BDS Thanh Trinh'], $this->data_render);
-		if (empty($templateName)) $templateName = 'index.tpl';
 
-		$html = $twig->render($templateName, $data);
+		$html = $twig->render($this->getTemplateName(), $data);
 
 		echo $html;
+	}
+
+	private function getTemplateName()
+	{
+		$basicPath = strtolower($this->module) . '/' . strtolower(Helper::covertToCameCase($this->controller));
+
+		if (file_exists(dirname(__DIR__) . '/View/' . $basicPath . '/'. $this->templateName . '.tpl')) {
+			return $basicPath . '/'. $this->templateName . '.tpl';
+		}
+
+		return 'index.tpl';
 	}
 
 	private function detectModule()
@@ -62,7 +73,9 @@ class Router
 		call_user_func_array([new $class, $this->action], []);
 
 		$obj = new $class;
+
 		$this->data_render = $obj->data;
+		$this->templateName = $obj->templateName;
 	}
 
 	private function analysModule()
