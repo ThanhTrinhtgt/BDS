@@ -21,14 +21,15 @@
   <div class="tab-content" id="nav-tabContent">
     {% if list_search is not empty %}
       {% for item in list_search %}
-        <div class="tab-pane fade show" 
+        <form class="tab-pane fade show" 
             id="nav-search-{{ item.id }}" 
             role="tabpanel" 
             aria-labelledby="nav-home-tab" 
             tabindex="0"
         >
-          {{ item.name }}
-        </div>
+          <input name="" />
+          <button>Tim kiem</button>
+        </form>
       {% endfor %}
     {% endif %}
   </div>
