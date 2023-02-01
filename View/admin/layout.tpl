@@ -5,27 +5,17 @@
         <title>{{ title }}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-        <!-- Font Awesome -->
         <link rel="stylesheet" href="View/admin/dist/css/all.min.css">
-        <!-- Ionicons -->
         <link rel="stylesheet" href="View/admin/dist/css/ionicons.min.css">
-        <!-- Tempusdominus Bootstrap 4 -->
         <link rel="stylesheet" href="View/admin/dist/css/tempusdominus-bootstrap-4.min.css">
-        <!-- iCheck -->
         <link rel="stylesheet" href="View/admin/dist/css/icheck-bootstrap.min.css">
-        <!-- JQVMap -->
         <link rel="stylesheet" href="View/admin/dist/css/jqvmap.min.css">
-        <!-- Theme style -->
         <link rel="stylesheet" href="View/admin/dist/css/adminlte.min.css">
-        <!-- overlayScrollbars -->
         <link rel="stylesheet" href="View/admin/dist/css/OverlayScrollbars.min.css">
-        <!-- Daterange picker -->
         <link rel="stylesheet" href="View/admin/dist/css/daterangepicker.css">
-        <!-- summernote -->
         <link rel="stylesheet" href="View/admin/dist/css/summernote-bs4.min.css">
+        <link rel="stylesheet" href="View/admin/dist/css/_main-sidebar.scss">
         {#{% include "dist/css/main.tpl" with {'ver': date().timestamp} %}#}
     {% endblock %}
 </head>
@@ -71,35 +61,77 @@
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="index3.html" class="brand-link">
+              <img src="View/admin/dist/image/house.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+              <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                  <!-- Add icons to the links using the .nav-icon class
-                       with font-awesome or any other icon font library -->
-                  <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
-                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <li class="nav-item active">
+                    <a href="pages/widgets.html" class="nav-link">
+                      <i class="nav-icon fas fa-th"></i>
                       <p>
-                        Dashboard
-                        <i class="right fas fa-angle-left"></i>
+                        Widgets
+                        <span class="right badge badge-danger">New</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fas fa-copy"></i>
+                      <p>
+                        Layout Options
+                        <i class="fas fa-angle-left right"></i>
+                        <span class="badge badge-info right">6</span>
                       </p>
                     </a>
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
-                        <a href="./index.html" class="nav-link active">
+                        <a href="pages/layout/top-nav.html" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Dashboard v1</p>
+                          <p>Top Navigation</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="./index2.html" class="nav-link">
+                        <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Dashboard v2</p>
+                          <p>Top Navigation + Sidebar</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
+                        <a href="pages/layout/boxed.html" class="nav-link">
                           <i class="far fa-circle nav-icon"></i>
-                          <p>Dashboard v3</p>
+                          <p>Boxed</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="pages/layout/fixed-sidebar.html" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Fixed Sidebar</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Fixed Sidebar <small>+ Custom Area</small></p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="pages/layout/fixed-topnav.html" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Fixed Navbar</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="pages/layout/fixed-footer.html" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Fixed Footer</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Collapsed Sidebar</p>
                         </a>
                       </li>
                     </ul>
@@ -107,5 +139,19 @@
               </ul>
         </aside>
     </div>
+    <!-- jQuery -->
+    <script src="View/admin/dist/js/jquery.min.js"></script>
+    <script src="View/admin/dist/js/jquery-ui.min.js"></script>
+    <script>
+      $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <script src="View/admin/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="View/admin/dist/js/moment.min.js"></script>
+    <script src="View/admin/dist/js/daterangepicker.js"></script>
+    <script src="View/admin/dist/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="View/admin/dist/js/summernote-bs4.min.js"></script>
+    <script src="View/admin/dist/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="View/admin/dist/js/adminlte.js"></script>
+    <script src="View/admin/dist/js/dashboard.js"></script>
 </body>
 </html>
