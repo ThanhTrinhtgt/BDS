@@ -1,7 +1,7 @@
 <?php 
 namespace BDS\Model;
 
-use BDS\App;
+use BDS\Core\App;
 
 class BaseModel extends \stdClass
 {

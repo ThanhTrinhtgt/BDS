@@ -7,6 +7,9 @@ error_reporting(E_ALL);
 
 include_once 'Core/init.php';
 
+use BDS\Core\Router;
+use BDS\Core\App;
+
 $router = new Router();
 $app = App::getInstance();
 

@@ -1,8 +1,7 @@
 <?php 
+namespace BDS\Core;
 
-namespace BDS;
-
-class Helper
+class Helper extends \stdClass
 {
 	public static function covertToCameCase($str, $lcf = false)
 	{

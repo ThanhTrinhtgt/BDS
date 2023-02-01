@@ -1,6 +1,5 @@
 <?php 
-
-namespace BDS;
+namespace BDS\Core;
 
 class App
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace BDS;
+namespace BDS\Core;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use BDS\Helper;
+use BDS\Core\Helper;
 
 class Router 
 {

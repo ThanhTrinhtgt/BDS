@@ -12,9 +12,10 @@ function autoload($className)
     }
     
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className);
-    $fileName = str_replace('BDS/', '', $fileName);
 
-    include_once $fileName . '.php';
+    if (file_exists(dirname(dirname(__DIR__)) . '\\' . $fileName . '.php')) {
+        include_once dirname(dirname(__DIR__)) . '\\' . $fileName . '.php';
+    }
 }
 
 spl_autoload_register('autoload');
