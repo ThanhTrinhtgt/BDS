@@ -5,6 +5,6 @@ class News extends BaseModel
 {
 	public static $table = 'real-estate';
 	public static $fields = [
-		'id', 'name', 'desc'
+		'id', 'name', 'short_desc', 'desc', 'sort', 'type'
 	];
 }

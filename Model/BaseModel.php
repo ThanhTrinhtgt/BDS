@@ -5,15 +5,8 @@ use BDS\App;
 
 class BaseModel extends \stdClass
 {
-	const MENU_TIN_RAO = 'tin-rao';
-	const MENU_TIN_TUC = 'tin-tuc';
-
 	public static $table;
 	public static $fields;
-	public static $menu = [
-		self::MENU_TIN_RAO => 'real-estate',
-		self::MENU_TIN_TUC => 'news',
-	];
 	
 	public function __construct()
 	{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 01, 2023 at 04:18 AM
+-- Generation Time: Feb 01, 2023 at 05:00 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -56,7 +56,23 @@ INSERT INTO `configuration` (`id`, `name`, `value`, `key`, `desc`) VALUES
 CREATE TABLE `news` (
   `id` int(11) NOT NULL,
   `name` int(11) NOT NULL,
-  `desc` int(11) NOT NULL
+  `short_desc` text NOT NULL,
+  `desc` text NOT NULL,
+  `sort` int(10) NOT NULL,
+  `type` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `node`
+--
+
+CREATE TABLE `node` (
+  `id` int(11) NOT NULL,
+  `url` varchar(254) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `key` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -91,6 +107,12 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `node`
+--
+ALTER TABLE `node`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `real-estate`
 --
 ALTER TABLE `real-estate`
@@ -110,6 +132,12 @@ ALTER TABLE `configuration`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `node`
+--
+ALTER TABLE `node`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

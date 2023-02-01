@@ -8,6 +8,9 @@ use BDS\Helper;
 
 class Router 
 {
+	const MENU_TIN_RAO = 'tin-rao';
+	const MENU_TIN_TUC = 'tin-tuc';
+
 	protected $route 	    = '';
 	protected $arr_route    = [];
 	protected $module       = 'User'; #User || Admin
@@ -15,6 +18,12 @@ class Router
 	protected $action  	    = '';
 	protected $data_render  = [];
 	protected $templateName = '';
+	protected $renderPath   = '';
+
+	public $menu_rewrite = [
+		self::MENU_TIN_RAO => 'real-estate',
+		self::MENU_TIN_TUC => 'news',
+	];
 
 	public function __construct() {
 		if (!empty($_SERVER['PATH_INFO'])) {
@@ -51,13 +60,13 @@ class Router
 
 	private function getTemplateName()
 	{
-		$basicPath = strtolower($this->module) . '/' . strtolower(Helper::covertToCameCase($this->controller));
+		$basicPath = strtolower($this->module) . '/' . strtolower($this->renderPath);
 
 		if (file_exists(dirname(__DIR__) . '/View/' . $basicPath . '/'. $this->templateName . '.tpl')) {
 			return $basicPath . '/'. $this->templateName . '.tpl';
 		}
 
-		return 'index.tpl';
+		return '404.tpl';
 	}
 
 	private function detectModule()
@@ -93,6 +102,11 @@ class Router
 				$this->arr_route[1] = 'index';
 			}
 
+			if (isset($this->menu_rewrite[$this->arr_route[0]])) {
+				$this->arr_route[0] = $this->menu_rewrite[$this->arr_route[0]];
+			}
+
+			$this->renderPath = $this->arr_route[0];
 			$this->controller = Helper::covertToCameCase($this->arr_route[0]);
 			$this->action = Helper::covertToCameCase($this->arr_route[1], true);
 		}
