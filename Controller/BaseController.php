@@ -23,7 +23,9 @@ class BaseController extends \stdClass
 		$config = new Configuration();
 
 		$listsearch = $config->getList(Configuration::KEY_TYPE_SEARCH);
+		$listmenu = $config->getList(Configuration::KEY_TYPE_MENU);
 		
 		$this->set('list_search', $listsearch);
+		$this->set('list_menu', $listmenu);
 	}
 }

@@ -1,5 +1,4 @@
 <div id="bds-search-bar">
-
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
     {% if list_search is not empty %}
