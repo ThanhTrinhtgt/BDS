@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2023 at 10:55 AM
+-- Generation Time: Feb 01, 2023 at 04:18 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -24,22 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
+-- Table structure for table `configuration`
 --
 
-CREATE TABLE `menu` (
+CREATE TABLE `configuration` (
   `id` int(11) NOT NULL,
   `name` varchar(254) NOT NULL,
-  `desc` text NOT NULL,
-  `key` varchar(24) NOT NULL
+  `value` varchar(254) NOT NULL,
+  `key` varchar(100) NOT NULL,
+  `desc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `menu`
+-- Dumping data for table `configuration`
 --
 
-INSERT INTO `menu` (`id`, `name`, `desc`, `key`) VALUES
-(1, 'f12f1 2', 'f1f12', 'f3f3f1');
+INSERT INTO `configuration` (`id`, `name`, `value`, `key`, `desc`) VALUES
+(1, 'Dự án', '', 'KEY_TYPE_SEARCH', ''),
+(2, 'Nhà đất bán', '', 'KEY_TYPE_SEARCH', ''),
+(3, 'Nhà cho thuê', '', 'KEY_TYPE_SEARCH', ''),
+(4, 'Tin rao', 'tin-rao', 'KEY_TYPE_MENU', ''),
+(5, 'Tin tuc', 'tin-tuc', 'KEY_TYPE_MENU', ''),
+(6, 'Lien he', 'lien-he', 'KEY_TYPE_MENU', '');
 
 -- --------------------------------------------------------
 
@@ -53,14 +59,29 @@ CREATE TABLE `news` (
   `desc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `real-estate`
+--
+
+CREATE TABLE `real-estate` (
+  `id` int(11) NOT NULL,
+  `name` varchar(254) NOT NULL,
+  `short_desc` text NOT NULL,
+  `desc` text NOT NULL,
+  `sort` int(10) NOT NULL,
+  `type` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `menu`
+-- Indexes for table `configuration`
 --
-ALTER TABLE `menu`
+ALTER TABLE `configuration`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -70,19 +91,31 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `real-estate`
+--
+ALTER TABLE `real-estate`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `menu`
+-- AUTO_INCREMENT for table `configuration`
 --
-ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `configuration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `real-estate`
+--
+ALTER TABLE `real-estate`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
