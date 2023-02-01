@@ -5,6 +5,6 @@ class Node extends BaseModel
 {
 	public static $table = 'node';
 	public static $fields = [
-		'id', 'url', 'type',
+		'id', 'url', 'type', 'key'
 	];
 }

@@ -51,7 +51,7 @@ class Router
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
 
-		$data   = array_merge(['layout' => 'layout.tpl', 'title' => 'BDS Thanh Trinh'], $this->data_render);
+		$data   = array_merge(['title' => 'BDS Thanh Trinh'], $this->data_render);
 
 		$html = $twig->render($this->getTemplateName(), $data);
 
@@ -93,6 +93,13 @@ class Router
 		if (!empty($this->arr_route[0]) && $this->arr_route[0] == 'admin') {
 			//check amdin
 			$this->module = 'Admin';
+
+			unset($this->arr_route[0]);
+
+			$this->arr_route = array_values($this->arr_route);
+
+			if (empty($this->arr_route[0])) $this->arr_route[0] = 'index';
+			if (empty($this->arr_route[1])) $this->arr_route[1] = 'index';
 		} else {
 			if (empty($this->arr_route) || empty($this->arr_route[0]) || !is_array($this->arr_route)) {
 				$this->arr_route = ['index', 'index'];
@@ -105,10 +112,10 @@ class Router
 			if (isset($this->menu_rewrite[$this->arr_route[0]])) {
 				$this->arr_route[0] = $this->menu_rewrite[$this->arr_route[0]];
 			}
-
-			$this->renderPath = $this->arr_route[0];
-			$this->controller = Helper::covertToCameCase($this->arr_route[0]);
-			$this->action = Helper::covertToCameCase($this->arr_route[1], true);
 		}
+
+		$this->renderPath = $this->arr_route[0];
+		$this->controller = Helper::covertToCameCase($this->arr_route[0]);
+		$this->action = Helper::covertToCameCase($this->arr_route[1], true);
 	}
 }

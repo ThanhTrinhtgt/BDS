@@ -1,4 +1,4 @@
-{% extends "user/layout.tpl" %}
+{% extends "admin/layout.tpl" %}
 {% block content %}
 	<div class="container">
 		
