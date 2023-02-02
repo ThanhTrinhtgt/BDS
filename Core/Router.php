@@ -14,11 +14,17 @@ class Router
 	const MENU_ADMIN = [
 		'real-estate' => [
 			'name' => 'Tin rao',
-			'child' => ['index', 'detail']
+			'child' => [
+				'index' => ['name' => 'Danh sách tin rao'],  
+				'detail' => ['name' => 'Chi tiết tin rao']
+			]
 		],
 		'news' => [
 			'name' => 'Tin tức',
-			'child' => ['index', 'detail']
+			'child' => [
+				'index' => ['name' => 'Danh sách tin tức'], 
+				'detail' => ['name' => 'Chi tiết tin tức']
+			]
 		],
 	];
 

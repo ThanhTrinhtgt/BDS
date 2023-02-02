@@ -10,7 +10,6 @@ class BaseController extends \stdClass
 
 	public function __construct()
 	{
-
 	}
 
 	public function set($key, $val)

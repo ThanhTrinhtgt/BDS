@@ -15,7 +15,7 @@
                 <div class="error-content">
                   <h3><i class="fas fa-exclamation-triangle text-warning"></i> Lỗi! Trang bạn tìm kiếm không tồn tại.</h3>
                   <p>
-                    Hãy quay trở lại <a href="/">trang chủ</a>.
+                    Hãy quay trở lại <a href="/admin">trang chủ</a>.
                   </p>
                 </div>
             </div>

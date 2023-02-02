@@ -26,17 +26,16 @@
               <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
               </li>
-              <li class="nav-item d-none d-sm-inline-block">
+              <!-- <li class="nav-item d-none d-sm-inline-block">
                 <a href="index3.html" class="nav-link">Home</a>
               </li>
               <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
-              </li>
+              </li> -->
               
             </ul>
-            <!-- Right navbar links -->
+            
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
                 <li class="nav-item">
                 <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                   <i class="fas fa-search"></i>
@@ -76,15 +75,19 @@
                       <a href="admin/{{ url }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>{{ item.name }}</p>
-                        <!-- <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="pages/layout/top-nav.html" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Top Navigation</p>
-                            </a>
-                          </li>
-                        </ul> -->
                       </a>
+                      {% if item.child is defined and item.child is not empty %}
+                        <ul class="nav nav-treeview">
+                          {% for url_child, child in item.child %}
+                            <li class="nav-item">
+                              <a href="admin/{{ url }}/{{ url_child }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ child.name }}</p>
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
                     </li>
                 {% endfor %}
               </ul>
