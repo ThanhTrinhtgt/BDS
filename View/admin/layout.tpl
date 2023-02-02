@@ -83,7 +83,7 @@
                   </ol>
                 </div><!-- /.col -->
               </div>
-              <div id="content">{% block content %}{% endblock %}</div>
+              <section class="content">{% block content %}{% endblock %}</div>
             </div>
           </div>
     </div>
