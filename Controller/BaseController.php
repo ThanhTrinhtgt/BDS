@@ -7,6 +7,7 @@ class BaseController extends \stdClass
 {
 	public $data = [];
 	public $templateName = 'index';
+	public $title = 'Thanh BDS';
 
 	public function __construct()
 	{

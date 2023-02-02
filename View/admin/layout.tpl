@@ -72,7 +72,7 @@
                   data-accordion="false">
                 {% for url, item in menu %}
                     <li class="nav-item active">
-                      <a href="admin/{{ url }}" class="nav-link">
+                      <a href="{{ domain }}/admin/{{ url }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>{{ item.name }}</p>
                       </a>
@@ -80,7 +80,7 @@
                         <ul class="nav nav-treeview">
                           {% for url_child, child in item.child %}
                             <li class="nav-item">
-                              <a href="admin/{{ url }}/{{ url_child }}" class="nav-link">
+                              <a href="{{ domain }}/admin/{{ url }}/{{ url_child }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ child.name }}</p>
                               </a>

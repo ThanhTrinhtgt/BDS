@@ -36,6 +36,7 @@ class Router
 	protected $data_render  = [];
 	protected $templateName = '';
 	protected $renderPath   = '';
+	protected $title 		= '';
 
 	public $menu_rewrite = [
 		self::MENU_TIN_RAO => 'real-estate',
@@ -67,9 +68,21 @@ class Router
 		
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
-		$realPath = 'http://bds544.com/View';
+		$protocol = 'http://';
+		$realPath = $protocol . 'bds544.com/View';
 
-		$data   = array_merge(['title' => 'BDS Thanh Trinh', 'realPath' => $realPath], $this->data_render);
+		if (isset($_SERVER['HTTPS']) &&
+		    ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+		    isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+		    $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+		  $protocol = 'https://';
+		}
+
+		$data   = array_merge([
+			'title' => $this->title, 
+			'realPath' => $realPath,
+			'domain' => $protocol . $_SERVER['SERVER_NAME'],
+		], $this->data_render);
 
 		$html = $twig->render($this->getTemplateName(), $data);
 
@@ -106,7 +119,8 @@ class Router
 
 		call_user_func_array([$obj, $this->action], []);
 
-		$this->data_render = $obj->data;
+		$this->data_render 	= $obj->data;
+		$this->title 		= $obj->title;
 		$this->templateName = $obj->templateName;
 	}
 
