@@ -11,6 +11,17 @@ class Router
 	const MENU_TIN_RAO = 'tin-rao';
 	const MENU_TIN_TUC = 'tin-tuc';
 
+	const MENU_ADMIN = [
+		'real-estate' => [
+			'name' => 'Tin rao',
+			'child' => ['index', 'detail']
+		],
+		'news' => [
+			'name' => 'Tin tức',
+			'child' => ['index', 'detail']
+		],
+	];
+
 	protected $route 	    = '';
 	protected $arr_route    = [];
 	protected $module       = 'User'; #User || Admin
@@ -50,8 +61,9 @@ class Router
 		
 		$loader = new FilesystemLoader('View');
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
+		$realPath = 'http://bds544.com/View';
 
-		$data   = array_merge(['title' => 'BDS Thanh Trinh'], $this->data_render);
+		$data   = array_merge(['title' => 'BDS Thanh Trinh', 'realPath' => $realPath], $this->data_render);
 
 		$html = $twig->render($this->getTemplateName(), $data);
 
@@ -64,6 +76,10 @@ class Router
 
 		if (file_exists(dirname(__DIR__) . '/View/' . $basicPath . '/'. $this->templateName . '.tpl')) {
 			return $basicPath . '/'. $this->templateName . '.tpl';
+		}
+
+		if ($this->module == 'Admin') {
+			return 'admin/404.tpl';
 		}
 
 		return '404.tpl';

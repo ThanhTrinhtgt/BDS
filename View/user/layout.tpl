@@ -2,8 +2,11 @@
 <html>
     <head>
         {% block head %}
-            <title>{{ title }}</title>
-            {% include "dist/css/main.tpl" with {'ver': date().timestamp} %}
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap.min.css?ver={{ date().timestamp }}"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap-grid.min.css?ver={{ date().timestamp }}"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/custom.css?ver={{ date().timestamp }}"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/responsive.css?ver={{ date().timestamp }}"/>
         {% endblock %}
     </head>
     <body>
