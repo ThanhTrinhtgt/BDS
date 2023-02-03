@@ -99,7 +99,9 @@
     <script src="{{ realPath }}/admin/dist/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="{{ realPath }}/admin/dist/js/jquery.overlayScrollbars.min.js"></script>
     <script src="{{ realPath }}/admin/dist/js/adminlte.js"></script>
+    <script src="{{ realPath }}/admin/dist/js/ckeditor/ckeditor.js"></script>
     <script src="{{ realPath }}/admin/dist/js/dashboard.js?ver={{ date().timestamp }}"></script>
     <script src="{{ realPath }}/admin/dist/js/main.js?ver={{ date().timestamp }}"></script>
+    {% block contentJs %}{% endblock contentJs %}
 </body>
 </html>
