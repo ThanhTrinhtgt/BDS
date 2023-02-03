@@ -15,4 +15,11 @@ class NewsController extends BaseController
 		$this->templateName = 'detail';
 		$this->title = 'Chi tiết tin tức';
 	}
+
+	public function saveJson()
+	{
+		//vd($_POST);
+
+		$this->renderJson();
+	}
 }

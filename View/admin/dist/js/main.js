@@ -20,12 +20,24 @@ jQuery(function() {
 			form[name] = val;	
 		});
 
-		console.log(form);
-
 		$.ajax({
-		   url: 'http://bds544.com/admin/news/save',
+		   url: 'http://bds544.com/admin/news/save-json',
 		   data: form,
 		   method: 'post'
+		}).then(function(data) {
+			if (data != undefined) {
+				data = JSON.parse(data);
+			}
+
+		    if (data.code != undefined) {
+		    	let $mess = data.message != undefined ? data.message : '';
+
+		      	$(document).Toasts('create', {
+			        class: data.code == 200 ? 'bg-success' : 'bg-danger',
+			        title: 'Lưu thông tin',
+			        body: $mess
+			    })
+		    }
 		});
 	});
 

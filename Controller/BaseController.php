@@ -28,4 +28,15 @@ class BaseController extends \stdClass
 		$this->set('list_search', $listsearch);
 		$this->set('list_menu', $listmenu);
 	}
+
+	public function renderJson($response = [])
+	{
+		if (!empty($response) && is_array($response)) {
+				echo json_encode($response);
+			exit;
+		} 
+
+		echo json_encode(['code' => 404, 'message' => 'Undefined!']);
+		exit;
+	}
 }
