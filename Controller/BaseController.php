@@ -39,4 +39,13 @@ class BaseController extends \stdClass
 		echo json_encode(['code' => 404, 'message' => 'Undefined!']);
 		exit;
 	}
+
+	public function isRequest($method = 'GET')
+	{
+		if (empty($method) || !$method || $method != $_SERVER['REQUEST_METHOD']) {
+			return false;
+		}
+
+		return true;
+	}
 }

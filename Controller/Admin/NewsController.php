@@ -18,7 +18,9 @@ class NewsController extends BaseController
 
 	public function saveJson()
 	{
-		//vd($_POST);
+		$this->isRequest('POST');
+
+		$form = SafeData($_POST);
 
 		$this->renderJson();
 	}
