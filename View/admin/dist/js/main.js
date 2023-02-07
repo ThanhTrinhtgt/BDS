@@ -37,6 +37,10 @@ jQuery(function() {
 			        title: 'Lưu thông tin',
 			        body: $mess
 			    })
+
+			    if (data.code == 200) {
+			    	window.location.reload();
+			    }
 		    }
 		});
 	});

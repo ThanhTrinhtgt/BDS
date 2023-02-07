@@ -71,6 +71,12 @@
         </aside>
         <div class="content-wrapper">
           <div class="content-header">
+            <div class="progress">
+              <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                   aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                <span class="sr-only">40% Complete (success)</span>
+              </div>
+            </div>
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-6">
