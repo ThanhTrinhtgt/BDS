@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/daterangepicker.css?ver={{ date().timestamp }}">
         <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/summernote-bs4.min.css?ver={{ date().timestamp }}">
         <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/_main-sidebar.scss?ver={{ date().timestamp }}">
-        {#{% include "dist/css/main.tpl" with {'ver': date().timestamp} %}#}
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/custom.css?ver={{ date().timestamp }}">
     {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

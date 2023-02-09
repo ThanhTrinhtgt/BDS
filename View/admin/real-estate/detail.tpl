@@ -31,7 +31,7 @@
                 <div class="col-12 p-1"></div>
 
                 <div class="col-3">Ảnh</div>
-                <div class="col-3"><img src="{{ data.img_url }}"/></div>
+                <div class="col-3"><img class='img-review-60' src="{{ data.img_url }}"/></div>
                 <div class="col-6">
                     <div class="input-group">
                         <div class="custom-file">
