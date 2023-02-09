@@ -5,6 +5,6 @@ class RealEstate extends BaseModel
 {
 	public static $table = 'real-estate';
 	public static $fields = [
-		'id', 'name', 'short_desc', 'desc', 'sort', 'type'
+		'id', 'name', 'short_desc', 'desc', 'price', 'area', 'unit', 'sort', 'type'
 	];
 }

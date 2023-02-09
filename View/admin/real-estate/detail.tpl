@@ -17,7 +17,13 @@
 
                 <div class="col-12 p-1"></div>
                 
-                <div class="col-3">Đường dẫn</div>
+                <div class="col-3">
+                    Đường dẫn
+                    <button type="button" 
+                    class="btn btn-primary float-right bds-build-seo-name">
+                        <i class="fas fa-download"></i> Sync
+                    </button>
+                </div>
                 <div class="col-9">
                     <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
                 </div>
