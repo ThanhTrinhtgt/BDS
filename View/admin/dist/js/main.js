@@ -1,49 +1,64 @@
-let fieldForm = '.bds-field-form';
-let mainForm  = '.bds-main-form';
-let btnSubmit = '.bds-submit-form';
+var BDScore = function (controller) {
+	return BDScore.fn.init(controller);
+}
 
+BDScore.fn = BDScore.prototype = {
+	init: function (controller) {
+		console.log(controller);
+		this.controller = controller;
 
-jQuery(function() {
-	$(btnSubmit).unbind().click(function() {
-		let form = {};
+		this.eventForm = this.eventForm.bind(this);
+	},
 
-		$(mainForm + ' ' + fieldForm).each(function() {
-			let val = '';
-			let name = $(this).attr('name');
+	fieldForm:  '.bds-field-form',
+	mainForm:   '.bds-main-form',
+	btnSubmit:  '.bds-submit-form',
+	controller: '',
 
-			if ($(this).data('ckeditor') != undefined) {
-				val = CKEDITOR.instances.ckeditor.getData();
-			} else {
-				val = $(this).val();
-			}
+	eventForm() {
+		let self = this;
 
-			form[name] = val;	
-		});
+		$(this.btnSubmit).unbind().click(function() {
+			let form = {};
 
-		$.ajax({
-		   url: 'http://bds544.com/admin/news/save-json',
-		   data: form,
-		   method: 'post'
-		}).then(function(data) {
-			if (data != undefined) {
-				data = JSON.parse(data);
-			}
+			$(self.mainForm + ' ' + self.fieldForm).each(function() {
+				let val = '';
+				let name = $(this).attr('name');
 
-		    if (data.code != undefined) {
-		    	let $mess = data.message != undefined ? data.message : '';
+				if ($(this).data('ckeditor') != undefined) {
+					val = CKEDITOR.instances.ckeditor.getData();
+				} else {
+					val = $(this).val();
+				}
 
-		      	$(document).Toasts('create', {
-			        class: data.code == 200 ? 'bg-success' : 'bg-danger',
-			        title: 'Lưu thông tin',
-			        body: $mess
-			    })
+				form[name] = val;	
+			});
 
-			    if (data.code == 200) {
-			    	window.location.reload();
+			$.ajax({
+			   url: 'http://bds544.com/admin/' + self.controller + '/save-json',
+			   data: form,
+			   method: 'post'
+			}).then(function(data) {
+				if (data != undefined) {
+					data = JSON.parse(data);
+				}
+
+			    if (data.code != undefined) {
+			    	let $mess = data.message != undefined ? data.message : '';
+
+			      	$(document).Toasts('create', {
+				        class: data.code == 200 ? 'bg-success' : 'bg-danger',
+				        title: 'Lưu thông tin',
+				        body: $mess
+				    })
+
+				    if (data.code == 200) {
+				    	window.location.reload();
+				    }
 			    }
-		    }
+			});
 		});
-	});
 
-	CKEDITOR.replace( 'ckeditor' );
-})
+		CKEDITOR.replace( 'ckeditor' );
+	},
+}

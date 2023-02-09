@@ -24,13 +24,6 @@
 
                 <div class="col-12 p-1"></div>
                 
-                <div class="col-3">Giá tiền</div>
-                <div class="col-9">
-                    <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-                
                 <div class="col-3">Mô tả ngắn</div>
                 <div class="col-9">
                     <input class="form-control bds-field-form" name="short_desc" value="{{ data.short_desc }}"/>
@@ -69,6 +62,8 @@
 
 {% block contentJs %}
 <script>
+    let core = new BDScore('news');
 
+    core.eventForm();
 </script>
 {% endblock %}

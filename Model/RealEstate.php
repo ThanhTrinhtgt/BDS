@@ -1,7 +1,7 @@
 <?php 
 namespace BDS\Model;
 
-class News extends BaseModel
+class RealEstate extends BaseModel
 {
 	public static $table = 'real-estate';
 	public static $fields = [

@@ -8,7 +8,7 @@ class NewsController extends BaseController
 {
 	public function index()
 	{
-		$this->title = 'Danh sách tin tức';
+		$this->title = 'Danh sách';
 
 		$data = News::select([], true);
 
@@ -18,10 +18,10 @@ class NewsController extends BaseController
 	public function detail($id = 0)
 	{
 		$this->templateName = 'detail';
-		$this->title = 'Thêm mới tin tức';
+		$this->title = 'Thêm mới';
 
 		if (!empty($id) && $id > 0) {
-			$this->title = 'Tuỳ chỉnh tin tức';			
+			$this->title = 'Tuỳ chỉnh';			
 		} 
 
 		$news = new News($id);
