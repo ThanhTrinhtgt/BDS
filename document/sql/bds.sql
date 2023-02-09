@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 09, 2023 at 09:44 AM
+-- Generation Time: Feb 09, 2023 at 09:51 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -95,6 +95,7 @@ CREATE TABLE `node` (
 CREATE TABLE `real-estate` (
   `id` int(11) NOT NULL,
   `name` varchar(254) NOT NULL,
+  `seo_name` varchar(50) NOT NULL,
   `short_desc` text NOT NULL,
   `desc` text NOT NULL,
   `price` double NOT NULL DEFAULT 0,
@@ -108,9 +109,9 @@ CREATE TABLE `real-estate` (
 -- Dumping data for table `real-estate`
 --
 
-INSERT INTO `real-estate` (`id`, `name`, `short_desc`, `desc`, `price`, `area`, `unit`, `sort`, `type`) VALUES
-(1, 'Nhà mặt tiền đường Lý Phục Man', '', '<p>12r 12 zxc fasfas</p>\n', 0, 0, '', 1, 0),
-(2, 'Tin tức đất Hà Giang ', 'tại đây đang rất ', '<p>fasfasf 2r122</p>\n', 0, 0, '', 1, 0);
+INSERT INTO `real-estate` (`id`, `name`, `seo_name`, `short_desc`, `desc`, `price`, `area`, `unit`, `sort`, `type`) VALUES
+(1, 'Nhà mặt tiền đường Lý Phục Man', '', '', '<p>12r 12 zxc fasfas</p>\n', 0, 0, '', 1, 0),
+(2, 'Tin tức đất Hà Giang ', 'tin-tuc-dat-ha-giang-', 'tại đây đang rất ', '<p>fasfasf 2r122</p>\n', 0, 0, '', 1, 0);
 
 --
 -- Indexes for dumped tables
