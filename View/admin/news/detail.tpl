@@ -1,37 +1,39 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
     <div class="callout callout-info">
-      <h5><i class="fas fa-info"></i> Note:</h5>
-      
+        <a class="btn btn-info btn-sm" href='/admin/news/edit/0'>
+            <i class="fas fa-pencil-alt"></i>Thêm mới
+        </a>
     </div>
 
     <div class="invoice p-3 mb-3">   
         <form class="bds-main-form">
+            <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
             <div class="row form-group">
                 <div class="col-3">Tiêu đề</div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="name"/>
+                    <input class="form-control bds-field-form" name="name" value="{{ data.name }}"/>
                 </div>
 
                 <div class="col-12 p-1"></div>
                 
                 <div class="col-3">Đường dẫn</div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="seo_name"/>
+                    <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
                 </div>
 
                 <div class="col-12 p-1"></div>
                 
                 <div class="col-3">Giá tiền</div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="price"/>
+                    <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
                 </div>
 
                 <div class="col-12 p-1"></div>
                 
                 <div class="col-3">Mô tả ngắn</div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="short_desc"/>
+                    <input class="form-control bds-field-form" name="short_desc" value="{{ data.short_desc }}"/>
                 </div>
 
                 <div class="col-12 p-1"></div>
@@ -44,7 +46,8 @@
                         name="desc" 
                         id="ckeditor" 
                         data-ckeditor="1"
-                    ></textarea>
+                        value="{{ data.desc|raw }}"
+                    >{{ data.desc|raw }}</textarea>
                 </div>
                 <div class="col-12" id="editor">
                     

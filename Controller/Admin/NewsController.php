@@ -9,12 +9,24 @@ class NewsController extends BaseController
 	public function index()
 	{
 		$this->title = 'Danh sách tin tức';
+
+		$data = News::select([], true);
+
+		$this->set('data', $data);
 	}
 
-	public function detail()
+	public function detail($id = 0)
 	{
 		$this->templateName = 'detail';
-		$this->title = 'Chi tiết tin tức';
+		$this->title = 'Thêm mới tin tức';
+
+		if (!empty($id) && $id > 0) {
+			$this->title = 'Tuỳ chỉnh tin tức';			
+		} 
+
+		$news = new News($id);
+
+		$this->set('data', $news);
 	}
 
 	public function saveJson()

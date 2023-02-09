@@ -33,6 +33,8 @@ class BaseModel extends \stdClass
 		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : static::$fields;
 
 		if (!empty($this->id) && $this->id > 0) {
+			$fields['id'] = $this->id;
+
 			return $this->update($fields);
 		} else {
 			$val_field = '';
@@ -52,7 +54,7 @@ class BaseModel extends \stdClass
 
 			$q = mysqli_query($app->db, "INSERT INTO `".static::$table."`($val_field) VALUES($val_value)");
 
-			if ($q && mysqli_affected_rows($q) > 0) $result = true;
+			if (mysqli_affected_rows($app->db) > 0) $result = true;
 		}
 
 
@@ -65,6 +67,7 @@ class BaseModel extends \stdClass
 		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : static::$fields;
 		$val     = '';
 		$where   = '1';
+		$app 	 = App::getInstance();
 
 		foreach ($fields as $field) {
 			if ($field != 'id') {
@@ -74,7 +77,7 @@ class BaseModel extends \stdClass
 			}
 		}
 
-		if (isset($fields['id'])) {
+		if (in_array('id', $fields)) {
 			$where = "`id` = '" . $this->id . "' LIMIT 1";
 		} elseif (!empty($query)) {
 			$arr_dif_query = array_diff($query, static::$fields);
@@ -94,7 +97,7 @@ class BaseModel extends \stdClass
 
 		$q = mysqli_query($app->db, "UPDATE `".static::$table."` SET $val WHERE $where");
 
-		if (mysqli_affected_rows($q) > 0) {
+		if (mysqli_affected_rows($app->db) > 0) {
 			return true;
 		}
 
@@ -152,6 +155,12 @@ class BaseModel extends \stdClass
 				}
 
 				$data[] = $item;
+			}
+		} elseif (!$isMultiple) {
+			$data[0] = [];
+
+			foreach (static::$fields as $field) {
+				$data[0][$field] = '';
 			}
 		}
 

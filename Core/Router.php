@@ -15,21 +15,20 @@ class Router
 		'real-estate' => [
 			'name' => 'Tin rao',
 			'child' => [
-				'index' => ['name' => 'Danh sách tin rao'],  
-				'detail' => ['name' => 'Chi tiết tin rao']
+				'index' => ['name' => 'Danh sách']
 			]
 		],
 		'news' => [
 			'name' => 'Tin tức',
 			'child' => [
-				'index' => ['name' => 'Danh sách tin tức'], 
-				'detail' => ['name' => 'Chi tiết tin tức']
+				'index' => ['name' => 'Danh sách']
 			]
 		],
 	];
 
 	protected $route 	    = '';
 	protected $arr_route    = [];
+	protected $args    		= [];
 	protected $module       = 'User'; #User || Admin
 	protected $controller   = '';
 	protected $action  	    = '';
@@ -117,7 +116,7 @@ class Router
 
 		$obj = new $class;
 
-		call_user_func_array([$obj, $this->action], []);
+		call_user_func_array([$obj, $this->action], $this->args);
 
 		$this->data_render 	= $obj->data;
 		$this->title 		= $obj->title;
@@ -150,8 +149,21 @@ class Router
 			}
 		}
 
+		foreach ($this->arr_route as $k => $v) {
+			if ($k > 1) {
+				$this->args[] = $v;
+			}
+		}
+
 		$this->renderPath = $this->arr_route[0];
 		$this->controller = Helper::covertToCameCase($this->arr_route[0]);
-		$this->action = Helper::covertToCameCase($this->arr_route[1], true);
+		$this->action     = Helper::covertToCameCase($this->arr_route[1], true);
+
+		switch($this->action) {
+			case 'edit':
+			case 'add':
+				$this->action = 'detail';
+				break;
+		}
 	}
 }
