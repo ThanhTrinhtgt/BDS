@@ -150,6 +150,11 @@ class BaseModel extends \stdClass
 				
 				foreach (static::$fields as $field) {
 					if (isset($row[$field])) {
+						if ($field == 'img_url') {
+							$row[$field] = $app->realpathImage . '/' . static::$table . '/' . $row[$field];
+						}
+
+
 						$item[$field] = $row[$field];
 					}
 				}

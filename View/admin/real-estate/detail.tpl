@@ -29,10 +29,16 @@
                 </div>
 
                 <div class="col-12 p-1"></div>
-                
-                <div class="col-3">Giá tiền</div>
-                <div class="col-9">
-                    <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
+
+                <div class="col-3">Ảnh</div>
+                <div class="col-3"><img src="{{ data.img_url }}"/></div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile" name='img_url'>
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-12 p-1"></div>
@@ -55,9 +61,15 @@
                         value="{{ data.desc|raw }}"
                     >{{ data.desc|raw }}</textarea>
                 </div>
-                <div class="col-12" id="editor">
-                    
+
+                <div class="col-12 p-1"></div>
+                
+                <div class="col-3">Giá tiền</div>
+                <div class="col-9">
+                    <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
                 </div>
+
+                <div class="col-12" id="editor"></div>
             </div>
         </form>
     </div>

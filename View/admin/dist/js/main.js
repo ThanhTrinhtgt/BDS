@@ -51,24 +51,19 @@ BDScore.fn = BDScore.prototype = {
 
 		$(this.btnSubmit).unbind().click(function() {
 			let form = {};
+			let formData = new FormData($(self.mainForm)[0]);
 
-			$(self.mainForm + ' ' + self.fieldForm).each(function() {
-				let val = '';
-				let name = $(this).attr('name');
-
-				if ($(this).data('ckeditor') != undefined) {
-					val = CKEDITOR.instances.ckeditor.getData();
-				} else {
-					val = $(this).val();
-				}
-
-				form[name] = val;	
-			});
+			formData.set('desc', CKEDITOR.instances.ckeditor.getData());
 
 			$.ajax({
-			   url: 'http://bds544.com/admin/' + self.controller + '/save-json',
-			   data: form,
-			   method: 'post'
+			   	url: 'http://bds544.com/admin/' + self.controller + '/save-json',
+			   	data: formData,
+			   	method: 'post',
+			   	async: true,
+			   	cache: false,
+				contentType: false,
+				processData: false,
+				timeout: 6000
 			}).then(function(data) {
 				if (data != undefined) {
 					data = JSON.parse(data);

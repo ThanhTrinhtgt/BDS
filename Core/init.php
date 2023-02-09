@@ -7,6 +7,7 @@ use BDS\Core\App;
 
 $app = App::getInstance();
 $app->initDB();
+$app->pathImage = dirname(__DIR__) . '/' . $app->pathImage;
 
 function SafeData($data, $tp = false)
 {
@@ -36,6 +37,22 @@ function SafeData($data, $tp = false)
 	}
 
 	return addslashes($data);
+}
+
+function SafeImage(&$files)
+{
+	if (!empty($files)) {
+		foreach ($files as $k => $file) {
+			if (empty($file)) continue;
+			if (empty($file['type'])) continue;
+
+			$filetype = explode('/', $file['type']);
+
+			if (!empty($filetype) && trim($filetype[0]) != 'image') {
+				unset($files[$k]);
+			}
+		}
+	}
 }
 
 function removeXSS($content)

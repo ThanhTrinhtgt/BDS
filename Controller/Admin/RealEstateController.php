@@ -3,6 +3,7 @@ namespace BDS\Controller\Admin;
 
 use BDS\Controller\Admin\BaseController as BaseController;
 use BDS\Model\RealEstate;
+use BDS\Core\App;
 
 class RealEstateController extends BaseController
 {
@@ -38,8 +39,11 @@ class RealEstateController extends BaseController
 		];
 
 		$form = SafeData($_POST);
+		SafeImage($_FILES);
+		$app = App::getInstance();
 
 		if ($this->validateForm($form, $error)) {
+			
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
 
 			$obj->name 		 = $form['name'];
@@ -49,6 +53,12 @@ class RealEstateController extends BaseController
 			$obj->price 	 = !empty($form['price']) ? $form['price'] : 0;
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : 0;
+			
+			if (!empty($_FILES) && !empty($_FILES['img_url'])) {
+				$obj->img_url = $_FILES['img_url']['name'];
+
+				move_uploaded_file($_FILES['img_url']['tmp_name'], $app->pathImage . '/real-estate/'.$obj->img_url);
+			}
 
 			if ($obj->save()) {
 				$respone = [

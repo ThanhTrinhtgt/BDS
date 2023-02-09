@@ -4,6 +4,8 @@ namespace BDS\Core;
 class App
 {
 	public $db = null;
+	public $pathImage 	  = 'View/dist/image';
+	public $realpathImage = '/View/dist/image';
 
 	public function initDB()
 	{
