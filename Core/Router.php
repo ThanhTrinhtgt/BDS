@@ -61,26 +61,43 @@ class Router
 		$this->analysModule();
 	}
 
+	public static function reRewriteRouter($path = '')
+	{
+		$menu_rewrite = (new Router)->menu_rewrite;
+		$menu_rewrite = array_flip($menu_rewrite);
+
+		if (!empty($path) && !empty($menu_rewrite[$path])) {
+			return $menu_rewrite[$path];
+		}
+
+		return $path;
+	}
+
+	public static function rewriteRouter($path = '')
+	{
+		$menu_rewrite = (new Router)->menu_rewrite;
+
+		if (!empty($path) && !empty($menu_rewrite[$path])) {
+			return $menu_rewrite[$path];
+		}
+
+		return $path;
+	}
+
 	public function render()
 	{
 		$this->detectModule();
 		
 		$loader = new FilesystemLoader('View');
+		$app    = App::getInstance();
 		$twig   = new \Twig\Environment($loader, ['cache' => false]);
 		$protocol = 'http://';
-		$realPath = $protocol . 'bds544.com/View';
-
-		if (isset($_SERVER['HTTPS']) &&
-		    ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-		    isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-		    $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-		  $protocol = 'https://';
-		}
+		$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
 
 		$data   = array_merge([
 			'title' => $this->title, 
 			'realPath' => $realPath,
-			'domain' => $protocol . $_SERVER['SERVER_NAME'],
+			'domain' => $app->domain,
 		], $this->data_render);
 
 		$html = $twig->render($this->getTemplateName(), $data);
@@ -135,6 +152,19 @@ class Router
 
 			if (empty($this->arr_route[0])) $this->arr_route[0] = 'index';
 			if (empty($this->arr_route[1])) $this->arr_route[1] = 'index';
+
+			switch($this->arr_route[1]) {
+				case 'edit':
+				case 'add':
+					$this->arr_route[1] = 'detail';
+					break;
+			}
+
+			foreach ($this->arr_route as $k => $v) {
+				if ($k > 1) {
+					$this->args[] = $v;
+				}
+			}
 		} else {
 			if (empty($this->arr_route) || empty($this->arr_route[0]) || !is_array($this->arr_route)) {
 				$this->arr_route = ['index', 'index'];
@@ -142,6 +172,9 @@ class Router
 
 			if (empty($this->arr_route[1])) {
 				$this->arr_route[1] = 'index';
+			} else {
+				$this->args[0] = $this->arr_route[1];
+				$this->arr_route[1] = 'detail';
 			}
 
 			if (isset($this->menu_rewrite[$this->arr_route[0]])) {
@@ -149,21 +182,8 @@ class Router
 			}
 		}
 
-		foreach ($this->arr_route as $k => $v) {
-			if ($k > 1) {
-				$this->args[] = $v;
-			}
-		}
-
 		$this->renderPath = $this->arr_route[0];
 		$this->controller = Helper::covertToCameCase($this->arr_route[0]);
 		$this->action     = Helper::covertToCameCase($this->arr_route[1], true);
-
-		switch($this->action) {
-			case 'edit':
-			case 'add':
-				$this->action = 'detail';
-				break;
-		}
 	}
 }

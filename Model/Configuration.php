@@ -25,6 +25,6 @@ class Configuration extends BaseModel
 			$query['where'] = ['key' => $key];
 		}
 
-		return self::select($query);
+		return self::select($query, true);
 	}
 }

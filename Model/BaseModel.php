@@ -2,6 +2,7 @@
 namespace BDS\Model;
 
 use BDS\Core\App;
+use BDS\Core\Router;
 
 class BaseModel extends \stdClass
 {
@@ -15,6 +16,11 @@ class BaseModel extends \stdClass
 
 			$this->mapDataToObject($News);
 		}
+	}
+
+	public function afterSelect($data = [])
+	{
+		
 	}
 
 	public function mapDataToObject($data = [])
@@ -103,6 +109,11 @@ class BaseModel extends \stdClass
 		return false;
 	}
 
+	public static function selectAll($query = []) 
+	{
+		return self::select($query, true);
+	}
+
 	public static function select($query = [], $isMultiple = false)
 	{
 		$app    = App::getInstance();
@@ -155,6 +166,10 @@ class BaseModel extends \stdClass
 
 
 						$item[$field] = $row[$field];
+					}
+
+					if (!empty($row['seo_name'])) {
+						$item['url'] = $app->doamin . '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
 					}
 				}
 

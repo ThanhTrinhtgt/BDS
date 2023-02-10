@@ -21,5 +21,6 @@
             {% endblock %}
         </div>
     </body>
-    {% include "dist/js/main.tpl" %}
+    <script src='{{ realPath }}/dist/js/bootstrap.min.js?ver={{ date().timestamp }}'></script>
+    <script src='{{ realPath }}/dist/js/jquery-3.6.3.min.js?ver={{ date().timestamp }}'></script>
 </html>

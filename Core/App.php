@@ -6,6 +6,7 @@ class App
 	public $db = null;
 	public $pathImage 	  = 'View/dist/image';
 	public $realpathImage = '/View/dist/image';
+	public $domain = '';
 
 	public function initDB()
 	{
