@@ -30,13 +30,14 @@ class BaseModel extends \stdClass
 		$result = true;
 
 		$arr_dif = array_diff($fields, static::$fields);
-		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : static::$fields;
+		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : $fields;
 
 		if (!empty($this->id) && $this->id > 0) {
 			$fields['id'] = $this->id;
 
 			return $this->update($fields);
 		} else {
+			$fields    = static::$fields;
 			$val_field = '';
 			$val_value = '';
 
@@ -97,9 +98,7 @@ class BaseModel extends \stdClass
 
 		$q = mysqli_query($app->db, "UPDATE `".static::$table."` SET $val WHERE $where");
 
-		if (mysqli_affected_rows($app->db) > 0) {
-			return true;
-		}
+		if (mysqli_affected_rows($app->db) > 0) return true;
 
 		return false;
 	}

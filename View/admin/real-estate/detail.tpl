@@ -5,11 +5,10 @@
             <i class="fas fa-pencil-alt"></i>Thêm mới
         </a>
     </div>
-
-    <div class="invoice p-3 mb-3">   
-        <form class="bds-main-form">
-            <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
-            <div class="row form-group">
+    <form class="bds-main-form">
+        <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
+        <div class="card">   
+            <div class="row form-group card-body">
                 <div class="col-3">Tiêu đề</div>
                 <div class="col-9">
                     <input class="form-control bds-field-form" name="name" value="{{ data.name }}"/>
@@ -19,13 +18,14 @@
                 
                 <div class="col-3">
                     Đường dẫn
-                    <button type="button" 
-                    class="btn btn-primary float-right bds-build-seo-name">
-                        <i class="fas fa-download"></i> Sync
-                    </button>
                 </div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary bds-build-seo-name">Sync</button>
+                        </div>
+                        <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
+                    </div>
                 </div>
 
                 <div class="col-12 p-1"></div>
@@ -63,7 +63,11 @@
                 </div>
 
                 <div class="col-12 p-1"></div>
-                
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body row form-group">
                 <div class="col-3">Giá tiền</div>
                 <div class="col-9">
                     <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
@@ -71,8 +75,8 @@
 
                 <div class="col-12" id="editor"></div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 
     <div class="row no-print">
         <div class="col-12">
