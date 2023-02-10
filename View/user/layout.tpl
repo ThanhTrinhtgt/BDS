@@ -11,8 +11,9 @@
     </head>
     <body>
         <div id="head">
-            {% include "element/menu.tpl" with {'list_menu' : list_menu} %}
-            {% include "element/search-bar.tpl" with {'list_search' : list_search} %}
+            <div id='content-head'>
+                {% include "element/menu.tpl" with {'list_menu' : list_menu} %}    
+            </div>
         </div>
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">

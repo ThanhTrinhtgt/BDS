@@ -2,20 +2,29 @@
 #footer {
 	padding: 10px 15px;
 }
-
 #bds-search-bar{
 	background: rgba(0, 0, 0, 0.3);
 	width:  fit-content;
 	margin: 10px auto;
 }
-
 .error-page {
 	margin: 20px auto 0;
     max-width: 600px;
     width:  60%;
 }
-
 .bds-img-item {
 	max-width: 100%;
     height: auto;
+}
+body > #head {
+	position: fixed;
+	top:  0;
+	left: 0;
+	width:  100%;
+	height: auto;
+	background: rgba(244, 244, 244, 1);
+	z-index: 100;
+}
+body > #content {
+	margin-top: 120px;
 }

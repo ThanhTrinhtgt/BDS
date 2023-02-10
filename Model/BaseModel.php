@@ -116,11 +116,12 @@ class BaseModel extends \stdClass
 
 	public static function select($query = [], $isMultiple = false)
 	{
-		$app    = App::getInstance();
-		$data   = [];
-		$select = '*';
-		$where  = '';
-		$limit  = 20;
+		$app     = App::getInstance();
+		$data    = [];
+		$select  = '*';
+		$where   = '';
+		$orderby = '';
+		$limit   = 20;
 
 		if (!empty($query)) {
 			if (!empty($query['select'])) {
@@ -144,6 +145,14 @@ class BaseModel extends \stdClass
 					if (empty($where)) $where = '1';
 				}
 			}
+
+			if (!empty($query['order_by'])) {
+				foreach ($query['order_by'] as $k => $v) {
+					if (in_array($k, static::$fields) && in_array($v, ['ASC', 'DESC', 'asc', 'desc'])) {
+						$orderby .= !empty($orderby) ? ", $k $v" : " $k $v";
+					}
+				}
+			}
 		}
 
 		if (!$isMultiple) {
@@ -152,7 +161,11 @@ class BaseModel extends \stdClass
 
 		if (empty(trim($where))) $where = '1';
 
-		$q = mysqli_query($app->db, "SELECT $select FROM `".static::$table."` WHERE $where LIMIT $limit");
+		if (!empty($orderby)) {
+			$orderby = ' ORDER BY ' . $orderby;
+		}
+
+		$q = mysqli_query($app->db, "SELECT $select FROM `".static::$table."` WHERE $where $orderby LIMIT $limit");
 		
 		if ($q) {
 			while($row = mysqli_fetch_assoc($q)) {

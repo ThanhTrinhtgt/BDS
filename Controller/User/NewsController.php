@@ -1,7 +1,7 @@
 <?php 
 namespace BDS\Controller\User;
 
-use BDS\Controller\BaseController as BaseController;
+use BDS\Controller\User\BaseController;
 
 class NewsController extends BaseController
 {

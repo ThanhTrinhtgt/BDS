@@ -1,8 +1,6 @@
 <?php 
 namespace BDS\Controller;
 
-use BDS\Model\Configuration;
-
 class BaseController extends \stdClass
 {
 	public $data = [];
@@ -20,13 +18,7 @@ class BaseController extends \stdClass
 
 	public function setDefaultData()
 	{
-		$config = new Configuration();
-
-		$listsearch = $config->getList(Configuration::KEY_TYPE_SEARCH);
-		$listmenu = $config->getList(Configuration::KEY_TYPE_MENU);
-		//vd($listsearch);
-		$this->set('list_search', $listsearch);
-		$this->set('list_menu', $listmenu);
+		
 	}
 
 	public function renderJson($response = [])
