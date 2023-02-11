@@ -4,7 +4,6 @@ var BDScore = function (controller) {
 
 BDScore.fn = BDScore.prototype = {
 	init: function (controller) {
-		console.log(controller);
 		this.controller = controller;
 
 		this.eventForm    = this.eventForm.bind(this);
@@ -17,11 +16,15 @@ BDScore.fn = BDScore.prototype = {
 	btnSubmit:  	 '.bds-submit-form',
 	btnBuilSeoName:  '.bds-build-seo-name',
 
+	inputFormatCurrentcy:  '.bds-format-currentcy',
+
 	controller: 	 '',
+	varSetTimeout: null,
 
 	eventForm() {
 		this.buildSeoName();
 		this.submitForm();
+		this.autoFormatCurrentcy();
 
 		CKEDITOR.replace( 'ckeditor' );
 	},
@@ -83,6 +86,28 @@ BDScore.fn = BDScore.prototype = {
 				    }
 			    }
 			});
+		});
+	},
+
+	autoFormatCurrentcy() {
+		let self = this;
+
+		$(this.inputFormatCurrentcy).each(function () {
+			if ($(this).val() != '') {
+				$(this).val(numeral($(this).val()).format('0,0'));
+			}
+		});
+
+		$(this.inputFormatCurrentcy).keydown(function () {
+			clearTimeout(self.varSetTimeout);
+
+			if ($(this).val() != '') {
+				let $this = $(this);
+
+				self.varSetTimeout = setTimeout(function() {
+					$this.val(numeral($this.val()).format('0,0'));
+				}, 300);
+			}
 		});
 	},
 

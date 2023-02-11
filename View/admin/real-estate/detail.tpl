@@ -66,11 +66,16 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card m-0">
             <div class="card-body row form-group">
                 <div class="col-3">Giá tiền</div>
-                <div class="col-9">
-                    <input class="form-control bds-field-form" name="price" value="{{ data.price }}"/>
+                <div class="col-3">
+                    <input class="form-control bds-field-form bds-format-currentcy" name="price" value="{{ data.price }}"/>
+                </div>
+
+                <div class="col-3">Đơn vị</div>
+                <div class="col-3">
+                    <input class="form-control bds-field-form" name="unit" value="{{ data.unit }}"/>
                 </div>
 
                 <div class="col-12" id="editor"></div>

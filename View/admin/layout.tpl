@@ -107,6 +107,7 @@
     <script src="{{ realPath }}/admin/dist/js/adminlte.js"></script>
     <script src="{{ realPath }}/admin/dist/js/ckeditor/ckeditor.js"></script>
     <script src="{{ realPath }}/admin/dist/js/dashboard.js?ver={{ date().timestamp }}"></script>
+    <script src="{{ realPath }}/dist/js/numeral.min.js?ver={{ date().timestamp }}"></script>
     <script src="{{ realPath }}/admin/dist/js/main.js?ver={{ date().timestamp }}"></script>
     {% block contentJs %}{% endblock contentJs %}
 </body>

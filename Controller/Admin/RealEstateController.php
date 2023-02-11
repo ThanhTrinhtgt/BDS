@@ -44,13 +44,21 @@ class RealEstateController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'sort', 'type'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type'];
 
 			$obj->name 		 = $form['name'];
 			$obj->seo_name 	 = $form['seo_name'];
 			$obj->short_desc = !empty($form['short_desc']) ? $form['short_desc'] : '';
 			$obj->desc 		 = !empty($form['desc']) ? $form['desc'] : '';
-			$obj->price 	 = !empty($form['price']) ? $form['price'] : 0;
+			
+			$obj->price 	  = !empty($form['price']) ? str_replace(',', '', $form['price']) : 0;
+			$obj->unit 		  = !empty($form['unit']) ? $form['unit'] : '';
+			$obj->area 		  = !empty($form['area']) ? $form['area'] : 0;
+			$obj->legally	  = !empty($form['legally']) ? $form['legally'] : 0;
+			$obj->num_bedroom = !empty($form['num_bedroom']) ? $form['num_bedroom'] : 0;
+			$obj->num_toilet  = !empty($form['num_toilet']) ? $form['num_toilet'] : 0;
+			$obj->num_floor   = !empty($form['num_floor']) ? $form['num_floor'] : 0;
+			
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : 0;
 			
