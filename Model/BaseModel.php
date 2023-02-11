@@ -23,6 +23,22 @@ class BaseModel extends \stdClass
 		
 	}
 
+	public function upLoadFile($field = 'img_url')
+	{
+		if (!empty($_FILES) && !empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
+			$app = App::getInstance();
+			$this->$field = time() . '_' . $_FILES[$field]['name'];
+
+			if (!is_dir($app->pathImage . '/'.static::$table)) {
+				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			}
+
+			return move_uploaded_file($_FILES[$field]['tmp_name'], $app->pathImage . '/'.static::$table . '/' . $this->$field);
+		}
+
+		return false;
+	}
+
 	public function mapDataToObject($data = [])
 	{
 		foreach (static::$fields as $field) {

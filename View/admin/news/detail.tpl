@@ -17,9 +17,29 @@
 
                 <div class="col-12 p-1"></div>
                 
-                <div class="col-3">Đường dẫn</div>
+                <div class="col-3">
+                    Đường dẫn
+                </div>
                 <div class="col-9">
-                    <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary bds-build-seo-name">Sync</button>
+                        </div>
+                        <input class="form-control bds-field-form" name="seo_name" value="{{ data.seo_name }}"/>
+                    </div>
+                </div>
+
+                <div class="col-12 p-1"></div>
+
+                <div class="col-3">Ảnh</div>
+                <div class="col-3"><img class='img-review-60' src="{{ data.img_url }}"/></div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile" name='img_url'>
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-12 p-1"></div>

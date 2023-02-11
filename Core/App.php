@@ -3,10 +3,10 @@ namespace BDS\Core;
 
 class App
 {
-	public $db = null;
+	public $db 			  = null;
 	public $pathImage 	  = 'View/dist/image';
 	public $realpathImage = '/View/dist/image';
-	public $domain = '';
+	public $domain 		  = '';
 
 	public function initDB()
 	{
@@ -27,5 +27,16 @@ class App
 			}
 
 		return $instance;
+	}
+
+	public function test($field = '', $path = '')
+	{
+		if (empty($_FILES) || empty($_FILES[$field]) || empty($_FILES[$field]['name']) || empty($path)) {
+			return false;
+		}
+
+		$filename = $_FILES[$field]['name'];
+
+		return move_uploaded_file($_FILES[$field]['tmp_name'], $this->pathImage . "/$path/".$filename);
 	}
 }

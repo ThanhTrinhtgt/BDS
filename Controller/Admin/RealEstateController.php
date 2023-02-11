@@ -61,12 +61,9 @@ class RealEstateController extends BaseController
 			
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : 0;
-			
-			if (!empty($_FILES) && !empty($_FILES['img_url']) && !empty($_FILES['img_url']['name'])) {
-				$fields[] = 'img_url';
-				$obj->img_url = $_FILES['img_url']['name'];
 
-				move_uploaded_file($_FILES['img_url']['tmp_name'], $app->pathImage . '/real-estate/'.$obj->img_url);
+			if ($obj->upLoadFile('img_url')) {
+				$fields[] = 'img_url';
 			}
 
 			if ($obj->save($fields)) {

@@ -3,6 +3,7 @@ namespace BDS\Controller\Admin;
 
 use BDS\Controller\Admin\BaseController as BaseController;
 use BDS\Model\News;
+use BDS\Core\App;
 
 class NewsController extends BaseController
 {
@@ -38,9 +39,11 @@ class NewsController extends BaseController
 		];
 
 		$form = SafeData($_POST);
+		$app = App::getInstance();
 
 		if ($this->validateForm($form, $error)) {
 			$news = new News(!empty($form['id']) ? $form['id'] : 0);
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'sort', 'type'];
 
 			$news->name 		= $form['name'];
 			$news->seo_name 	= $form['seo_name'];
@@ -49,7 +52,11 @@ class NewsController extends BaseController
 			$news->sort 		= !empty($form['sort']) ? $form['sort'] : 1;
 			$news->type 		= !empty($form['type']) ? $form['type'] : 0;
 
-			if ($news->save()) {
+			if ($news->upLoadFile('img_url')) {
+				$fields[] = 'img_url';
+			}
+
+			if ($news->save($fields)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'success'
