@@ -51,6 +51,21 @@
 
                 <div class="col-12 p-1"></div>
                 
+                <div class="col-3">Loại</div>
+                <div class="col-9">
+                    <select class='form-control' name='type'>
+                        {% for item in list_type %}
+                            {% if item.value == data.type %}
+                                <option value='{{ item.value }}' selected>{{ item.name }}</option>
+                            {% else%}
+                                <option value='{{ item.value }}'>{{ item.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-12 p-1"></div>
+                
                 <div class="col-3">Nội dung</div>
                 <div class="col-9">
                     <textarea 

@@ -28,6 +28,7 @@ class NewsController extends BaseController
 		$news = new News($id);
 
 		$this->set('data', $news);
+		$this->set('list_type', News::getListType());
 	}
 
 	public function saveJson()

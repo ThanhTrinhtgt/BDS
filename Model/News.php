@@ -14,6 +14,10 @@ class News extends BaseModel
 	public static function getListType()
 	{
 		return [
+			0 => [
+				'name' => 'Chọn loại',
+				'value' => 0
+			],
 			self::TYPE_NEW => [
 				'name' => 'Tin tức mới',
 				'value' => self::TYPE_NEW
