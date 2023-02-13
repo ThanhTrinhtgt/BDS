@@ -173,6 +173,8 @@ class BaseModel extends \stdClass
 
 		if (!$isMultiple) {
 			$limit = 1;
+		} elseif (!empty($query['limit']) && $query['limit'] > 0) {
+			$limit = $query['limit'];
 		}
 
 		if (empty(trim($where))) $where = '1';

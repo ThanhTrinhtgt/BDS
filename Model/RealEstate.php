@@ -21,6 +21,4 @@ class RealEstate extends BaseModel
 		'sort', 
 		'type'
 	];
-
-	
 }

@@ -31,3 +31,7 @@ body > #content {
 .color-red {
 	color: #ff0000 !important;
 }
+.splide__slide img {
+	max-width: 100%;
+	height:  auto;
+}

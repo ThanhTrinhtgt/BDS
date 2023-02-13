@@ -10,6 +10,7 @@ class Router
 {
 	const MENU_TIN_RAO = 'tin-rao';
 	const MENU_TIN_TUC = 'tin-tuc';
+	const MENU_LIEN_HE = 'lien-he';
 
 	const MENU_ADMIN = [
 		'real-estate' => [
@@ -20,6 +21,12 @@ class Router
 		],
 		'news' => [
 			'name' => 'Tin tức',
+			'child' => [
+				'index' => ['name' => 'Danh sách']
+			]
+		],
+		'banner' => [
+			'name' => 'Banner',
 			'child' => [
 				'index' => ['name' => 'Danh sách']
 			]
@@ -40,6 +47,11 @@ class Router
 	public $menu_rewrite = [
 		self::MENU_TIN_RAO => 'real-estate',
 		self::MENU_TIN_TUC => 'news',
+		self::MENU_LIEN_HE => 'other'
+	];
+
+	public $action_rewrite = [
+		self::MENU_LIEN_HE => 'contact'
 	];
 
 	public function __construct() {
@@ -178,7 +190,13 @@ class Router
 			}
 
 			if (isset($this->menu_rewrite[$this->arr_route[0]])) {
+				$realRoute1 = $this->arr_route[0];
+
 				$this->arr_route[0] = $this->menu_rewrite[$this->arr_route[0]];
+
+				if (isset($this->action_rewrite[$realRoute1])) {
+					$this->arr_route[1] = $this->action_rewrite[$realRoute1];
+				}
 			}
 		}
 

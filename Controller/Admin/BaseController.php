@@ -20,11 +20,11 @@ class BaseController extends GlobalBaseController
 
 	public function index()
 	{
-		// code...
+		$this->set('data', []);
 	}
 
 	public function detail()
 	{
-		// code...
+		$this->set('data', []);
 	}
 }

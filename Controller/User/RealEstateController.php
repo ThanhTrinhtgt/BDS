@@ -11,6 +11,10 @@ class RealEstateController extends BaseController
 	{
 		$this->templateName = 'index';
 		$this->setDefaultData();
+
+		$realestate = RealEstate::select([], true);
+
+		$this->set('data', $realestate);
 	}
 
 	public function detail($seo_name = '')

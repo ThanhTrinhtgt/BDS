@@ -1,14 +1,15 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
     <div class="callout callout-info">
-        <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/0'>
+        <a class="btn btn-info btn-sm" href='/admin/banner/edit/0'>
             <i class="fas fa-pencil-alt"></i>Thêm mới
         </a>
     </div>
-    <form class="bds-main-form">
-        <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
-        <div class="card">   
-            <div class="row form-group card-body">
+
+    <div class="invoice p-3 mb-3">   
+        <form class="bds-main-form">
+            <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
+            <div class="row form-group">
                 <div class="col-3">Tiêu đề</div>
                 <div class="col-9">
                     <input class="form-control bds-field-form" name="name" value="{{ data.name }}"/>
@@ -50,6 +51,21 @@
 
                 <div class="col-12 p-1"></div>
                 
+                <div class="col-3">Loại</div>
+                <div class="col-9">
+                    <select class='form-control' name='type'>
+                        {% for item in list_type %}
+                            {% if item.value == data.type %}
+                                <option value='{{ item.value }}' selected>{{ item.name }}</option>
+                            {% else%}
+                                <option value='{{ item.value }}'>{{ item.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-12 p-1"></div>
+                
                 <div class="col-3">Nội dung</div>
                 <div class="col-9">
                     <textarea 
@@ -61,52 +77,12 @@
                         value="{{ data.desc|raw }}"
                     >{{ data.desc|raw }}</textarea>
                 </div>
-
-                <div class="col-12 p-1"></div>
-            </div>
-        </div>
-
-        <div class="card m-0">
-            <div class="card-body row form-group">
-                <div class="col-3">Giá tiền</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form bds-format-currentcy" name="price" value="{{ data.price }}"/>
-                </div>
-
-                <div class="col-3">Đơn vị</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="unit" value="{{ data.unit }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-                <div class="col-3">Phòng ngủ</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_bedroom" value="{{ data.num_bedroom }}"/>
-                </div>
-
-                <div class="col-3">Toilet</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_toilet" value="{{ data.num_toilet }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-
-                <div class="col-3">Tầng</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_floor" value="{{ data.num_floor }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-                <div class="col-3">Pháp lý</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="legally" value="{{ data.legally }}"/>
+                <div class="col-12" id="editor">
+                    
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <div class="row no-print">
         <div class="col-12">
@@ -121,7 +97,7 @@
 
 {% block contentJs %}
 <script>
-    let core = new BDScore('real-estate');
+    let core = new BDScore('banner');
 
     core.eventForm();
 </script>
