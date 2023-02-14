@@ -80,6 +80,18 @@
 
                 <div class="col-12 p-1"></div>
 
+                <div class="col-3">Diện tích</div>
+                <div class="col-3">
+                    <input class="form-control bds-field-form" name="area" value="{{ data.area }}"/>
+                </div>
+
+                <div class="col-3">Đơn vị</div>
+                <div class="col-3">
+                    <input class="form-control bds-field-form" name="unit_area" value="{{ data.unit_area }}"/>
+                </div>
+
+                <div class="col-12 p-1"></div>
+
                 <div class="col-3">Phòng ngủ</div>
                 <div class="col-3">
                     <input class="form-control bds-field-form" name="num_bedroom" value="{{ data.num_bedroom }}"/>

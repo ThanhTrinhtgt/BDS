@@ -44,7 +44,7 @@ class RealEstateController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type'];
 
 			$obj->name 		 = $form['name'];
 			$obj->seo_name 	 = $form['seo_name'];
@@ -53,6 +53,7 @@ class RealEstateController extends BaseController
 			
 			$obj->price 	  = !empty($form['price']) ? str_replace(',', '', $form['price']) : 0;
 			$obj->unit 		  = !empty($form['unit']) ? $form['unit'] : '';
+			$obj->unit_area   = !empty($form['unit_area']) ? $form['unit_area'] : '';
 			$obj->area 		  = !empty($form['area']) ? $form['area'] : 0;
 			$obj->legally	  = !empty($form['legally']) ? $form['legally'] : 0;
 			$obj->num_bedroom = !empty($form['num_bedroom']) ? $form['num_bedroom'] : 0;

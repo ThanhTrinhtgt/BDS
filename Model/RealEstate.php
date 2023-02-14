@@ -13,6 +13,7 @@ class RealEstate extends BaseModel
 		'price', 
 		'area', 
 		'unit', 
+		'unit_area',
 		'legally', 
 		'num_bedroom', 
 		'num_toilet', 
