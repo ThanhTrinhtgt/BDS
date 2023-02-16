@@ -27,4 +27,22 @@ class BaseController extends GlobalBaseController
 	{
 		$this->set('data', []);
 	}
+
+	public function delete()
+	{
+		$this->checkPermission();
+
+		$router = new Router();
+		
+	}
+
+	/**
+	 * Kiểm tra có quyền vào trang admin hay không
+	 */
+	private function checkPermission()
+	{
+
+
+		return true;
+	}
 }

@@ -7,6 +7,7 @@ BDScore.fn = BDScore.prototype = {
 		this.controller = controller;
 
 		this.eventForm    = this.eventForm.bind(this);
+		this.eventList    = this.eventList.bind(this);
 		this.buildSeoName = this.buildSeoName.bind(this);
 		this.submitForm   = this.submitForm.bind(this);
 	},
@@ -15,6 +16,7 @@ BDScore.fn = BDScore.prototype = {
 	mainForm:   	 '.bds-main-form',
 	btnSubmit:  	 '.bds-submit-form',
 	btnBuilSeoName:  '.bds-build-seo-name',
+	btnDeleteItem:   '.bds-delete-object',
 
 	inputFormatCurrentcy:  '.bds-format-currentcy',
 
@@ -27,6 +29,10 @@ BDScore.fn = BDScore.prototype = {
 		this.autoFormatCurrentcy();
 
 		CKEDITOR.replace( 'ckeditor' );
+	},
+
+	eventList() {
+		this.eventDeleteItemForm();
 	},
 
 	buildSeoName() {
@@ -58,34 +64,27 @@ BDScore.fn = BDScore.prototype = {
 
 			formData.set('desc', CKEDITOR.instances.ckeditor.getData());
 
-			$.ajax({
-			   	url: 'http://bds544.com/admin/' + self.controller + '/save-json',
-			   	data: formData,
-			   	method: 'post',
-			   	async: true,
-			   	cache: false,
-				contentType: false,
-				processData: false,
-				timeout: 6000
-			}).then(function(data) {
-				if (data != undefined) {
-					data = JSON.parse(data);
+			Core.post(
+				'http://bds544.com/admin/' + self.controller + '/save-json',
+				{
+					data: formData
+				},
+				function () {
+					window.location.reload();
 				}
+			);
+		});
+	},
 
-			    if (data.code != undefined) {
-			    	let $mess = data.message != undefined ? data.message : '';
+	eventDeleteItemForm() {
+		let self = this;
 
-			      	$(document).Toasts('create', {
-				        class: data.code == 200 ? 'bg-success' : 'bg-danger',
-				        title: 'Lưu thông tin',
-				        body: $mess
-				    })
-
-				    if (data.code == 200) {
-				    	window.location.reload();
-				    }
-			    }
-			});
+		$(this.btnDeleteItem).unbind().click(function () {
+			if ($(this).data('id') != undefined) {
+				Core.post('/admin/' + self.controller + '/delete', 
+					{'id': $(this).data('id'), 'contentType': 'json'}
+				);
+			}
 		});
 	},
 
@@ -112,14 +111,6 @@ BDScore.fn = BDScore.prototype = {
 	},
 
 	convertAscii(text, strtolower) {
-		/*aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬ
-		đĐ
-		eEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ
-		iIìÌỉỈĩĨíÍịỊ
-		oOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢ 
-		UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰ
-		yYỳỲỷỶỹỸýÝỵỴ*/
-
 		if (!text || text == undefined || text == null) {
 			return '';
 		}

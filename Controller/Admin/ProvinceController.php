@@ -2,19 +2,20 @@
 namespace BDS\Controller\Admin;
 
 use BDS\Controller\Admin\BaseController as BaseController;
-use BDS\Model\News;
+use BDS\Model\Province;
+use BDS\Model\District;
+use BDS\Model\Ward;
 use BDS\Core\App;
-use BDS\Core\SMTPMail;
 
-class NewsController extends BaseController
+class ProvinceController extends BaseController
 {
 	public function index()
 	{
 		$this->title = 'Danh sách';
 
-		$data = News::select([], true);
+		$province = Province::selectAll(['limit' => 70]);
 
-		$this->set('data', $data);
+		$this->set('province', $province);
 	}
 
 	public function detail($id = 0)
@@ -25,11 +26,6 @@ class NewsController extends BaseController
 		if (!empty($id) && $id > 0) {
 			$this->title = 'Tuỳ chỉnh';			
 		} 
-
-		$news = new News($id);
-
-		$this->set('data', $news);
-		$this->set('list_type', News::getListType());
 	}
 
 	public function saveJson()
@@ -37,14 +33,14 @@ class NewsController extends BaseController
 		$this->isRequest('POST');
 		$respone = [
 			'code' => 400,
-			'message' => 'Lưu thông tin thất bại'
+			'message' => 'failed'
 		];
 
 		$form = SafeData($_POST);
 		$app = App::getInstance();
 
 		if ($this->validateForm($form, $error)) {
-			$news = new News(!empty($form['id']) ? $form['id'] : 0);
+			/*$news = new News(!empty($form['id']) ? $form['id'] : 0);
 			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'sort', 'type'];
 
 			$news->name 		= $form['name'];
@@ -61,9 +57,9 @@ class NewsController extends BaseController
 			if ($news->save($fields)) {
 				$respone = [
 					'code' => 200,
-					'message' => 'Lưu thông tin thành công'
+					'message' => 'success'
 				];
-			}
+			}*/
 		} else {
 			$respone['message'] = $error;
 		}

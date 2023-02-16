@@ -30,7 +30,7 @@
                         <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/{{ item.id }}'>
                             <i class="fas fa-pencil-alt"></i>Sửa
                         </a>
-                        <a class="btn btn-danger btn-sm">
+                        <a class="btn btn-danger btn-sm bds-delete-object" data-id='{{ item.id }}'>
                             <i class="fas fa-trash"></i>Xoá
                         </a>
                     </td>
@@ -53,4 +53,12 @@
             </ul>
         </div>
     </div>
+{% endblock %}
+
+{% block contentJs %}
+<script>
+    let core = new BDScore('real-estate');
+
+    core.eventList();
+</script>
 {% endblock %}

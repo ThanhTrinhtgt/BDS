@@ -31,6 +31,12 @@ class Router
 				'index' => ['name' => 'Danh sách']
 			]
 		],
+		'province' => [
+			'name' => 'Quản lý tỉnh thành',
+			'child' => [
+				'index' => ['name' => 'Danh sách']
+			]
+		],
 	];
 
 	protected $route 	    = '';
@@ -99,22 +105,34 @@ class Router
 	public function render()
 	{
 		$this->detectModule();
+
+		if (substr($this->action, -4, 4) == 'Json') {
+			$this->renderJson();
+		} else {
+			$loader = new FilesystemLoader('View');
+			$app    = App::getInstance();
+			$twig   = new \Twig\Environment($loader, ['cache' => false]);
+			$protocol = 'http://';
+			$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
+
+			$data   = array_merge([
+				'title' => $this->title, 
+				'realPath' => $realPath,
+				'domain' => $app->domain,
+			], $this->data_render);
+
+			$html = $twig->render($this->getTemplateName(), $data);
+
+			echo $html;
+		}
+	}
+
+	public function renderJson()
+	{
+		$json = array_merge(['code' => 404, 'message' => 'Undefined!'], $this->data_render);
 		
-		$loader = new FilesystemLoader('View');
-		$app    = App::getInstance();
-		$twig   = new \Twig\Environment($loader, ['cache' => false]);
-		$protocol = 'http://';
-		$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
-
-		$data   = array_merge([
-			'title' => $this->title, 
-			'realPath' => $realPath,
-			'domain' => $app->domain,
-		], $this->data_render);
-
-		$html = $twig->render($this->getTemplateName(), $data);
-
-		echo $html;
+		echo json_encode($json);
+		exit;
 	}
 
 	private function getTemplateName()

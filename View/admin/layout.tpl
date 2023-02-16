@@ -108,7 +108,13 @@
     <script src="{{ realPath }}/admin/dist/js/ckeditor/ckeditor.js"></script>
     <script src="{{ realPath }}/admin/dist/js/dashboard.js?ver={{ date().timestamp }}"></script>
     <script src="{{ realPath }}/dist/js/numeral.min.js?ver={{ date().timestamp }}"></script>
+    <script src="{{ realPath }}/dist/js/core.js?ver={{ date().timestamp }}"></script>
     <script src="{{ realPath }}/admin/dist/js/main.js?ver={{ date().timestamp }}"></script>
+    <script type="text/javascript">
+      var Core = new Core();
+      Core.init();
+    </script>
+
     {% block contentJs %}{% endblock contentJs %}
 </body>
 </html>
