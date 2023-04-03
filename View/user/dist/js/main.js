@@ -7,6 +7,22 @@ userCore.fn = userCore.prototype = {
 		this.setupSlide = this.setupSlide.bind(this);
 
 		this.autoFormatCurrentcy();
+
+		document.addEventListener(
+            "DOMContentLoaded", () => {
+                new Mmenu( "#menu", {
+                   	"offCanvas": {
+                      "position": "left"
+                   	},
+                   	"theme": "white",
+                   	navbars	: {
+						content: [ "prev", "title" ]
+					},
+					setSelected	: {
+						hover: true
+					}})
+                });
+           
 	},
 
 	inputFormatCurrentcy:  	 '.format-curentcy',

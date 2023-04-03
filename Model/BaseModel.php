@@ -200,7 +200,7 @@ class BaseModel extends \stdClass
 					}
 
 					if (!empty($row['seo_name'])) {
-						$item['url'] = $app->doamin . '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
+						$item['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
 					}
 				}
 

@@ -3,11 +3,13 @@
     <head>
         {% block head %}
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap.min.css?ver={{ date().timestamp }}"/>
-        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap-grid.min.css?ver={{ date().timestamp }}"/>
-        <link rel="stylesheet" href="{{ realPath }}/dist/css/splide.min.css?ver={{ date().timestamp }}"/>
-        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/custom.css?ver={{ date().timestamp }}"/>
-        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/responsive.css?ver={{ date().timestamp }}"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap-grid.min.css"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/splide.min.css"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/mmenu.css"/>
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/all.css?ver=1"/>
+        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/custom.css?ver=1"/>
+        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/responsive.css?ver=1"/>
         {% endblock %}
     </head>
     <body>
@@ -21,10 +23,13 @@
             {% include "element/footer.tpl" %}
         </div>
     </body>
-    <script src='{{ realPath }}/dist/js/bootstrap.min.js?ver={{ date().timestamp }}'></script>
-    <script src='{{ realPath }}/dist/js/jquery-3.6.3.min.js?ver={{ date().timestamp }}'></script>
-    <script src='{{ realPath }}/dist/js/numeral.min.js?ver={{ date().timestamp }}'></script>
-    <script src='{{ realPath }}/dist/js/splide.min.js?ver={{ date().timestamp }}'></script>
-    <script src='{{ realPath }}/user/dist/js/main.js?ver={{ date().timestamp }}'></script>
-    {% block contentJs %}{% endblock contentJs %}
+    <script src='{{ realPath }}/dist/js/bootstrap.min.js'></script>
+    <script src='{{ realPath }}/dist/js/jquery-3.6.3.min.js'></script>
+    <script src='{{ realPath }}/dist/js/numeral.min.js'></script>
+    <script src='{{ realPath }}/dist/js/splide.min.js'></script>
+    <script src='{{ realPath }}/dist/js/mmenu.js'></script>
+    <script src='{{ realPath }}/user/dist/js/main.js?ver=1'></script>
+
+    {% block contentJs %}
+    {% endblock contentJs %}
 </html>

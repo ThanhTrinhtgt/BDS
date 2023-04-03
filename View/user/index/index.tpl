@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="container-fluid" id='content-banner-index'>
 		{% if banner is not empty %}
-		<section class="splide" aria-label="Splide Basic HTML Example">
+		<section class="splide" id='splide1' aria-label="Splide Basic HTML Example">
 		  	<div class="splide__track">
 				<ul class="splide__list">
 					{% for item in banner %}
@@ -24,20 +24,27 @@
 			{% endfor %}
 		</div>
 	</div>
-	<section class="splide2" aria-label="Splide Basic HTML Example">
+	<section class='splide' id="splide2" data-splide='{"type":"loop","perPage":3}'>
 	  <div class="splide__track">
 			<ul class="splide__list">
-				<li class="splide__slide">Slide 01</li>
-				<li class="splide__slide">Slide 02</li>
-				<li class="splide__slide">Slide 03</li>
+				{% for item in news %}
+					<li class="splide__slide p-3">
+						<a href='{{ item.url }}'>
+							<img src='{{ item.img_url }}'/>
+							<h3>{{ item.name }}</h3>
+						</a>
+					</li>
+				{% endfor %}
 			</ul>
 	  </div>
 	</section>
 {% endblock %}
+
 {% block contentJs %}
 <script>
     let core = new userCore();
 
-    core.setupSlide('.splide');
+    core.setupSlide('#splide1');
+    core.setupSlide('#splide2');
 </script>
 {% endblock %}

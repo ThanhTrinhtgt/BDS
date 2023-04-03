@@ -65,7 +65,7 @@ BDScore.fn = BDScore.prototype = {
 			formData.set('desc', CKEDITOR.instances.ckeditor.getData());
 
 			Core.post(
-				'http://bds544.com/admin/' + self.controller + '/save-json',
+				'/admin/' + self.controller + '/save-json',
 				{
 					data: formData
 				},

@@ -27,7 +27,13 @@
 				<li class="list-group-item">And a fifth one</li>
 			</ul>
 		</div>
-		<div class='col-3'>Map</div>
+		<div class='col-3'>
+			<div class="mapouter">
+				<div class="gmap_canvas">
+					<iframe width="260" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q=ho chi minh &t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <div class='container-fluid text-center'>
