@@ -5,7 +5,16 @@ class News extends BaseModel
 {
 	public static $table = 'news';
 	public static $fields = [
-		'id', 'name', 'seo_name', 'img_url', 'short_desc', 'desc', 'sort', 'type'
+		'id', 
+		'name', 
+		'seo_name', 
+		'img_url', 
+		'short_desc', 
+		'desc', 
+		'sort', 
+		'type',
+		'view',
+		'date_add'
 	];
 
 	const TYPE_NEW = 1;
@@ -27,5 +36,18 @@ class News extends BaseModel
 				'value' => self::TYPE_HOT
 			],
 		];
+	}
+
+	protected static function bindWhere($field, $value)
+	{
+		switch ($field) {
+			case 'id_not_in':
+				$strIds = implode(',', $value);
+
+				return ' id NOT IN (' .$strIds. ')';
+
+			default:
+				return "`$field` = '$value'";
+		}
 	}
 }

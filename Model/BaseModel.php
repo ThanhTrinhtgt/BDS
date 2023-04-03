@@ -154,13 +154,11 @@ class BaseModel extends \stdClass
 
 			if (!empty($query['where'])) {
 				foreach ($query['where'] as $search => $val) {
-					if (in_array($search, static::$fields)) {
-						$where .= !empty($where) ? " AND `$search` = '$val'" : " `$search` = '$val'";
-					}
-
-					if (empty($where)) $where = '1';
+					$where .= (!empty($where) ? ' AND ' : '') . static::bindWhere($search, $val);					
 				}
 			}
+
+			if (empty($where)) $where = '1';
 
 			if (!empty($query['order_by'])) {
 				foreach ($query['order_by'] as $k => $v) {
@@ -219,5 +217,14 @@ class BaseModel extends \stdClass
 		}
 
 		return $data;
+	}
+
+	protected static function bindWhere($field, $value)
+	{
+		if (in_array($field, static::$fields)) {
+			return "`$field` = '$value'";
+		}
+
+		return '';
 	}
 }

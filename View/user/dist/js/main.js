@@ -8,21 +8,22 @@ userCore.fn = userCore.prototype = {
 
 		this.autoFormatCurrentcy();
 
-		document.addEventListener(
-            "DOMContentLoaded", () => {
-                new Mmenu( "#menu", {
-                   	"offCanvas": {
-                      "position": "left"
-                   	},
-                   	"theme": "white",
-                   	navbars	: {
-						content: [ "prev", "title" ]
-					},
-					setSelected	: {
-						hover: true
-					}})
-                });
-           
+		if (window.outerWidth <= 1024) {
+			new Mmenu( "#menu", {
+	     	"offCanvas": {
+	        "position": "left"
+	     	},
+	     	"theme": "white",
+	     	navbars	: {
+					content: [ "prev", "title" ]
+				},
+				setSelected	: {
+					hover: true
+				}
+			});
+		}
+
+		
 	},
 
 	inputFormatCurrentcy:  	 '.format-curentcy',

@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="{{ realPath }}/dist/css/splide.min.css"/>
         <link rel="stylesheet" href="{{ realPath }}/dist/css/mmenu.css"/>
         <link rel="stylesheet" href="{{ realPath }}/dist/css/all.css?ver=1"/>
-        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/custom.css?ver=1"/>
-        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/responsive.css?ver=1"/>
+        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/custom.css?ver={{ 'now'|date('U') }}"/>
+        <link rel="stylesheet" href="{{ realPath }}/user/dist/css/responsive.css?ver={{ 'now'|date('U') }}"/>
         {% endblock %}
     </head>
     <body>
