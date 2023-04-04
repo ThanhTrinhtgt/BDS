@@ -2,7 +2,11 @@
 {% block content %}
     <div class="callout callout-info">
         <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/0'>
-            <i class="fas fa-pencil-alt"></i>Thêm mới
+            <i class="fas fa-pencil-alt"></i>&nbsp;Thêm mới
+        </a>
+
+        <a class="btn btn-info btn-sm ml-5 text-underline-none" href='/admin/real-estate/'>
+            <i class="far fa-bars"></i>&nbsp;Danh sách
         </a>
     </div>
     <form class="bds-main-form">
@@ -63,6 +67,24 @@
                 </div>
 
                 <div class="col-12 p-1"></div>
+            </div>
+        </div>
+
+        <div class="card form-group">
+            <div class="card-body row form-group">
+                <div class="col-3">Liên lạc</div>
+                <div class="col-9">
+                    <select class='form-control' name='contact_id'>
+                        <option value='0'>Chưa có liên lạc</option>
+                    {% for contact in list_contact %}
+                        {% if contact.id == data.contact_id %}
+                            <option value='{{ contact.id }}' selected>{{ contact.name }}</option>
+                        {% else%}
+                            <option value='{{ contact.id }}'>{{ contact.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
             </div>
         </div>
 

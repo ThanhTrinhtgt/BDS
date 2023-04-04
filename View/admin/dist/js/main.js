@@ -28,7 +28,9 @@ BDScore.fn = BDScore.prototype = {
 		this.submitForm();
 		this.autoFormatCurrentcy();
 
-		CKEDITOR.replace( 'ckeditor' );
+		if ($('#ckeditor').length > 0) {
+			CKEDITOR.replace( 'ckeditor' );
+		}
 	},
 
 	eventList() {
@@ -62,7 +64,9 @@ BDScore.fn = BDScore.prototype = {
 			let form = {};
 			let formData = new FormData($(self.mainForm)[0]);
 
-			formData.set('desc', CKEDITOR.instances.ckeditor.getData());
+			if (formData.has('desc')) {
+				formData.set('desc', CKEDITOR.instances.ckeditor.getData());
+			}
 
 			Core.post(
 				'/admin/' + self.controller + '/save-json',

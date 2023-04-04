@@ -4,6 +4,7 @@ namespace BDS\Controller\User;
 use BDS\Controller\User\BaseController;
 use BDS\Core\App;
 use BDS\Model\RealEstate;
+use BDS\Model\Contact;
 
 class RealEstateController extends BaseController
 {
@@ -32,6 +33,9 @@ class RealEstateController extends BaseController
 			'where' => ['seo_name' => $seo_name]
 		]);
 
+		$contact = new Contact($realestate['contact_id']);
+
 		$this->set('data', $realestate);
+		$this->set('contact', $contact);
 	}
 }

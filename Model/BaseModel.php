@@ -11,11 +11,14 @@ class BaseModel extends \stdClass
 	
 	public function __construct($id = 0)
 	{
+		$data = [];
+		
 		if (!empty($id) && $id > 0) {
-			$News = static::select(['where' => ['id' => $id]]);
+			$data = static::select(['where' => ['id' => $id]]);
 
-			$this->mapDataToObject($News);
 		}
+
+		$this->mapDataToObject($data);
 	}
 
 	public function afterSelect($data = [])
@@ -79,9 +82,12 @@ class BaseModel extends \stdClass
 
 			if (mysqli_affected_rows($app->db) > 0) {
 				$result = true;
+			} elseif (!empty(mysqli_error($app->db))) {
+				$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
+			} else {
+				$error = 'Có thể data không thay đổi nên update thất bại';
 			}
-
-			$error = __FILE__ . '(Func ' . __FUNCTION__ . '): ' . mysqli_error($app->db);
+			
 
 			$result = false;
 		}
@@ -126,9 +132,16 @@ class BaseModel extends \stdClass
 
 		$q = mysqli_query($app->db, "UPDATE `".static::$table."` SET $val WHERE $where");
 
-		if (mysqli_affected_rows($app->db) > 0) return true;
+		if (mysqli_affected_rows($app->db) > 0) {
+			return true;
+		}
 
-		$error = __FILE__ . '(Func ' . __FUNCTION__ . '): ' . mysqli_error($app->db);
+		if (!empty(mysqli_error($app->db))) {
+			$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
+		} else {
+			$error = 'Có thể data không thay đổi nên update thất bại';
+		}
+		
 
 		return false;
 	}

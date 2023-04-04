@@ -20,6 +20,7 @@ class RealEstate extends BaseModel
 		'num_floor', 
 		'img_url', 
 		'sort', 
-		'type'
+		'type',
+		'contact_id'
 	];
 }

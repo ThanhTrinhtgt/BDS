@@ -31,6 +31,12 @@ class Router
 				'index' => ['name' => 'Danh sách']
 			]
 		],
+		'contact' => [
+			'name' => 'Liên hệ',
+			'child' => [
+				'index' => ['name' => 'Danh sách']
+			]
+		],
 		'province' => [
 			'name' => 'Quản lý tỉnh thành',
 			'child' => [

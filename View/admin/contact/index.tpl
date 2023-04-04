@@ -1,10 +1,11 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
     <div class="callout callout-info">
-        <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/0'>
-            <i class="fas fa-pencil-alt"></i>Thêm mới
+        <a class="btn btn-info btn-sm text-underline-none" href='/admin/contact/edit/0'>
+            <i class="fas fa-pencil-alt"></i>&nbsp;Thêm mới
         </a>
     </div>
+
     <div class="card-body">
         <table 
             id="example2" 
@@ -12,40 +13,30 @@
         >
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Tiêu đề</th>
+                    <th>Tên</th>
+                    <th>SDT</th>
+                    <th>Uy tín</th>
+                    <th>Địa chỉ</th>
                     <th></th>
-                    <th>Miêu tả</th>
-                    <th>Tác vụ</th>
                 </tr>
             </thead>
 
             <tbody>
-            {% set stt = 1 %}
             {% for item in data %}
                 <tr>
-                    <td>
-                        {{ stt }}
-                    </td>
-                    <td>
-                        {{ item.name }}
-                    </td>
-                    <td>
-                        <img class='img-review-mini' src='{{ item.img_url }}'/>
-                    </td>
-                    <td>
-                        {{ item.short_desc }}
-                    </td>
-                    <td class="text-center">
-                        <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/{{ item.id }}'>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.level }}</td>
+                    <td>{{ item.address }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-info btn-sm" href='/admin/contact/edit/{{ item.id }}'>
                             <i class="fas fa-pencil-alt"></i>Sửa
                         </a>
-                        <a class="btn btn-danger btn-sm bds-delete-object" data-id='{{ item.id }}'>
+                        <a class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i>Xoá
                         </a>
                     </td>
                 </tr>
-                {% set stt = stt + 1 %}
             {% endfor %}
             </tbody>
         </table>
@@ -63,12 +54,4 @@
             </ul>
         </div>
     </div>
-{% endblock %}
-
-{% block contentJs %}
-<script>
-    let core = new BDScore('real-estate');
-
-    core.eventList();
-</script>
 {% endblock %}

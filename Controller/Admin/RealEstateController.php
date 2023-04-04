@@ -3,6 +3,7 @@ namespace BDS\Controller\Admin;
 
 use BDS\Controller\Admin\BaseController as BaseController;
 use BDS\Model\RealEstate;
+use BDS\Model\Contact;
 use BDS\Core\App;
 
 class RealEstateController extends BaseController
@@ -26,8 +27,10 @@ class RealEstateController extends BaseController
 		} 
 
 		$news = new RealEstate($id);
+		$list_contact = Contact::selectAll();
 
 		$this->set('data', $news);
+		$this->set('list_contact', $list_contact);
 	}
 
 	public function saveJson()
@@ -44,7 +47,7 @@ class RealEstateController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type', 'contact_id'];
 
 			$obj->name 		 = $form['name'];
 			$obj->seo_name 	 = $form['seo_name'];
@@ -59,6 +62,7 @@ class RealEstateController extends BaseController
 			$obj->num_bedroom = !empty($form['num_bedroom']) ? $form['num_bedroom'] : 0;
 			$obj->num_toilet  = !empty($form['num_toilet']) ? $form['num_toilet'] : 0;
 			$obj->num_floor   = !empty($form['num_floor']) ? $form['num_floor'] : 0;
+			$obj->contact_id  = !empty($form['contact_id']) ? $form['contact_id'] : 0;
 			
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : 0;
