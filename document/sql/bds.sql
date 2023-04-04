@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 11, 2023 at 09:05 AM
+-- Generation Time: Apr 04, 2023 at 04:44 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -24,6 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `banner`
+--
+
+CREATE TABLE `banner` (
+  `id` int(11) NOT NULL,
+  `name` varchar(254) NOT NULL,
+  `seo_name` varchar(254) NOT NULL,
+  `short_desc` varchar(254) NOT NULL,
+  `desc` text NOT NULL,
+  `img_url` varchar(254) NOT NULL,
+  `sort` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `configuration`
 --
 
@@ -36,18 +52,18 @@ CREATE TABLE `configuration` (
   `sort` tinyint(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `configuration`
+-- Table structure for table `district`
 --
 
-INSERT INTO `configuration` (`id`, `name`, `value`, `key`, `desc`, `sort`) VALUES
-(1, 'Dự án', '', 'KEY_TYPE_SEARCH', '', 0),
-(2, 'Nhà đất bán', '', 'KEY_TYPE_SEARCH', '', 0),
-(3, 'Nhà cho thuê', '', 'KEY_TYPE_SEARCH', '', 0),
-(4, 'Tin rao', 'tin-rao', 'KEY_TYPE_MENU', '', 1),
-(5, 'Tin tuc', 'tin-tuc', 'KEY_TYPE_MENU', '', 2),
-(6, 'Lien he', 'lien-he', 'KEY_TYPE_MENU', '', 3),
-(7, 'Trang chủ', '', 'KEY_TYPE_MENU', '', 0);
+CREATE TABLE `district` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `prefix` varchar(20) DEFAULT NULL,
+  `province_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -63,18 +79,10 @@ CREATE TABLE `news` (
   `short_desc` text NOT NULL,
   `desc` text NOT NULL,
   `sort` int(10) NOT NULL,
-  `type` tinyint(3) NOT NULL DEFAULT 0
+  `type` tinyint(3) NOT NULL DEFAULT 0,
+  `view` int(11) NOT NULL DEFAULT 0,
+  `date_add` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `news`
---
-
-INSERT INTO `news` (`id`, `name`, `img_url`, `seo_name`, `short_desc`, `desc`, `sort`, `type`) VALUES
-(1, 'Sốt đất bình dương', '1676087619_ram1.jpg', 'sot-dat-binh-duong', 'tin tức cực hot sốt đất tại bình dương', '<p>12r 121 fasf 12r12 f1f1w 12r12412412 1r21r12</p>\r\n', 1, 1),
-(2, 'Tin tức đất Hà Tĩnh ', '', 'ha-tinh-sot-dat', '', '\r\nfasdfasd f2f13ffsafasfa\r\n\r\n\r\n', 1, 0),
-(3, 'Tin tức đất Hà Giang ', '', 'ha-giang-sot-dat', 'tại đây đang rất ', '<p>fasdfasd&nbsp;<em>f2f13<u>ffsafasfa 12 csaf ấ</u></em></p>\n', 1, 0),
-(6, 'Novuland đang dần hồi phục', '', 'novuland-hoi-phuc', ' 1r212  ấ', '<p>&nbsp;r12f 1f12</p>\n', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -92,6 +100,18 @@ CREATE TABLE `node` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `province`
+--
+
+CREATE TABLE `province` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `real-estate`
 --
 
@@ -104,7 +124,8 @@ CREATE TABLE `real-estate` (
   `price` double NOT NULL DEFAULT 0,
   `area` float NOT NULL DEFAULT 0,
   `unit` varchar(10) NOT NULL,
-  `legally` tinyint(4) NOT NULL,
+  `unit_area` varchar(20) DEFAULT NULL COMMENT 'đơn vị của diện tích m2, ha,...',
+  `legally` varchar(100) NOT NULL,
   `num_bedroom` tinyint(4) NOT NULL,
   `num_toilet` tinyint(4) NOT NULL,
   `num_floor` tinyint(4) NOT NULL,
@@ -113,17 +134,29 @@ CREATE TABLE `real-estate` (
   `type` tinyint(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `real-estate`
+-- Table structure for table `ward`
 --
 
-INSERT INTO `real-estate` (`id`, `name`, `seo_name`, `short_desc`, `desc`, `price`, `area`, `unit`, `legally`, `num_bedroom`, `num_toilet`, `num_floor`, `img_url`, `sort`, `type`) VALUES
-(1, 'Nhà mặt tiền đường Lý Phục Man', '', '', '<p>12r 12 zxc fasfas</p>\n', 0, 0, '', 0, 0, 0, 0, '', 1, 1),
-(2, 'Tin tức đất Hà Giang  r12fsafas', 'tin-tuc-dat-ha-giang-r12fsafas', 'tại đây đang rất ', '<p>dawe ffsdfsdfsdfsdf 2</p>\r\n', 1500000000, 65.5, 'đồng', 0, 0, 0, 0, 'hinh-xe-honda-city-rs-2022-giaxehoi-vn-1-800x600.jpg', 1, 0);
+CREATE TABLE `ward` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `prefix` varchar(20) DEFAULT NULL,
+  `province_id` int(10) UNSIGNED DEFAULT NULL,
+  `district_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `banner`
+--
+ALTER TABLE `banner`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `configuration`
@@ -145,6 +178,12 @@ ALTER TABLE `node`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `province`
+--
+ALTER TABLE `province`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `real-estate`
 --
 ALTER TABLE `real-estate`
@@ -155,16 +194,22 @@ ALTER TABLE `real-estate`
 --
 
 --
+-- AUTO_INCREMENT for table `banner`
+--
+ALTER TABLE `banner`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `configuration`
 --
 ALTER TABLE `configuration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `node`
@@ -173,10 +218,16 @@ ALTER TABLE `node`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `province`
+--
+ALTER TABLE `province`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `real-estate`
 --
 ALTER TABLE `real-estate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

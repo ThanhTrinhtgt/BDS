@@ -67,11 +67,13 @@ class RealEstateController extends BaseController
 				$fields[] = 'img_url';
 			}
 
-			if ($obj->save($fields)) {
+			if ($obj->save($fields, $error)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'success'
 				];
+			} else {
+				$respone['message'] = $error;
 			}
 		} else {
 			$respone['message'] = $error;

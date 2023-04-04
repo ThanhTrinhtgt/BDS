@@ -55,11 +55,13 @@ class BannerController extends BaseController
 				$fields[] = 'img_url';
 			}
 
-			if ($banner->save($fields)) {
+			if ($banner->save($fields, $error)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'success'
 				];
+			} else {
+				$respone['message'] = $error;
 			}
 		} else {
 			$respone['message'] = $error;

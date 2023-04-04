@@ -29,7 +29,7 @@ class RealEstateController extends BaseController
 		}
 
 		$realestate = RealEstate::select([
-			'query' => ['seo_name' => $seo_name]
+			'where' => ['seo_name' => $seo_name]
 		]);
 
 		$this->set('data', $realestate);

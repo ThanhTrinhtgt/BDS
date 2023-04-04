@@ -57,7 +57,7 @@ class BaseModel extends \stdClass
 		if (!empty($this->id) && $this->id > 0) {
 			$fields['id'] = $this->id;
 
-			return $this->update($fields);
+			return $this->update($fields, [], $error);
 		} else {
 			$fields    = static::$fields;
 			$val_field = '';
@@ -81,16 +81,16 @@ class BaseModel extends \stdClass
 				$result = true;
 			}
 
-			$error = mysqli_error($app->db);
+			$error = __FILE__ . '(Func ' . __FUNCTION__ . '): ' . mysqli_error($app->db);
 
-			return false;
+			$result = false;
 		}
 
 
 		return $result;
 	}
 
-	public function update($fields, $query = [])
+	public function update($fields, $query = [], &$error)
 	{
 		$arr_dif = array_diff($fields, static::$fields);
 		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : static::$fields;
@@ -127,6 +127,8 @@ class BaseModel extends \stdClass
 		$q = mysqli_query($app->db, "UPDATE `".static::$table."` SET $val WHERE $where");
 
 		if (mysqli_affected_rows($app->db) > 0) return true;
+
+		$error = __FILE__ . '(Func ' . __FUNCTION__ . '): ' . mysqli_error($app->db);
 
 		return false;
 	}
