@@ -9,6 +9,7 @@ class BaseController extends \stdClass
 
 	public function __construct()
 	{
+		$this->setDefaultData();
 	}
 
 	public function set($key, $val)

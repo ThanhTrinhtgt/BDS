@@ -4,7 +4,11 @@
 			<img src='{{ data.img_url }}' class='col-3'/>
 
 			<div class='col-9'>
-				<h3>{{ data.name }}</h3>
+				<h3>
+					<a href='{{ data.url }}'>
+						{{ data.name }}
+					</a>
+				</h3>
 				<p class='m-0'>{{ data.short_desc }}</p>
 			</div>
 		</div>

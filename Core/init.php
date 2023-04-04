@@ -86,7 +86,7 @@ function vd($value = '', $cont = false)
 
 function pr($value = '', $cont = false)
 {
-	echo  '<b>' .__FILE__ .'</b><br/>';
+	echo  '<b>' .__FUNCTION__ .'</b><br/>';
 	echo '<pre>';
 	echo print_r($value);
 	echo '</pre>';

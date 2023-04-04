@@ -1,7 +1,12 @@
 /*Chung*/
 
+:root {
+  --link-color: #000;
+}
+
 body {
 	font-family: 'Roboto Slab';
+	overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, label {
@@ -38,13 +43,22 @@ body > #head {
 	background: rgba(244, 244, 244, 1);
 	z-index: 100;
 }
+
 body > #content {
 	margin-top: 70px;
 }
+
 .color-red {
 	color: #ff0000 !important;
 }
+
 .splide__slide img {
 	max-width: 100%;
 	height:  auto;
+}
+
+a {
+    color: rgba(var(--link-color), 0, 0, 0, 1);
+    text-decoration: none;
+    cursor: pointer;
 }

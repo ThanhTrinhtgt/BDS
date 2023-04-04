@@ -8,8 +8,6 @@ class NewsController extends BaseController
 {
 	public function index()
 	{
-		$this->setDefaultData();
-
 		$new_news = News::selectAll(['where' => ['type' => 1]]);
 		$ids_new_news = [];
 
@@ -22,5 +20,20 @@ class NewsController extends BaseController
 
 		$this->set('new_news', $new_news);
 		$this->set('news', $news);
+	}
+
+	public function detail($seo_name = '')
+	{
+		$this->templateName = 'detail';
+
+		if (!empty($seo_name)) {
+			$data = News::select([
+				'where' => [
+					'seo_name' => $seo_name
+				]
+			]);
+
+			$this->set('data', $data);
+		}
 	}
 }

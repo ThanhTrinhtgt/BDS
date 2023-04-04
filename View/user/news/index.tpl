@@ -8,7 +8,11 @@
 		<div class='row m-0'>
 			{% set first_news = new_news|first %}
 			<div class="col-8" style='background-image: url("{{ first_news.img_url }}");'>
-				<h3>{{ first_news.name }}</h3>
+				<h3>
+					<a href='{{ first_news.url }}'>
+						{{ first_news.name }}
+					</a>
+				</h3>
 				<p class='m-0'>{{ first_news.short_desc }}</p>
 			</div>
 
@@ -16,7 +20,11 @@
 				{% for key, item in new_news %}
 					{% if item.id != first_news.id %}
 						<div>
-							<h3>{{ item.name }}</h3>
+							<h3>
+								<a href='{{ item.url }}'>
+									{{ item.name }}
+								</a>
+							</h3>
 							<p class='m-0'>{{ item.short_desc }}</p>
 						</div>
 					{% endif %}
