@@ -1,8 +1,12 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
     <div class="callout callout-info">
-        <a class="btn btn-info btn-sm" href='/admin/news/edit/0'>
-            <i class="fas fa-pencil-alt"></i>Thêm mới
+        <a class="btn btn-info btn-sm text-underline-none" href='/admin/news/edit/0'>
+            <i class="fas fa-pencil-alt">&nbsp;</i>Thêm mới
+        </a>
+
+        <a class="btn btn-info btn-sm ml-5 text-underline-none" href='/admin/news/'>
+            <i class="far fa-bars"></i>&nbsp;Danh sách
         </a>
     </div>
 

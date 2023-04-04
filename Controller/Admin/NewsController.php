@@ -45,6 +45,7 @@ class NewsController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$news = new News(!empty($form['id']) ? $form['id'] : 0);
+
 			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'sort', 'type'];
 
 			$news->name 		= $form['name'];
@@ -58,11 +59,13 @@ class NewsController extends BaseController
 				$fields[] = 'img_url';
 			}
 
-			if ($news->save($fields)) {
+			if ($news->save($fields, $error)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'Lưu thông tin thành công'
 				];
+			} else {
+				$respone['message'] = $error;
 			}
 		} else {
 			$respone['message'] = $error;

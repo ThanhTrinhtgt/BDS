@@ -5,19 +5,20 @@
         <title>{{ title }} </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/all.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/ionicons.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/tempusdominus-bootstrap-4.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/icheck-bootstrap.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/jqvmap.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/adminlte.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/OverlayScrollbars.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/daterangepicker.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/summernote-bs4.min.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/_main-sidebar.scss?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/dist/css/all.css?ver={{ date().timestamp }}">
-        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/custom.css?ver={{ date().timestamp }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/all.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/ionicons.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/tempusdominus-bootstrap-4.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/icheck-bootstrap.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/jqvmap.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/adminlte.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/OverlayScrollbars.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/daterangepicker.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/summernote-bs4.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/_main-sidebar.scss?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/bootstrap.min.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/dist/css/all.css?ver=">
+        <link rel="stylesheet" href="{{ realPath }}/admin/dist/css/custom.css?ver=">
     {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -107,9 +108,9 @@
     <script src="{{ realPath }}/admin/dist/js/jquery.overlayScrollbars.min.js"></script>
     <script src="{{ realPath }}/admin/dist/js/adminlte.js"></script>
     <script src="{{ realPath }}/admin/dist/js/ckeditor/ckeditor.js"></script>
-    <script src="{{ realPath }}/admin/dist/js/dashboard.js?ver={{ date().timestamp }}"></script>
-    <script src="{{ realPath }}/dist/js/numeral.min.js?ver={{ date().timestamp }}"></script>
-    <script src="{{ realPath }}/dist/js/core.js?ver={{ date().timestamp }}"></script>
+    <script src="{{ realPath }}/admin/dist/js/dashboard.js?ver="></script>
+    <script src="{{ realPath }}/dist/js/numeral.min.js?ver="></script>
+    <script src="{{ realPath }}/dist/js/core.js?ver="></script>
     <script src="{{ realPath }}/admin/dist/js/main.js?ver={{ date().timestamp }}"></script>
     <script type="text/javascript">
       var Core = new Core();

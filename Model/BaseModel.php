@@ -46,7 +46,7 @@ class BaseModel extends \stdClass
 		}
 	}
 
-	public function save($fields = [])
+	public function save($fields = [], &$error = '')
 	{
 		$app    = App::getInstance();
 		$result = true;
@@ -65,19 +65,25 @@ class BaseModel extends \stdClass
 
 			foreach ($fields as $field) {
 				if ($field != 'id') {
-					$val_field .= !empty($val_field) ? ",`$field`" : "$field";
-
 					if (property_exists($this, $field)) {
+						$val_field .= !empty($val_field) ? ",`$field`" : "$field";
+
 						$val_value .= !empty($val_value) ? ",'".$this->$field."'" : "'".$this->$field."'";
-					} else {
+					}/* else {
 						$val_value .= !empty($val_value) ? ",''" : "''";
-					}
+					}*/
 				}
 			}
 
 			$q = mysqli_query($app->db, "INSERT INTO `".static::$table."`($val_field) VALUES($val_value)");
 
-			if (mysqli_affected_rows($app->db) > 0) $result = true;
+			if (mysqli_affected_rows($app->db) > 0) {
+				$result = true;
+			}
+
+			$error = mysqli_error($app->db);
+
+			return false;
 		}
 
 

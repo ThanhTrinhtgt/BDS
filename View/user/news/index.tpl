@@ -16,8 +16,8 @@
 				{% for key, item in new_news %}
 					{% if item.id != first_news.id %}
 						<div>
-							<h3>{{ first_news.name }}</h3>
-							<p class='m-0'>{{ first_news.short_desc }}</p>
+							<h3>{{ item.name }}</h3>
+							<p class='m-0'>{{ item.short_desc }}</p>
 						</div>
 					{% endif %}
 				{% endfor %}
