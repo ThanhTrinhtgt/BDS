@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card p-2">
 	<a href='{{ item.url }}' class="text-decoration-none">
 		<img src="{{ item.img_url }}" class="card-img-top" alt="{{ item.name }}">
 	</a>

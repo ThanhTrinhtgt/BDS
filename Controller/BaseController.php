@@ -7,6 +7,10 @@ class BaseController extends \stdClass
 	public $templateName = 'index';
 	public $title = 'Thanh BDS';
 
+	public $post = null;
+	public $get  = null;
+	public $json = null;
+
 	public function __construct()
 	{
 		$this->setDefaultData();
@@ -19,8 +23,10 @@ class BaseController extends \stdClass
 
 	public function setDefaultData()
 	{
-		
-	}
+		$this->post = SafeData($_POST);
+		$this->get = SafeData($_GET);
+		$this->json = SafeData(json_decode(file_get_contents("php://input"), true));
+	}	
 
 	public function renderJson($response = [])
 	{

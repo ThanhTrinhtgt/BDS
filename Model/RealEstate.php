@@ -3,7 +3,7 @@ namespace BDS\Model;
 
 use BDS\Model\Province;
 use BDS\Model\District;
-use BDS\Model\ward;
+use BDS\Model\Ward;
 
 class RealEstate extends BaseModel
 {
@@ -108,5 +108,22 @@ class RealEstate extends BaseModel
 		}
 
 		return ['name' => 'N/A', 'value' => 0];
+	}
+
+	protected static function bindWhere($field, $value)
+	{
+		if (in_array($field, static::$fields)) {
+			switch ($field) {
+				case 'id_not_in':
+					$strIds = implode(',', $value);
+
+					return ' id NOT IN (' .$strIds. ')';
+
+				default:
+					return "`$field` = '$value'";
+			}
+		}
+		
+		return '';
 	}
 }

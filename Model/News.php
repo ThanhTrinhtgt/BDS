@@ -40,14 +40,18 @@ class News extends BaseModel
 
 	protected static function bindWhere($field, $value)
 	{
-		switch ($field) {
-			case 'id_not_in':
-				$strIds = implode(',', $value);
+		if (in_array($field, static::$fields)) {
+			switch ($field) {
+				case 'id_not_in':
+					$strIds = implode(',', $value);
 
-				return ' id NOT IN (' .$strIds. ')';
+					return ' id NOT IN (' .$strIds. ')';
 
-			default:
-				return "`$field` = '$value'";
+				default:
+					return "`$field` = '$value'";
+			}
 		}
+		
+		return '';
 	}
 }

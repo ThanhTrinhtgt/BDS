@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 04, 2023 at 04:44 AM
+-- Generation Time: Apr 05, 2023 at 11:15 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -55,6 +55,21 @@ CREATE TABLE `configuration` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `name` varchar(254) NOT NULL,
+  `img_url` varchar(254) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` varchar(254) NOT NULL,
+  `level` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `district`
 --
 
@@ -63,6 +78,19 @@ CREATE TABLE `district` (
   `name` varchar(100) DEFAULT NULL,
   `prefix` varchar(20) DEFAULT NULL,
   `province_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
+--
+
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `module` varchar(50) NOT NULL,
+  `img_url` varchar(254) NOT NULL,
+  `sort` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -121,6 +149,11 @@ CREATE TABLE `real-estate` (
   `seo_name` varchar(50) NOT NULL,
   `short_desc` text NOT NULL,
   `desc` text NOT NULL,
+  `province_id` int(11) NOT NULL DEFAULT 0,
+  `district_id` int(11) NOT NULL DEFAULT 0,
+  `ward_id` int(11) NOT NULL DEFAULT 0,
+  `address_no` varchar(150) NOT NULL,
+  `address` varchar(350) DEFAULT NULL,
   `price` double NOT NULL DEFAULT 0,
   `area` float NOT NULL DEFAULT 0,
   `unit` varchar(10) NOT NULL,
@@ -131,7 +164,10 @@ CREATE TABLE `real-estate` (
   `num_floor` tinyint(4) NOT NULL,
   `img_url` varchar(254) NOT NULL,
   `sort` int(10) NOT NULL,
-  `type` tinyint(3) NOT NULL
+  `type` tinyint(3) NOT NULL DEFAULT 1,
+  `feature` tinyint(3) NOT NULL,
+  `contact_id` int(11) NOT NULL DEFAULT 0,
+  `date_create` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -162,6 +198,12 @@ ALTER TABLE `banner`
 -- Indexes for table `configuration`
 --
 ALTER TABLE `configuration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -203,6 +245,12 @@ ALTER TABLE `banner`
 -- AUTO_INCREMENT for table `configuration`
 --
 ALTER TABLE `configuration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

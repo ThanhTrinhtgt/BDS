@@ -26,7 +26,7 @@ class BaseModel extends \stdClass
 		
 	}
 
-	public function upLoadFile($field = 'img_url')
+	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
 		if (!empty($_FILES) && !empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
 			$app = App::getInstance();
@@ -36,7 +36,11 @@ class BaseModel extends \stdClass
 				mkdir($app->pathImage . '/'.static::$table, 0777, true);
 			}
 
-			return move_uploaded_file($_FILES[$field]['tmp_name'], $app->pathImage . '/'.static::$table . '/' . $this->$field);
+			if (empty($table_name)) {
+				$table_name = static::$table;
+			}
+
+			return move_uploaded_file($_FILES[$field]['tmp_name'], $app->pathImage . '/'. $table_name . '/' . $this->$field);
 		}
 
 		return false;
@@ -243,9 +247,17 @@ class BaseModel extends \stdClass
 	protected static function bindWhere($field, $value)
 	{
 		if (in_array($field, static::$fields)) {
-			return "`$field` = '$value'";
-		}
+			switch ($field) {
+				case 'id_not_in':
+					$strIds = implode(',', $value);
 
+					return ' id NOT IN (' .$strIds. ')';
+
+				default:
+					return "`$field` = '$value'";
+			}
+		}
+		
 		return '';
 	}
 }

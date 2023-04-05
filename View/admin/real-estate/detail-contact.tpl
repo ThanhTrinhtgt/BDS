@@ -18,7 +18,7 @@
         
         <div class="col-3">Loại tin</div>
         <div class="col-9">
-            <select class='form-control' name='type'>
+            <select class='form-control bds-field-form' name='type'>
             {% for type in list_type %}
                 {% if data.type is not empty and data.type == type.value %}
                     <option value='{{ type.value }}' selected>{{ type.name }}</option>
@@ -33,7 +33,7 @@
         
         <div class="col-3">Đặc điểm</div>
         <div class="col-9">
-            <select class='form-control' name='feature'>
+            <select class='form-control bds-field-form' name='feature'>
                 <option value='0'>Tin thường</option>
                 {% for list_feature in list_feature %}
                     {% if data.feature is not empty and data.feature == list_feature.value %}

@@ -105,6 +105,24 @@ BDScore.fn = BDScore.prototype = {
 				}
 			);
 		});
+
+		$(this.targetDistrict).unbind().change(function() {
+			let district_id = $(this).val();
+
+			Core.jsonPost(
+				'/admin/ward/get-list-by-district-json',
+				{
+					data: {district_id: district_id},
+				},
+				function ($resp) {
+					$(self.targetWard).html('<option value="0">Chọn phường xã</option>');
+
+					$resp.data.forEach((item) => {
+						$(self.targetWard).append('<option value="'+item.id+'">'+item.name+'</option>');
+					});
+				}
+			);
+		});
 	},
 
 	exportAddress() {

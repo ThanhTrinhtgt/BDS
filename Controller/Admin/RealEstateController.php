@@ -54,6 +54,8 @@ class RealEstateController extends BaseController
 		$this->set('list_feature', $list_feature);
 		$this->set('list_contact', $list_contact);
 		$this->set('list_province', $list_province);
+		$this->set('list_district', $list_district);
+		$this->set('list_ward', $list_ward);
 	}
 
 	public function saveJson()
@@ -70,7 +72,7 @@ class RealEstateController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type', 'feature', 'contact_id'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type', 'feature', 'contact_id', 'province_id', '', 'district_id', 'ward_id', 'address_no', 'address'];
 
 			$obj->name 		 = $form['name'];
 			$obj->seo_name 	 = $form['seo_name'];

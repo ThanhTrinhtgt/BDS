@@ -3,8 +3,8 @@
 	<div class="container">
 		<div class="row">
 			{% for item in data %}
-				<div class="col-3">
-					{% include "element/item-real-estate.tpl" with {'item' : item} %}
+				<div class="col-3 mb-3">
+					{% include "user/real-estate/item-real-estate.tpl" with {'item' : item} %}
 			    </div>
 			{% endfor %}
 		</div>

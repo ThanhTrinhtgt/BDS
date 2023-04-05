@@ -2,7 +2,7 @@
     <div class="card-body row form-group">
         <div class="col-3">Tỉnh thành</div>
         <div class="col-9">
-            <select class='form-control' name='province_id'>
+            <select class='form-control bds-field-form' name='province_id'>
                 <option value='0'>Chọn tỉnh</option>
             {% for province in list_province %}
                 {% if province.id == data.province_id %}
@@ -18,7 +18,7 @@
 
         <div class="col-3">Quận huyện</div>
         <div class="col-9">
-            <select class='form-control' name='district_id'>
+            <select class='form-control bds-field-form' name='district_id'>
                 <option value='0'>Chọn quận</option>
             {% for district in list_district %}
                 {% if district.id == data.district_id %}
@@ -34,7 +34,7 @@
 
         <div class="col-3">Phường xã</div>
         <div class="col-9">
-            <select class='form-control' name='ward_id'>
+            <select class='form-control bds-field-form' name='ward_id'>
                 <option value='0'>Chọn phường xã</option>
             {% for ward in list_ward %}
                 {% if ward.id == data.ward_id %}

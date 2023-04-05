@@ -15,6 +15,8 @@ class BaseController extends GlobalBaseController
 
 	public function setDefaultData()
 	{
+		parent::setDefaultData();
+
 		$this->set('menu', Router::MENU_ADMIN);
 	}
 
