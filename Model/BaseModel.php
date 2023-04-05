@@ -81,7 +81,7 @@ class BaseModel extends \stdClass
 			$q = mysqli_query($app->db, "INSERT INTO `".static::$table."`($val_field) VALUES($val_value)");
 
 			if (mysqli_affected_rows($app->db) > 0) {
-				$result = true;
+				return true;
 			} elseif (!empty(mysqli_error($app->db))) {
 				$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 			} else {

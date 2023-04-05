@@ -7,11 +7,10 @@
 		
 		<div class='row m-0'>
 			<div class='col-9'>
-				<div class='form-control'>
-
+				<div class='mb-3 form-control'>
+					<img src='{{ data.img_url }}'/>
 				</div>
-				<img src='{{ data.img_url }}'/>
-
+				
 				<div class="accordion">
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="headingOne">
@@ -56,18 +55,10 @@
 				</div>
 			</div>
 
-			<div class='col-3 '>
-				<div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
-				  	<div class="offcanvas-header">
-				    	<h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
-				    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				  	</div>
-				  	<div class="offcanvas-body">
-				    	Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here.
-				  	</div>
-				</div>
-				{% if contact is not empty and contact.id is not empty  %}
+			<div class='col-3 form-control'>
+				{% if contact is not empty %}
 				<div class='text-center'>
+					<h3>Liên lạc/trao đổi</h3>
 					<div class='frame-img-contact-detail d-inline-block'>
 						<img src='{{ contact.img_url }}'/>
 					</div>

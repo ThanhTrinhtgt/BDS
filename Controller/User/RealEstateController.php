@@ -22,6 +22,7 @@ class RealEstateController extends BaseController
 	{
 		$this->templateName = 'detail';
 		$this->setDefaultData();
+		
 		$app = App::getInstance();
 
 		if (empty($seo_name)) {
