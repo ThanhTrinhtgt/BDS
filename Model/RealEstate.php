@@ -1,6 +1,10 @@
 <?php 
 namespace BDS\Model;
 
+use BDS\Model\Province;
+use BDS\Model\District;
+use BDS\Model\ward;
+
 class RealEstate extends BaseModel
 {
 	public static $table = 'real-estate';
@@ -10,10 +14,11 @@ class RealEstate extends BaseModel
 		'seo_name', 
 		'short_desc', 
 		'desc', 
-		'city_id', 
+		'province_id', 
 		'district_id', 
 		'ward_id', 
-		'address', 
+		'address_no', //Số nhà, tên đường
+		'address', // ghép lại từ city, district, ward
 		'price', 
 		'area', 
 		'unit', 
@@ -37,6 +42,15 @@ class RealEstate extends BaseModel
 	const TYPE_SELL = 1;
 	const TYPE_RENT = 2;
 	const TYPE_PURCHASE = 3;
+
+	public function buildAddressRealEstate()
+	{
+		$province = Province::getNameById($this->province_id);
+		$district = District::getNameById($this->district_id);
+		$ward     = Ward::getNameById($this->ward_id);
+
+		return $this->address_no . ', ' . " $ward, $district, $province";
+	}
 
 	public static function getListType()
 	{

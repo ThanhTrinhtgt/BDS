@@ -11,6 +11,7 @@
     </div>
     <form class="bds-main-form">
         <input type='hidden' class="bds-field-form" name='id' value="{{ data.id }}"/>
+
         <div class="card">   
             <div class="row form-group card-body">
                 <div class="col-3">Tiêu đề</div>
@@ -69,108 +70,10 @@
                 <div class="col-12 p-1"></div>
             </div>
         </div>
-
-        <div class="card form-group">
-            <div class="card-body row form-group">
-                <div class="col-3">Liên lạc</div>
-                <div class="col-9">
-                    <select class='form-control' name='contact_id'>
-                        <option value='0'>Chưa có liên lạc</option>
-                    {% for contact in list_contact %}
-                        {% if contact.id == data.contact_id %}
-                            <option value='{{ contact.id }}' selected>{{ contact.name }}</option>
-                        {% else%}
-                            <option value='{{ contact.id }}'>{{ contact.name }}</option>
-                        {% endif %}
-                    {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-12 p-1"></div>
-                
-                <div class="col-3">Loại tin</div>
-                <div class="col-9">
-                    <select class='form-control' name='type'>
-                    {% for type in list_type %}
-                        {% if data.type is not empty and data.type == type.value %}
-                            <option value='{{ type.value }}' selected>{{ type.name }}</option>
-                        {% else%}
-                            <option value='{{ type.value }}'>{{ type.name }}</option>
-                        {% endif %}
-                    {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-12 p-1"></div>
-                
-                <div class="col-3">Đặc điểm</div>
-                <div class="col-9">
-                    <select class='form-control' name='feature'>
-                        <option value='0'>Tin thường</option>
-                        {% for list_feature in list_feature %}
-                            {% if data.feature is not empty and data.feature == list_feature.value %}
-                                <option value='{{ list_feature.value }}' selected>{{ list_feature.name }}</option>
-                            {% else%}
-                                <option value='{{ list_feature.value }}'>{{ list_feature.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="card m-0">
-            <div class="card-body row form-group">
-                <div class="col-3">Giá tiền</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form bds-format-currentcy" name="price" value="{{ data.price }}"/>
-                </div>
-
-                <div class="col-3">Đơn vị</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="unit" value="{{ data.unit }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-                <div class="col-3">Diện tích</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="area" value="{{ data.area }}"/>
-                </div>
-
-                <div class="col-3">Đơn vị</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="unit_area" value="{{ data.unit_area }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-                <div class="col-3">Phòng ngủ</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_bedroom" value="{{ data.num_bedroom }}"/>
-                </div>
-
-                <div class="col-3">Toilet</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_toilet" value="{{ data.num_toilet }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-
-                <div class="col-3">Tầng</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="num_floor" value="{{ data.num_floor }}"/>
-                </div>
-
-                <div class="col-12 p-1"></div>
-
-                <div class="col-3">Pháp lý</div>
-                <div class="col-3">
-                    <input class="form-control bds-field-form" name="legally" value="{{ data.legally }}"/>
-                </div>
-            </div>
-        </div>
+        
+        {% include "admin/real-estate/detail-address.tpl" with {'data' : data} %}
+        {% include "admin/real-estate/detail-contact.tpl" with {'data' : data} %}
+        {% include "admin/real-estate/detail-advance.tpl" with {'data' : data} %}
     </form>
 
     <div class="row no-print">
@@ -189,5 +92,6 @@
     let core = new BDScore('real-estate');
 
     core.eventForm();
+    core.eventFormAddress();
 </script>
 {% endblock %}

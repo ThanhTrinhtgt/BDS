@@ -4,6 +4,9 @@ namespace BDS\Controller\Admin;
 use BDS\Controller\Admin\BaseController as BaseController;
 use BDS\Model\RealEstate;
 use BDS\Model\Contact;
+use BDS\Model\Province;
+use BDS\Model\District;
+use BDS\Model\Ward;
 use BDS\Core\App;
 
 class RealEstateController extends BaseController
@@ -22,20 +25,35 @@ class RealEstateController extends BaseController
 		$this->templateName = 'detail';
 		$this->title = 'Thêm mới';
 
+		$list_province = Province::selectAll();
+		$list_district = [];
+		$list_ward = [];
+
 		if (!empty($id) && $id > 0) {
 			$this->title = 'Tuỳ chỉnh';			
 		} 
 
-		$news = new RealEstate($id);
+		$obj = new RealEstate($id);
+
+		if (!empty($obj->id)) {
+			if (!empty($obj->province_id)) {
+				$list_district = District::selectAll(['where' => ['province_id' => $obj->province_id]]);
+			}
+			
+			if (!empty($obj->district_id)) {
+				$list_ward = Ward::selectAll(['where' => ['district_id' => $obj->district_id]]);
+			}
+		}
 
 		$list_type    = RealEstate::getListType();
 		$list_feature = RealEstate::getListFeature();
 		$list_contact = Contact::selectAll();
 
-		$this->set('data', $news);
+		$this->set('data', $obj);
 		$this->set('list_type', $list_type);
 		$this->set('list_feature', $list_feature);
 		$this->set('list_contact', $list_contact);
+		$this->set('list_province', $list_province);
 	}
 
 	public function saveJson()
@@ -58,6 +76,7 @@ class RealEstateController extends BaseController
 			$obj->seo_name 	 = $form['seo_name'];
 			$obj->short_desc = !empty($form['short_desc']) ? $form['short_desc'] : '';
 			$obj->desc 		 = !empty($form['desc']) ? $form['desc'] : '';
+			$obj->contact_id = !empty($form['contact_id']) ? $form['contact_id'] : 0;
 			
 			$obj->price 	  = !empty($form['price']) ? str_replace(',', '', $form['price']) : 0;
 			$obj->unit 		  = !empty($form['unit']) ? $form['unit'] : '';
@@ -67,7 +86,12 @@ class RealEstateController extends BaseController
 			$obj->num_bedroom = !empty($form['num_bedroom']) ? $form['num_bedroom'] : 0;
 			$obj->num_toilet  = !empty($form['num_toilet']) ? $form['num_toilet'] : 0;
 			$obj->num_floor   = !empty($form['num_floor']) ? $form['num_floor'] : 0;
-			$obj->contact_id  = !empty($form['contact_id']) ? $form['contact_id'] : 0;
+
+			$obj->province_id 	= $form['province_id'];
+			$obj->district_id  	= $form['district_id'];
+			$obj->ward_id  		= $form['ward_id'];
+			$obj->address_no  	= $form['address_no'];
+			$obj->address  	 	= $obj->buildAddressRealEstate();
 			
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : RealEstate::TYPE_SELL;
@@ -106,6 +130,21 @@ class RealEstateController extends BaseController
 
 		if (empty($form['seo_name'])) {
 			$error = 'Không thể để trống đường dẫn';
+			return false;
+		}
+
+		if (empty($form['province_id'])) {
+			$error = 'Không thể để trống thành phố';
+			return false;
+		}
+
+		if (empty($form['district_id'])) {
+			$error = 'Không thể để trống quận huyện';
+			return false;
+		}
+
+		if (empty($form['ward_id'])) {
+			$error = 'Không thể để trống phường xã';
 			return false;
 		}
 

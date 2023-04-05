@@ -10,6 +10,7 @@ BDScore.fn = BDScore.prototype = {
 		this.eventList    = this.eventList.bind(this);
 		this.buildSeoName = this.buildSeoName.bind(this);
 		this.submitForm   = this.submitForm.bind(this);
+		this.eventFormAddress   = this.eventFormAddress.bind(this);
 	},
 
 	fieldForm:  	 '.bds-field-form',
@@ -17,6 +18,10 @@ BDScore.fn = BDScore.prototype = {
 	btnSubmit:  	 '.bds-submit-form',
 	btnBuilSeoName:  '.bds-build-seo-name',
 	btnDeleteItem:   '.bds-delete-object',
+	btnExportAddress:'#btn-export-addres',
+	targetProvince:  '[name="province_id"]',
+	targetDistrict:  '[name="district_id"]',
+	targetWard:      '[name="ward_id"]',
 
 	inputFormatCurrentcy:  '.bds-format-currentcy',
 
@@ -73,6 +78,45 @@ BDScore.fn = BDScore.prototype = {
 				{
 					data: formData
 				},
+				function () {
+					window.location.reload();
+				}
+			);
+		});
+	},
+
+	eventFormAddress() {
+		let self = this;
+
+		$(this.targetProvince).unbind().change(function() {
+			let province_id = $(this).val();
+
+			Core.jsonPost(
+				'/admin/district/get-list-by-province-json',
+				{
+					data: {province_id: province_id},
+				},
+				function ($resp) {
+					$(self.targetDistrict).html('<option value="0">Chọn quận</option>');
+
+					$resp.data.forEach((item) => {
+						$(self.targetDistrict).append('<option value="'+item.id+'">'+item.name+'</option>');
+					});
+				}
+			);
+		});
+	},
+
+	exportAddress() {
+		let self = this;
+
+		$(this.btnExportAddress).unbind().click(function() {
+			let value = $(this).val();
+			
+
+			Core.post(
+				'/admin/' + value + '/export-address-json',
+				{},
 				function () {
 					window.location.reload();
 				}

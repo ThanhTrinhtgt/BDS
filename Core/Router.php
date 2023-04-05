@@ -13,34 +13,29 @@ class Router
 	const MENU_LIEN_HE = 'lien-he';
 
 	const MENU_ADMIN = [
-		'real-estate' => [
+		[
+			'url' => 'real-estate',
 			'name' => 'Tin rao',
-			'child' => [
-				'index' => ['name' => 'Danh sách']
-			]
 		],
-		'news' => [
+		[
+			'url' => 'news',
 			'name' => 'Tin tức',
-			'child' => [
-				'index' => ['name' => 'Danh sách']
-			]
 		],
-		'banner' => [
+		[
+			'url' => 'banner',
 			'name' => 'Banner',
-			'child' => [
-				'index' => ['name' => 'Danh sách']
-			]
 		],
-		'contact' => [
+		[
+			'url' => 'contact',
 			'name' => 'Liên hệ',
-			'child' => [
-				'index' => ['name' => 'Danh sách']
-			]
 		],
-		'province' => [
+		[
+			'url' => '',
 			'name' => 'Quản lý tỉnh thành',
 			'child' => [
-				'index' => ['name' => 'Danh sách']
+				'province' => ['name' => 'Tỉnh/TP'],
+				'district' => ['name' => 'Quận huyện'],
+				'ward' => ['name' => 'Phường xã'],
 			]
 		],
 	];

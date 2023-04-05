@@ -1,11 +1,5 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
-    {#<div class="callout callout-info">
-        <button class="btn btn-info btn-sm" id='btn-export-addres' value='province'>
-            <i class="fas fa-save"></i>&nbsp;Export
-        </button>
-    </div>#}
-
     <div class="invoice p-3 mb-3">   
         <table 
             id="example2" 
@@ -14,19 +8,23 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tỉnh</th>
+                    <th>Quận/huyện</th>
                     <th>Mã</th>
+                    <th>ID phường/xã</th>
+                    <th>ID tỉnh thành</th>
                     <th>Tác vụ</th>
                 </tr>
             </thead>
 
             <tbody>
             {% set stt = 1 %}
-            {% for item in province %}
+            {% for item in ward %}
                 <tr>
                     <td>{{ stt }}</td>
                     <td>{{ item.name }}</td>
-                    <td>{{ item.code }}</td>
+                    <td>{{ item.prefix }}</td>
+                    <td>{{ item.district_id }}</td>
+                    <td>{{ item.province_id }}</td>
                     <td class="text-right">
                         <a class="btn btn-info btn-sm" href=''>
                             <i class="fas fa-pencil-alt"></i>Sửa
@@ -57,6 +55,6 @@
 <script>
     let core = new BDScore('province');
 
-    core.exportAddress();
+    core.eventForm();
 </script>
 {% endblock %}

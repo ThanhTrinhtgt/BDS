@@ -34,7 +34,44 @@ Core.fn = Core.prototype = {
 		    		self.showMessSuccess('Thành công', $mess);
 
 			    	if (typeof callback == 'function') {
-				    	callback();
+				    	callback(data);
+				    }
+			    } else {
+					self.showMessError('Thất bại', $mess);
+			    }
+		    }
+		});
+	},
+
+	jsonPost: function (url, config, callback) {
+		let self = this;
+
+		config = $.extend(true, {
+			url: url,
+			data: {},
+			method: 'post',
+			async: true,
+		   	cache: false,
+			contentType: "application/json; charset=utf-8",
+			dataType: 'json',
+			timeout: 6000
+		}, config);
+
+		config.data = JSON.stringify(config.data);
+
+		$.ajax(config).then(function(data) {
+			if (data != undefined && typeof data == 'json') {
+				data = JSON.parse(data);
+			}
+
+		    if (data.code != undefined) {
+		    	let $mess = data.message != undefined ? data.message : '';
+
+			    if (data.code == 200) {
+		    		self.showMessSuccess('Thành công', $mess);
+
+			    	if (typeof callback == 'function') {
+				    	callback(data);
 				    }
 			    } else {
 					self.showMessError('Thất bại', $mess);
