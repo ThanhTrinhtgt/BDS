@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2023 at 04:41 AM
+-- Generation Time: Apr 06, 2023 at 11:14 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -31,7 +31,7 @@ CREATE TABLE `banner` (
   `id` int(11) NOT NULL,
   `name` varchar(254) NOT NULL,
   `banner_key` varchar(30) NOT NULL,
-  `banner_group_id` int(11) NOT NULL DEFAULT 0,
+  `banner_group_key` varchar(50) DEFAULT NULL,
   `seo_name` varchar(254) NOT NULL,
   `short_desc` varchar(254) NOT NULL,
   `desc` text NOT NULL,
