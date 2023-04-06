@@ -8,6 +8,7 @@ class BaseModel extends \stdClass
 {
 	public static $table;
 	public static $fields;
+	public static $isBuildSeoName = true;
 	
 	public function __construct($id = 0)
 	{
@@ -76,9 +77,7 @@ class BaseModel extends \stdClass
 						$val_field .= !empty($val_field) ? ",`$field`" : "$field";
 
 						$val_value .= !empty($val_value) ? ",'".$this->$field."'" : "'".$this->$field."'";
-					}/* else {
-						$val_value .= !empty($val_value) ? ",''" : "''";
-					}*/
+					}
 				}
 			}
 
@@ -135,7 +134,7 @@ class BaseModel extends \stdClass
 		}
 
 		$q = mysqli_query($app->db, "UPDATE `".static::$table."` SET $val WHERE $where");
-
+		
 		if (mysqli_affected_rows($app->db) > 0) {
 			return true;
 		}
@@ -222,7 +221,7 @@ class BaseModel extends \stdClass
 						$item[$field] = $row[$field];
 					}
 
-					if (!empty($row['seo_name'])) {
+					if (static::$isBuildSeoName && isset($row['seo_name'])) {
 						$item['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
 					}
 				}

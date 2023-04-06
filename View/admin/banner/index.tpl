@@ -14,6 +14,7 @@
                 <tr>
                     <th>STT</th>
                     <th>Tiêu đề</th>
+                    <th>Key</th>
                     <th>Miêu tả</th>
                     <th>Tác vụ</th>
                 </tr>
@@ -25,6 +26,7 @@
                 <tr>
                     <td>{{ stt }}</td>
                     <td>{{ item.name }}</td>
+                    <td>{{ item.banner_key }}</td>
                     <td>{{ item.short_desc }}</td>
                     <td class="text-right">
                         <a class="btn btn-info btn-sm" href='/admin/banner/edit/{{ item.id }}'>
@@ -53,4 +55,7 @@
             </ul>
         </div>
     </div>
+{% endblock %}
+
+{% block contentJs %}
 {% endblock %}

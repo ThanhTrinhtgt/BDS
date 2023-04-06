@@ -50,9 +50,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('province');
-
-    core.eventForm();
-</script>
+    core.eventForm('province');
 {% endblock %}

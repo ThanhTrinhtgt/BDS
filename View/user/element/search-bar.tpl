@@ -1,4 +1,5 @@
 <div id="bds-search-bar">
+  <input class='transition-smooth' id='input-search-keyword'/>
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
     {% if list_search is not empty %}

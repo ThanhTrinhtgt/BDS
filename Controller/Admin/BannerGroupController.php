@@ -6,13 +6,13 @@ use BDS\Model\Banner;
 use BDS\Model\BannerGroup;
 use BDS\Core\App;
 
-class BannerController extends BaseController
+class BannerGroupController extends BaseController
 {
 	public function index()
 	{
 		$this->title = 'Danh sách';
 
-		$data = Banner::select([], true);
+		$data = BannerGroup::select([], true);
 
 		$this->set('data', $data);
 	}
@@ -26,11 +26,9 @@ class BannerController extends BaseController
 			$this->title = 'Tuỳ chỉnh';			
 		} 
 
-		$banner = new Banner($id);
-		$banner_group = BannerGroup::selectAll(['select' => ['name', 'banner_group_key']]);
+		$banner = new BannerGroup($id);
 
 		$this->set('data', $banner);
-		$this->set('banner_group', $banner_group);
 	}
 
 	public function saveJson()
@@ -45,25 +43,17 @@ class BannerController extends BaseController
 		$app = App::getInstance();
 
 		if ($this->validateForm($form, $error)) {
-			$banner = new Banner(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'banner_group_key', 'short_desc', 'desc', 'sort'];
+			$banner = new BannerGroup(!empty($form['id']) ? $form['id'] : 0);
+			$fields = ['id', 'name', 'desc'];
 
-			if (empty($form['id']) || empty($banner->banner_key)) {
-				$fields[] = 'banner_key';
+			if (empty($form['id'])) {
+				$fields[] = 'banner_group_key';
 
-				$banner->banner_key = 'BANNER_KEY_'.time();
+				$banner->banner_group_key = 'BANNER_GROUP_KEY_'.time();
 			}
 
-			$banner->name 		= $form['name'];
-			$banner->seo_name 	= $form['seo_name'];
-			$banner->short_desc = !empty($form['short_desc']) ? $form['short_desc'] : '';
-			$banner->desc 		= !empty($form['desc']) ? $form['desc'] : '';
-			$banner->sort 		= !empty($form['sort']) ? $form['sort'] : 1;
-			$banner->banner_group_key = !empty($form['banner_group_key']) ? $form['banner_group_key'] : 0;
-
-			if ($banner->upLoadFile('img_url')) {
-				$fields[] = 'img_url';
-			}
+			$banner->name = $form['name'];
+			$banner->desc = $form['desc'];
 
 			if ($banner->save($fields, $error)) {
 				$respone = [

@@ -88,10 +88,6 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('real-estate');
-
-    core.eventForm();
+    core.eventForm('real-estate');
     core.eventFormAddress();
-</script>
 {% endblock %}

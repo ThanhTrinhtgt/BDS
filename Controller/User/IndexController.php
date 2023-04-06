@@ -11,12 +11,17 @@ class IndexController extends BaseController
 	{
 		$this->setDefaultData();
 
-		$banner = Banner::selectAll([]);
+		$banner_slide = Banner::selectAll([
+			'where' => [
+				'banner_group_key' => 'BANNER_GROUP_KEY_1680752334'
+			]
+		]);
+
 		$realestate = RealEstate::selectAll([]);
 		$news = RealEstate::selectAll([]);
 
 		$this->set('real_estate', $realestate);
 		$this->set('news', $news);
-		$this->set('banner', $banner);
+		$this->set('banner_slide', $banner_slide);
 	}
 }

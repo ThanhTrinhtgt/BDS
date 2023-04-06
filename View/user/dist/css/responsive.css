@@ -1,5 +1,15 @@
-@media only screen and (min-width: 1024px) {
-  #header nav#menu, #header #button-menu {
-  	display: none;
-  }
+@media (min-width: 1024px) {
+    #menu, #button-menu {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    #menu-desktop {
+      display: none !important;
+    }
+}
+
+@media (max-width: 768px) { 
+
 }

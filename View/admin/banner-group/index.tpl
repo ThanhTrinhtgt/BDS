@@ -1,11 +1,10 @@
 {% extends "admin/layout.tpl" %}
 {% block content %}
     <div class="callout callout-info">
-        <a class="btn btn-info btn-sm text-underline-none" href='/admin/news/edit/0'>
-            <i class="fas fa-pencil-alt"></i>&nbsp;Thêm mới
+        <a class="btn btn-info btn-sm" href='/admin/banner-group/edit/0'>
+            <i class="fas fa-pencil-alt"></i>Thêm mới
         </a>
     </div>
-
     <div class="card-body">
         <table 
             id="example2" 
@@ -15,7 +14,7 @@
                 <tr>
                     <th>STT</th>
                     <th>Tiêu đề</th>
-                    <th>Miêu tả</th>
+                    <th>Key</th>
                     <th>Tác vụ</th>
                 </tr>
             </thead>
@@ -26,9 +25,9 @@
                 <tr>
                     <td>{{ stt }}</td>
                     <td>{{ item.name }}</td>
-                    <td>{{ item.short_desc }}</td>
+                    <td>{{ item.banner_group_key }}</td>
                     <td class="text-right">
-                        <a class="btn btn-info btn-sm" href='/admin/news/edit/{{ item.id }}'>
+                        <a class="btn btn-info btn-sm" href='/admin/banner-group/edit/{{ item.id }}'>
                             <i class="fas fa-pencil-alt"></i>Sửa
                         </a>
                         <a class="btn btn-danger btn-sm">
@@ -41,17 +40,7 @@
             </tbody>
         </table>
         <div>
-            <ul class="pagination">
-                <li id="example2_previous"class="paginate_button page-item previous disabled">
-                    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                </li>
-                <li class="paginate_button page-item active">
-                    <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                </li>
-                <li class="paginate_button page-item next" id="example2_next">
-                    <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                </li>
-            </ul>
+            {% include "admin/element/pagination.tpl" with {'current_page' : 1} %}
         </div>
     </div>
 {% endblock %}

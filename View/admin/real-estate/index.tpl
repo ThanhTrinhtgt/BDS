@@ -66,9 +66,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('real-estate');
-
     core.eventList();
-</script>
 {% endblock %}

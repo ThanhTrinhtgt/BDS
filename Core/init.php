@@ -10,13 +10,23 @@ $app->initDB();
 $app->pathImage = dirname(__DIR__) . '/' . $app->pathImage;
 
 $protocol = 'http://';
+
 if (isset($_SERVER['HTTPS']) &&
     ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
     isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
     $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
   $protocol = 'https://';
 }
+
 $app->doamin = $protocol . $_SERVER['SERVER_NAME'];
+
+include 'Locale/vn.php';
+
+if (!empty($_GET['lang']) && file_exists('Locale/'.$_GET['lang'].'.php')) {
+	include 'Locale/'.$_GET['lang'].'.php';
+
+	$langArr = array_merge($langArr, ${"langArr_" . $_GET['lang']});
+} 
 
 function SafeData($data, $tp = false)
 {
@@ -91,4 +101,15 @@ function pr($value = '', $cont = false)
 	echo print_r($value);
 	echo '</pre>';
 	if (!$cont) exit();
+}
+
+function lang($key)
+{
+	global $langArr;
+	
+	if (isset($langArr[$key])) {
+		return $langArr[$key];
+	}
+
+	return '';
 }

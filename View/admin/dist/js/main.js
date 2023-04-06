@@ -1,10 +1,9 @@
-var BDScore = function (controller) {
-	return BDScore.fn.init(controller);
+var BDScore = function () {
+	return BDScore.fn.init();
 }
 
 BDScore.fn = BDScore.prototype = {
-	init: function (controller) {
-		this.controller = controller;
+	init: function () {
 
 		this.eventForm    = this.eventForm.bind(this);
 		this.eventList    = this.eventList.bind(this);
@@ -25,12 +24,11 @@ BDScore.fn = BDScore.prototype = {
 
 	inputFormatCurrentcy:  '.bds-format-currentcy',
 
-	controller: 	 '',
 	varSetTimeout: null,
 
-	eventForm() {
+	eventForm(controller) {
 		this.buildSeoName();
-		this.submitForm();
+		this.submitForm(controller);
 		this.autoFormatCurrentcy();
 
 		if ($('#ckeditor').length > 0) {
@@ -62,7 +60,7 @@ BDScore.fn = BDScore.prototype = {
 		});
 	},
 
-	submitForm() {
+	submitForm(controller) {
 		let self = this;
 
 		$(this.btnSubmit).unbind().click(function() {
@@ -74,7 +72,7 @@ BDScore.fn = BDScore.prototype = {
 			}
 
 			Core.post(
-				'/admin/' + self.controller + '/save-json',
+				'/admin/' + controller + '/save-json',
 				{
 					data: formData
 				},
@@ -142,12 +140,12 @@ BDScore.fn = BDScore.prototype = {
 		});
 	},
 
-	eventDeleteItemForm() {
+	eventDeleteItemForm(controller) {
 		let self = this;
 
 		$(this.btnDeleteItem).unbind().click(function () {
 			if ($(this).data('id') != undefined) {
-				Core.post('/admin/' + self.controller + '/delete', 
+				Core.post('/admin/' + controller + '/delete', 
 					{'id': $(this).data('id'), 'contentType': 'json'}
 				);
 			}

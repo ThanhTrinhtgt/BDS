@@ -7,6 +7,7 @@
 body {
 	font-family: 'Noto Serif Sinhala';
 	overflow-x: hidden;
+	background-color: rgba(242,242,242,0.5);
 }
 
 h1, h2, h3, h4, h5, label {
@@ -35,13 +36,14 @@ h1, h2, h3, h4, h5, label {
 }
 
 body > #head {
-	position: fixed;
+	/*position: fixed;
 	top:  0;
 	left: 0;
 	width:  100%;
-	height: auto;
-	background: rgba(244, 244, 244, 1);
+	height: auto;*/
+	background: rgba(255, 255, 255, 1);
 	z-index: 100;
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04)
 }
 
 body > #content {
@@ -61,6 +63,10 @@ a {
     color: rgba(var(--link-color), 0, 0, 0, 1);
     text-decoration: none;
     cursor: pointer;
+}
+
+#logo-menu {
+	max-width: 100%;
 }
 
 .frame-img-contact-detail {
@@ -89,4 +95,20 @@ a {
 	z-index: 100;
 	padding: 5px 10px;
 	font-size: 16px;
+}
+
+.item-box-shadow {
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);	
+}
+
+#menu:not( .mm-menu ) {
+    display: none;
+}
+
+.mm-menu:not(.mm-menu--opened) {
+	display: none !important;
+}
+
+.transition-smooth {
+	transition: 0.3s ease-in-out;
 }

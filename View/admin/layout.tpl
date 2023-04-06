@@ -114,9 +114,9 @@
     <script src="{{ realPath }}/admin/dist/js/main.js?ver={{ date().timestamp }}"></script>
     <script type="text/javascript">
       var Core = new Core();
-      Core.init();
-    </script>
+      let core = new BDScore();
 
-    {% block contentJs %}{% endblock contentJs %}
+      {% block contentJs %}{% endblock contentJs %}
+    </script>
 </body>
 </html>

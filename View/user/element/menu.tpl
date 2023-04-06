@@ -1,8 +1,13 @@
 <div class="container-fluid">
   <div class="row align-items-center">
-    <div class='col-8'>
+    <div class='col-1'>
+      <a href='{{ logo.seo_name }}'>
+        <img id=logo-menu src='{{ logo.img_url }}'/>
+      </a>
+    </div>
+
+    <div class='col-7'>
       <div id="header">
-          <a href="#menu" id='button-menu'><i class="fas fa-bars"></i></a>
           <nav id='menu-desktop'>
             <div class='row'>
               {% if list_menu is not empty %}
@@ -14,6 +19,10 @@
               {% endif %}
             </div>
           </nav>
+
+          <a href="#menu" id='button-menu'>
+            <i class="fas fa-bars"></i>
+          </a>
           
           <nav id="menu">
               <ul>
@@ -42,7 +51,7 @@
     </div>
 
     <div class='col-4'>
-      {% include "element/search-bar.tpl" with {'list_search' : list_search} %}
+      {% include "user/element/search-bar.tpl" with {'list_search' : list_search} %}
     </div>
   </div>
 </div>

@@ -16,12 +16,12 @@
     <body>
         <div id="head">
             <div id='content-head'>
-                {% include "element/menu.tpl" with {'list_menu' : list_menu} %}    
+                {% include "user/element/menu.tpl" with {'list_menu' : list_menu, 'logo': logo} %}    
             </div>
         </div>
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">
-            {% include "element/footer.tpl" %}
+            {% include "user/element/footer.tpl" %}
         </div>
     </body>
     <script src='{{ realPath }}/dist/js/bootstrap.min.js'></script>

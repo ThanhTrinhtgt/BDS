@@ -54,9 +54,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('province');
-
-    core.exportAddress();
-</script>
+core.exportAddress('province');
 {% endblock %}

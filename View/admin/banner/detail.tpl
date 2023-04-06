@@ -4,6 +4,10 @@
         <a class="btn btn-info btn-sm" href='/admin/banner/edit/0'>
             <i class="fas fa-pencil-alt"></i>Thêm mới
         </a>
+
+        <a class="btn btn-info btn-sm" href='/admin/banner'>
+            <i class="fas fa-pencil-alt"></i>Danh sách
+        </a>
     </div>
 
     <div class="invoice p-3 mb-3">   
@@ -77,8 +81,21 @@
                         value="{{ data.desc|raw }}"
                     >{{ data.desc|raw }}</textarea>
                 </div>
-                <div class="col-12" id="editor">
-                    
+
+                <div class="col-12 p-1"></div>
+                
+                <div class="col-3">Nhóm banner</div>
+                <div class="col-9">
+                    <select class='form-control bds-field-form' name='banner_group_key'>
+                        <option value='0'>Chọn nhóm</option>
+                        {% for group in banner_group %}
+                            {% if group.banner_group_key == data.banner_group_key %}
+                                <option value='{{ group.banner_group_key }}' selected>{{ group.name }}</option>
+                            {% else%}
+                                <option value='{{ group.banner_group_key }}'>{{ group.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </form>
@@ -96,9 +113,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('banner');
-
-    core.eventForm();
-</script>
+    core.eventForm('banner');
 {% endblock %}

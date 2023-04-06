@@ -80,9 +80,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('contact');
-
-    core.eventForm();
-</script>
+    core.eventForm('contact');
 {% endblock %}

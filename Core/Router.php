@@ -22,8 +22,12 @@ class Router
 			'name' => 'Tin tức',
 		],
 		[
-			'url' => 'banner',
-			'name' => 'Banner',
+			'url' => '',
+			'name' => 'Quản lý banner',
+			'child' => [
+				'banner-group' => ['name' => 'Nhóm'],
+				'banner' => ['name' => 'Banner'],
+			]
 		],
 		[
 			'url' => 'contact',

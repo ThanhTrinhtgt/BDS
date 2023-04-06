@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2023 at 11:15 AM
+-- Generation Time: Apr 06, 2023 at 04:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -30,11 +30,26 @@ SET time_zone = "+00:00";
 CREATE TABLE `banner` (
   `id` int(11) NOT NULL,
   `name` varchar(254) NOT NULL,
+  `banner_key` varchar(30) NOT NULL,
+  `banner_group_id` int(11) NOT NULL DEFAULT 0,
   `seo_name` varchar(254) NOT NULL,
   `short_desc` varchar(254) NOT NULL,
   `desc` text NOT NULL,
   `img_url` varchar(254) NOT NULL,
-  `sort` tinyint(4) NOT NULL
+  `sort` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banner-group`
+--
+
+CREATE TABLE `banner-group` (
+  `id` int(11) NOT NULL,
+  `name` varchar(254) NOT NULL,
+  `banner_group_key` varchar(30) NOT NULL,
+  `desc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -195,6 +210,12 @@ ALTER TABLE `banner`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `banner-group`
+--
+ALTER TABLE `banner-group`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `configuration`
 --
 ALTER TABLE `configuration`
@@ -239,6 +260,12 @@ ALTER TABLE `real-estate`
 -- AUTO_INCREMENT for table `banner`
 --
 ALTER TABLE `banner`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `banner-group`
+--
+ALTER TABLE `banner-group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

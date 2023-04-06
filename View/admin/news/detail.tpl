@@ -100,9 +100,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new BDScore('news');
-
-    core.eventForm();
-</script>
+core.eventForm('news');
 {% endblock %}

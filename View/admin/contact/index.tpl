@@ -55,3 +55,6 @@
         </div>
     </div>
 {% endblock %}
+
+{% block contentJs %}
+{% endblock %}
