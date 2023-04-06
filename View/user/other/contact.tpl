@@ -36,9 +36,5 @@
 {% endblock %}
 
 {% block contentJs %}
-<script>
-    let core = new userCore();
-
     core.setupSlide('.splide');
-</script>
 {% endblock %}

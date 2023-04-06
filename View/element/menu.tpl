@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row align-items-center">
     <div class='col-8'>
       <div id="header">

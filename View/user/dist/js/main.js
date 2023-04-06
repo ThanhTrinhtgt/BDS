@@ -23,7 +23,13 @@ userCore.fn = userCore.prototype = {
 			});
 		}
 
-		
+		$(this.target.btnPinToTop).unbind().click(function() {
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
+	},
+
+	target: {
+		btnPinToTop: '#pin-to-top',
 	},
 
 	inputFormatCurrentcy:  	 '.format-curentcy',

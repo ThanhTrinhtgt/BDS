@@ -29,8 +29,11 @@
     <script src='{{ realPath }}/dist/js/numeral.min.js'></script>
     <script src='{{ realPath }}/dist/js/splide.min.js'></script>
     <script src='{{ realPath }}/dist/js/mmenu.js'></script>
-    <script src='{{ realPath }}/user/dist/js/main.js?ver=1'></script>
-
-    {% block contentJs %}
-    {% endblock contentJs %}
+    <script src='{{ realPath }}/user/dist/js/main.js?ver={{ "now"|date("U") }}'></script>
+    <script>
+        let core = new userCore();
+    
+        {% block contentJs %}
+        {% endblock contentJs %}
+    </script>
 </html>

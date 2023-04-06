@@ -7,3 +7,7 @@
 		<p>{{ data.desc|raw }}</p>
 	</div>
 {% endblock %}
+
+{% block contentJs %}
+    
+{% endblock %}

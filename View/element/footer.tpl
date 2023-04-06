@@ -37,5 +37,6 @@
 	</div>
 </div>
 <div class='container-fluid text-center'>
+	<button id='pin-to-top'><i class="fa-solid fa-arrow-up"></i></button>
 	&copy; Copyright 2023 by <a href="http://domain.invalid/">Thanh Trịnh</a>.
 </div>

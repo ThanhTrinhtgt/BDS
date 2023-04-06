@@ -41,3 +41,6 @@
 		</div>
 	</section>
 {% endblock %}
+
+{% block contentJs %}
+{% endblock %}
