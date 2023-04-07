@@ -3,6 +3,7 @@
 namespace BDS\Core;
 
 use Twig\Environment;
+use Twig\TwigFunction;;
 use Twig\Loader\FilesystemLoader;
 use BDS\Core\Helper;
 
@@ -117,6 +118,7 @@ class Router
 			$loader = new FilesystemLoader('View');
 			$app    = App::getInstance();
 			$twig   = new \Twig\Environment($loader, ['cache' => false]);
+
 			$protocol = 'http://';
 			$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
 
@@ -125,6 +127,13 @@ class Router
 				'realPath' => $realPath,
 				'domain' => $app->domain,
 			], $this->data_render);
+
+			$twig->addFunction(new TwigFunction('l', function () {
+				$argList = func_get_args();
+				$text = array_shift($argList);
+
+				return sprintf(l($text), ...$argList);
+			}));
 
 			$html = $twig->render($this->getTemplateName(), $data);
 

@@ -1,14 +1,13 @@
-<div class="card item-box-shadow">
+<div class="card p-2">
 	<a href='{{ item.url }}' class="text-decoration-none">
 		<img src="{{ item.img_url }}" class="card-img-top" alt="{{ item.name }}">
 	</a>
-	
 	<div class="card-body">
 		<a href='{{ item.url }}' class="text-decoration-none">
 			<h5 class="card-title color-red">
 				{{ item.name }}
 				{% if item.type == 1 %}    
-				    <span class="badge bg-primary">Tin mới</span>
+				    <span class="badge bg-primary">{{ l('new_news') }}</span>
 		        {% elseif item.type == 2 %}
 				        <span class="badge bg-danger">Tin hot</span>
 				{% endif %}

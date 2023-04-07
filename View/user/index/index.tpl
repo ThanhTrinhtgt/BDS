@@ -16,18 +16,16 @@
 		{% endif %}
 	</section>
 
-	<section class="container-fluid mb-3">
+	<section class="container mb-3">
 		<div class="row">
 			{% for item in real_estate %}
-				<div class="col-3 mb-2">
-					{% include "user/index/item-real-estate.tpl" with {'item' : item} %}
-			    </div>
+				{% include "user/element/index/item-real-estate.tpl" with {'item' : item} %}
 			{% endfor %}
 		</div>
 	</section>
 
 	<section class="container-fluid mb-3">
-		{% include "user/index/slider-footer.tpl" with {'data' : news} %}
+		{% include "user/element/index/slider-footer.tpl" with {'data' : news} %}
 	</section>
 {% endblock %}
 

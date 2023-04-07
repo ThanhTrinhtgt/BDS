@@ -103,7 +103,7 @@ function pr($value = '', $cont = false)
 	if (!$cont) exit();
 }
 
-function lang($key)
+function l($key)
 {
 	global $langArr;
 	

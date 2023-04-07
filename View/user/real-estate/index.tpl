@@ -2,11 +2,15 @@
 {% block content %}
 	<div class="container">
 		<div class="row">
-			{% for item in data %}
-				<div class="col-3 mb-3">
-					{% include "user/real-estate/item-real-estate.tpl" with {'item' : item} %}
-			    </div>
-			{% endfor %}
+			<div class='col-9'>
+				{% for item in data %}
+					{% include "user/element/real-estate/item-fluid-real-estate.tpl" with {'item' : item} %}
+				{% endfor %}
+			</div>
+
+			<div class='col-3'>
+				{% include "user/element/real-estate/sidebar.tpl" with {'data' : data} %}
+			</div>
 		</div>
 	</div>
 {% endblock %}
