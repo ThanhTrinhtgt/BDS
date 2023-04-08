@@ -1,4 +1,4 @@
-CREATE TABLE `province` (
+CREATE TABLE IF NOT EXISTS `province` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL
