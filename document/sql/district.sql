@@ -1,4 +1,4 @@
-CREATE TABLE `district` (
+CREATE TABLE IF NOT EXISTS `district` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `prefix` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,

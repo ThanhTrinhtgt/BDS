@@ -1,4 +1,4 @@
-CREATE TABLE `ward` (
+CREATE TABLE IF NOT EXISTS `ward` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `ward` (
 -- INSERT 1
 --
 
-INSERT INTO `ward` (`id`, `_name`, `prefix`, `province_id`, `district_id`) VALUES
+INSERT INTO `ward` (`id`, `name`, `prefix`, `province_id`, `district_id`) VALUES
 (1, 'An Phú Tây', 'Xã', 1, 1),
 (2, 'Bình Chánh', 'Xã', 1, 1),
 (3, 'Bình Hưng', 'Xã', 1, 1),

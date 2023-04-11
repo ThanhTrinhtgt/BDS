@@ -297,6 +297,10 @@ class BaseModel extends \stdClass
 		}
 
 		if (!$isMultiple) {
+			if (empty($data) || empty($data[0])) {
+				return null;
+			}
+
 			return $data[0];
 		}
 
