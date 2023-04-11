@@ -22,6 +22,7 @@ class RealEstateController extends BaseController
 	{
 		$this->templateName = 'detail';
 		$this->setDefaultData();
+		$list_hot = [];
 		
 		$app = App::getInstance();
 
@@ -35,11 +36,13 @@ class RealEstateController extends BaseController
 			'where' => ['seo_name' => $seo_name]
 		]);
 
-		$list_hot = RealEstate::selectAll([
-			'where' => ['id_not_in' => [$realestate->id], 'feature' => RealEstate::FEATURE_HOT],
-			'limit' => 5
-		]);
-
+		if (!empty($realestate->id)) {
+			$list_hot = RealEstate::selectAll([
+				'where' => ['id_not_in' => [$realestate->id], 'feature' => RealEstate::FEATURE_HOT],
+				'limit' => 5
+			]);
+		}
+		
 		$contact = new Contact($realestate['contact_id']);
 
 		$this->set('data', $realestate);

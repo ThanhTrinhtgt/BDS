@@ -8,6 +8,7 @@ body {
 	font-family: 'Noto Serif Sinhala';
 	overflow-x: hidden;
 	background-color: rgba(242,242,242,0.5);
+	font-size: 13px;
 }
 
 h1, h2, h3, h4, h5, label {
@@ -97,8 +98,9 @@ a {
 	font-size: 16px;
 }
 
-.item-box-shadow {
-	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);	
+.item-box-shadow {	
+	box-sizing: border-box;
+    box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
 }
 
 #menu:not( .mm-menu ) {
@@ -111,4 +113,45 @@ a {
 
 .transition-smooth {
 	transition: 0.3s ease-in-out;
+}
+
+.title-real-estate {
+	font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    text-transform: uppercase;
+}
+
+.short-desc-real-estate {
+	font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
+    color: #505050;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+    -webkit-line-clamp: 2;
+}
+
+.badge {
+	line-height: 12px;
+    font-size: 9px;
+}
+
+.text-price {
+	font-size: 16px;
+    line-height: 26px;
+    font-weight: bold;
+    color: #E03C31;
+    line-height: 26px;
+}
+
+.cursor-help {
+	cursor: help;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }

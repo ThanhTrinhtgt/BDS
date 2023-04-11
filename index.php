@@ -11,7 +11,9 @@ use BDS\Core\Router;
 use BDS\Core\App;
 
 $router = new Router();
-$app = App::getInstance();
+$app    = App::getInstance();
+
+$app->router = $router;
 
 $router->render();
 

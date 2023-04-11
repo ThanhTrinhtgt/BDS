@@ -60,6 +60,7 @@ function SafeData($data, $tp = false)
 
 function SafeImage(&$files)
 {
+	/*
 	if (!empty($files)) {
 		foreach ($files as $k => $file) {
 			if (empty($file)) continue;
@@ -71,7 +72,7 @@ function SafeImage(&$files)
 				unset($files[$k]);
 			}
 		}
-	}
+	}*/
 }
 
 function removeXSS($content)

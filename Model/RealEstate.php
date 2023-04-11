@@ -88,23 +88,23 @@ class RealEstate extends BaseModel
 		];
 	}
 
-	public function getType()
+	public static function getType($type)
 	{
 		$list = static::getListType();
 
-		if (!empty($list[$this->type])) {
-			return $list[$this->type];
+		if (!empty($list[$type])) {
+			return $list[$type];
 		}
 
 		return $list[self::TYPE_SELL];
 	}
 
-	public function getFeature()
+	public static function getFeature($feature)
 	{
 		$list = static::getListFeature();
 
-		if (!empty($list[$this->feature])) {
-			return $list[$this->feature];
+		if (!empty($list[$feature])) {
+			return $list[$feature];
 		}
 
 		return ['name' => 'N/A', 'value' => 0];

@@ -6,6 +6,7 @@ class Images extends BaseModel
 	public static $table = 'images';
 	public static $fields = [
 		'id', 
+		'id_object',
 		'module',
 		'img_url',
 		'sort'

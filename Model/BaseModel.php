@@ -3,6 +3,7 @@ namespace BDS\Model;
 
 use BDS\Core\App;
 use BDS\Core\Router;
+use BDS\Core\Helper;
 
 class BaseModel extends \stdClass
 {
@@ -29,22 +30,81 @@ class BaseModel extends \stdClass
 
 	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
-		if (!empty($_FILES) && !empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
-			$app = App::getInstance();
-			$this->$field = time() . '_' . $_FILES[$field]['name'];
+		if (!empty($_FILES) && !empty($_FILES[$field])) {
+			$this->deleteCurrentImage($field);
 
-			if (!is_dir($app->pathImage . '/'.static::$table)) {
-				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			$app      = App::getInstance();
+
+			$fileName = $_FILES[$field]['name'];
+			$tmp_name = $_FILES[$field]['tmp_name'];
+
+			if (is_array($_FILES[$field])) {
+				$fileName = $_FILES[$field]['name'][0];
+				$tmp_name = $_FILES[$field]['tmp_name'][0];
+
+				unset($_FILES[$field]['name'][0]);
 			}
 
 			if (empty($table_name)) {
 				$table_name = static::$table;
 			}
 
-			return move_uploaded_file($_FILES[$field]['tmp_name'], $app->pathImage . '/'. $table_name . '/' . $this->$field);
+			$this->$field = time() . '_' . Helper::removeSpecialChar($fileName);
+
+			if (!is_dir($app->pathImage . '/'.static::$table)) {
+				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			}
+
+			if (!empty($_FILES[$field])) {
+
+			}
+
+			$url = $app->pathImage . '/'. $table_name . '/' . $this->$field;
+
+			return move_uploaded_file($tmp_name, $url);
 		}
 
 		return false;
+	}
+
+	public function deleteCurrentImage($field = '')
+	{
+		$img = $this->$field;
+		$img = substr($img, 1);
+
+		if (!empty($img) && file_exists($img)) {
+			unlink($img);
+		}
+	}
+
+	public function upLoadFileMultiple($field = 'img_url', $table_name = '')
+	{
+		$result = false;
+
+		if (!empty($_FILES) && !empty($_FILES[$field])) {
+			$app      = App::getInstance();
+			$fileMain = $_FILES[$field][0];
+
+			unset($_FILES[$field][0]);
+
+			if (empty($table_name)) {
+				$table_name = static::$table;
+			}
+
+			$this->$field = time() . '_' . $fileMain[$field]['name'];
+
+			if (!is_dir($app->pathImage . '/'.static::$table)) {
+				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			}
+
+			$result = move_uploaded_file($fileMain[$field]['tmp_name'], $app->pathImage . '/'. $table_name . '/' . $this->$field);
+
+			foreach ($_FILES[$field]['name'] as $key) {
+				$img = new Images();
+			}
+		}
+
+		return $result;
 	}
 
 	public function mapDataToObject($data = [])

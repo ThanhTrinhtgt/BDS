@@ -61,15 +61,15 @@ class BannerController extends BaseController
 			$banner->sort 		= !empty($form['sort']) ? $form['sort'] : 1;
 			$banner->banner_group_key = !empty($form['banner_group_key']) ? $form['banner_group_key'] : 0;
 
-			if ($banner->upLoadFile('img_url')) {
-				$fields[] = 'img_url';
-			}
-
 			if ($banner->save($fields, $error)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'success'
 				];
+
+				if ($banner->upLoadFile('img_url')) {
+					$banner->save(['img_url'])
+				}
 			} else {
 				$respone['message'] = $error;
 			}
