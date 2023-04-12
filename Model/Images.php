@@ -11,6 +11,7 @@ class Images extends BaseModel
 		'img_url',
 		'sort'
 	];
-
+	public static $specialField = ['module'];
+	public static $fieldImage = '';
 	
 }

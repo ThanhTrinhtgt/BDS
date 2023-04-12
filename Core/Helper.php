@@ -35,7 +35,7 @@ class Helper extends \stdClass
 		$str = preg_replace('/(Ỳ|Ỷ|Ỹ|Ý|Ỵ)/i', "Y", $str);
 		$str = preg_replace('/(ỳ|ỷ|ỹ|ý|ỵ)/i', "y", $str);
 
-		$str = preg_replace('/[~!@#$%^&*()_+=|\\{}\[\]\'\";:<>?\/,.]/i', "", $str);
+		$str = preg_replace('/[~!@#$%^&*_+=|\\{}\[\]\'\";:<>?\/,]/i', "", $str);
 
 		return $str;
 	}

@@ -104,16 +104,12 @@ class RealEstateController extends BaseController
 			$obj->sort 		 = !empty($form['sort']) ? $form['sort'] : 1;
 			$obj->type 		 = !empty($form['type']) ? $form['type'] : RealEstate::TYPE_SELL;
 			$obj->feature 	 = !empty($form['feature']) ? $form['feature'] : 0;
-				
+			
 			if ($obj->save($fields, $error)) {
 				$respone = [
 					'code' => 200,
 					'message' => 'success'
 				];
-				
-				if ($obj->upLoadFile('img_url')) {
-					$obj->save(['img_url']);
-				}
 			} else {
 				$respone['message'] = $error;
 			}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2023 at 11:14 AM
+-- Generation Time: Apr 12, 2023 at 04:39 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -67,6 +67,19 @@ CREATE TABLE `configuration` (
   `sort` tinyint(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `configuration`
+--
+
+INSERT INTO `configuration` (`id`, `name`, `value`, `key`, `desc`, `sort`) VALUES
+(1, 'Dự án', '', 'KEY_TYPE_SEARCH', '', 0),
+(2, 'Nhà đất bán', '', 'KEY_TYPE_SEARCH', '', 0),
+(3, 'Nhà cho thuê', '', 'KEY_TYPE_SEARCH', '', 0),
+(4, 'Tin rao', 'tin-rao', 'KEY_TYPE_MENU', '', 1),
+(5, 'Tin tuc', 'tin-tuc', 'KEY_TYPE_MENU', '', 2),
+(6, 'Lien he', 'lien-he', 'KEY_TYPE_MENU', '', 3),
+(7, 'Trang chủ', '', 'KEY_TYPE_MENU', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +116,7 @@ CREATE TABLE `district` (
 
 CREATE TABLE `images` (
   `id` int(11) NOT NULL,
+  `id_object` int(11) NOT NULL,
   `module` varchar(50) NOT NULL,
   `img_url` varchar(254) NOT NULL,
   `sort` int(11) NOT NULL
@@ -228,6 +242,12 @@ ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `news`
 --
 ALTER TABLE `news`
@@ -272,12 +292,18 @@ ALTER TABLE `banner-group`
 -- AUTO_INCREMENT for table `configuration`
 --
 ALTER TABLE `configuration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

@@ -10,6 +10,8 @@ class BaseModel extends \stdClass
 	public static $table;
 	public static $fields;
 	public static $isBuildSeoName = true;
+	public static $fieldImage = 'img_url';
+	public static $specialField = [];
 	
 	public function __construct($id = 0)
 	{
@@ -31,7 +33,7 @@ class BaseModel extends \stdClass
 	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
 		if (!empty($_FILES) && !empty($_FILES[$field])) {
-			$this->deleteCurrentImage($field);
+			$this->deleteCurrentImage($field, $table_name);
 
 			$app      = App::getInstance();
 
@@ -55,8 +57,25 @@ class BaseModel extends \stdClass
 				mkdir($app->pathImage . '/'.static::$table, 0777, true);
 			}
 
-			if (!empty($_FILES[$field])) {
+			if (!empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
+				$sortMulti = 0;
 
+				foreach ($_FILES[$field]['name'] as $key => $img_name) {
+					$tmp_name_multi = $_FILES[$field]['tmp_name'][$key];
+					$url_multi = time() . '_' . Helper::removeSpecialChar($img_name);
+
+					$imgMultiObj = new Images();
+
+					$imgMultiObj->id_object = $this->id;
+					$imgMultiObj->img_url    = $url_multi;
+					$imgMultiObj->module    = $table_name;
+					$imgMultiObj->sort      = $sortMulti;
+
+					move_uploaded_file($tmp_name_multi, $app->pathImage . '/'. $table_name . '/' . $url_multi);
+					$sortMulti++;
+
+					$imgMultiObj->save();
+				}
 			}
 
 			$url = $app->pathImage . '/'. $table_name . '/' . $this->$field;
@@ -67,50 +86,48 @@ class BaseModel extends \stdClass
 		return false;
 	}
 
-	public function deleteCurrentImage($field = '')
+	public function deleteCurrentImage($field = '', $table_name)
 	{
+		if (empty($table_name)) {
+			$table_name = static::$table;
+		}
+
+		$app = App::getInstance();
 		$img = $this->$field;
 		$img = substr($img, 1);
 
 		if (!empty($img) && file_exists($img)) {
 			unlink($img);
 		}
-	}
 
-	public function upLoadFileMultiple($field = 'img_url', $table_name = '')
-	{
-		$result = false;
+		$images = Images::selectAll([
+			'where' => [
+				'id_object' => $this->id,
+				'module'	=> $table_name,
+			],
+			'select' => ['id', 'module', 'img_url'],
+		]);
 
-		if (!empty($_FILES) && !empty($_FILES[$field])) {
-			$app      = App::getInstance();
-			$fileMain = $_FILES[$field][0];
+		foreach ($images as $img) {
+			$url = substr($img['img_url'], 1);
 
-			unset($_FILES[$field][0]);
-
-			if (empty($table_name)) {
-				$table_name = static::$table;
+			if (file_exists($url)) {
+				unlink($url);
 			}
 
-			$this->$field = time() . '_' . $fileMain[$field]['name'];
-
-			if (!is_dir($app->pathImage . '/'.static::$table)) {
-				mkdir($app->pathImage . '/'.static::$table, 0777, true);
-			}
-
-			$result = move_uploaded_file($fileMain[$field]['tmp_name'], $app->pathImage . '/'. $table_name . '/' . $this->$field);
-
-			foreach ($_FILES[$field]['name'] as $key) {
-				$img = new Images();
-			}
+			$newObj = new Images();
+			$newObj->id = $img['id'];
+			$newObj->delete();
 		}
-
-		return $result;
 	}
 
 	public function mapDataToObject($data = [])
 	{
-		foreach (static::$fields as $field) {
-			$this->$field = !empty($data) && isset($data[$field]) ? SafeData($data[$field], false) : '';
+
+		if (!empty(static::$fields)) {
+			foreach (static::$fields as $field) {
+				$this->$field = !empty($data) && isset($data[$field]) ? $data[$field] : '';
+			}
 		}
 	}
 
@@ -118,12 +135,21 @@ class BaseModel extends \stdClass
 	{
 		$app    = App::getInstance();
 		$result = true;
-
+		
+		if (empty($fields)) {
+			$fields = static::$fields;
+		}
+		
 		$arr_dif = array_diff($fields, static::$fields);
 		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : $fields;
+		$fieldImage = static::$fieldImage;
 
 		if (!empty($this->id) && $this->id > 0) {
 			$fields['id'] = $this->id;
+
+			if (!empty($fieldImage) && $this->upLoadFile($fieldImage)) {
+				$fields[] = $fieldImage;
+			}
 
 			return $this->update($fields, [], $error);
 		} else {
@@ -144,7 +170,13 @@ class BaseModel extends \stdClass
 			$q = mysqli_query($app->db, "INSERT INTO `".static::$table."`($val_field) VALUES($val_value)");
 
 			if (mysqli_affected_rows($app->db) > 0) {
-				return true;
+				$this->id = mysqli_insert_id($app->db);
+
+				if (!empty($fieldImage) && $this->upLoadFile($fieldImage)) {
+					return $this->update([$fieldImage], [], $error);
+				}
+
+				return $this->id;
 			} elseif (!empty(mysqli_error($app->db))) {
 				$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 			} else {
@@ -225,6 +257,7 @@ class BaseModel extends \stdClass
 
 		if (!empty($query)) {
 			if (!empty($query['select'])) {
+				$query['select'] = (new self)->checkSpecialFieldSelect($query['select']);
 				$select = '';
 
 				foreach ($query['select'] as $field) {
@@ -274,7 +307,13 @@ class BaseModel extends \stdClass
 				foreach (static::$fields as $field) {
 					if (isset($row[$field])) {
 						if ($field == 'img_url') {
-							$row[$field] = $app->realpathImage . '/' . static::$table . '/' . $row[$field];
+							if (static::$table == Images::$table) {
+								if (!empty($row['module'])) {
+									$row[$field] = $app->realpathImage . '/' . $row['module'] . '/' . $row[$field];
+								} 
+							} else {
+								$row[$field] = $app->realpathImage . '/' . static::$table . '/' . $row[$field];
+							}
 						}
 
 
@@ -305,6 +344,28 @@ class BaseModel extends \stdClass
 		}
 
 		return $data;
+	}
+
+	public function delete()
+	{
+		$id = $this->id;
+
+		if (!empty($id)) {
+			$app   = App::getInstance();
+
+			$q = mysqli_query($app->db, "DELETE FROM `".static::$table."` WHERE `id` = '$id' LIMIT 1");
+
+			if (mysqli_affected_rows($app->db) > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function checkSpecialFieldSelect($fields = [])
+	{
+		return array_merge(static::$specialField, $fields);
 	}
 
 	protected static function bindWhere($field, $value)
