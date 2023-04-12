@@ -34,6 +34,7 @@ class RealEstate extends BaseModel
 		'contact_id',
 		'date_create',
 	];
+	public static $isMultileImage = true;
 
 	const FEATURE_NEW = 1;
 	const FEATURE_HOT = 2;

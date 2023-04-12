@@ -7,18 +7,20 @@ use BDS\Core\Helper;
 
 class BaseModel extends \stdClass
 {
-	public static $table;
-	public static $fields;
-	public static $isBuildSeoName = true;
-	public static $fieldImage = 'img_url';
-	public static $specialField = [];
+	public static $table 			= '';
+	public static $fields 			= [];
+	public static $isBuildSeoName 	= true;
+	public static $fieldImage 		= 'img_url';
+	public static $fieldImgageMulti = 'img_multi';
+	public static $specialField 	= [];
+	public static $isMultileImage 	= false;
 	
 	public function __construct($id = 0)
 	{
 		$data = [];
 		
 		if (!empty($id) && $id > 0) {
-			$data = static::select(['where' => ['id' => $id]]);
+			$data = static::select(['where' => ['id' => $id], 'multiImg' => true]);
 
 		}
 
@@ -127,6 +129,13 @@ class BaseModel extends \stdClass
 		if (!empty(static::$fields)) {
 			foreach (static::$fields as $field) {
 				$this->$field = !empty($data) && isset($data[$field]) ? $data[$field] : '';
+			}
+
+			if (static::$isMultileImage) {
+				$fieldMultiImg = static::$fieldImgageMulti;
+
+				$this->$fieldMultiImg = !empty($data) && !empty($data[static::$fieldImgageMulti]) ? 
+				$data[static::$fieldImgageMulti] : [];
 			}
 		}
 	}
@@ -254,6 +263,7 @@ class BaseModel extends \stdClass
 		$where   = '';
 		$orderby = '';
 		$limit   = 20;
+		$multiImg = isset($query['multiImg']) ? $query['multiImg'] : false;
 
 		if (!empty($query)) {
 			if (!empty($query['select'])) {
@@ -309,10 +319,10 @@ class BaseModel extends \stdClass
 						if ($field == 'img_url') {
 							if (static::$table == Images::$table) {
 								if (!empty($row['module'])) {
-									$row[$field] = $app->realpathImage . '/' . $row['module'] . '/' . $row[$field];
+									$row[$field] = self::buildImageUrl($row['module'], $row[$field]);
 								} 
 							} else {
-								$row[$field] = $app->realpathImage . '/' . static::$table . '/' . $row[$field];
+								$row[$field] = self::buildImageUrl(static::$table, $row[$field]);
 							}
 						}
 
@@ -326,6 +336,25 @@ class BaseModel extends \stdClass
 				}
 
 				$data[] = $item;
+			}
+
+
+			if ($multiImg && static::$isMultileImage) {
+				foreach ($data as $k => $v) {
+					$imgs = Images::selectAll([
+						'where' => [
+							'id_object' => $v['id'],
+							'module' => static::$table
+						],
+						'select' => ['img_url']
+					]);
+
+					$data[$k][static::$fieldImgageMulti] = [];
+
+					foreach ($imgs as $img) {
+						$data[$k][static::$fieldImgageMulti][] = $img['img_url'];
+					}
+				}
 			}
 		} elseif (!$isMultiple) {
 			$data[0] = [];
@@ -383,5 +412,12 @@ class BaseModel extends \stdClass
 		}
 		
 		return '';
+	}
+
+	protected static function buildImageUrl($module, $name)
+	{
+		$app = App::getInstance();
+
+		return $app->realpathImage . '/' . $module . '/' . $name;
 	}
 }
