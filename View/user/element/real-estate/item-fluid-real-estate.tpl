@@ -1,12 +1,17 @@
 <div class="card mb-3 item-box-shadow">
-	<div class='row'>
-		<div class='col-8'>
+	<div class='row m-0'>
+		<div class='col-8 p-0'>
 			<a href='{{ item.url }}' class="text-decoration-none">
 				<img src="{{ item.img_url }}" class="card-img-top" alt="{{ item.name }}">
 			</a>
 		</div>
 
-		<div class='col-4'>
+		<div class='col-4 d-flex flex-column p-0 m-0'>
+		{% if item.img_multi is not empty %}
+			{% for img in item.img_multi %}
+				<div class='flex-1 bg-img-real-estate' style='background-image: url("{{ img.img_url }}")'></div>
+			{% endfor %}
+		{% endif %}
 		</div>
 	</div>
 
@@ -68,7 +73,7 @@
 			{% endif %}
 		</div>
 
-		<div class="short-desc-real-estate">
+		<div class="short-desc-real-estate short-desc-line">
 			{{ item.short_desc }}
 		</div>
 	</div>

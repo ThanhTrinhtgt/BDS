@@ -43,6 +43,10 @@ class Router
 				'ward' => ['name' => 'Phường xã'],
 			]
 		],
+		[
+			'url' => 'project',
+			'name' => 'Dự án',
+		],
 	];
 
 	protected $route 	    = '';

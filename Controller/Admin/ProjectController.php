@@ -2,17 +2,16 @@
 namespace BDS\Controller\Admin;
 
 use BDS\Controller\Admin\BaseController as BaseController;
-use BDS\Model\News;
+use BDS\Model\Project;
 use BDS\Core\App;
-use BDS\Core\SMTPMail;
 
-class NewsController extends BaseController
+class ProjectController extends BaseController
 {
 	public function index()
 	{
 		$this->title = 'Danh sách';
 
-		$data = News::select([], true);
+		$data = Project::select([], true);
 
 		$this->set('data', $data);
 	}
@@ -26,10 +25,9 @@ class NewsController extends BaseController
 			$this->title = 'Tuỳ chỉnh';			
 		} 
 
-		$news = new News($id);
+		$news = new Project($id);
 
 		$this->set('data', $news);
-		$this->set('list_type', News::getListType());
 	}
 
 	public function saveJson()
@@ -44,16 +42,14 @@ class NewsController extends BaseController
 		$app = App::getInstance();
 
 		if ($this->validateForm($form, $error)) {
-			$news = new News(!empty($form['id']) ? $form['id'] : 0);
+			$news = new Project(!empty($form['id']) ? $form['id'] : 0);
 
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'sort', 'type'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc'];
 
 			$news->name 		= $form['name'];
 			$news->seo_name 	= $form['seo_name'];
 			$news->short_desc 	= !empty($form['short_desc']) ? $form['short_desc'] : '';
 			$news->desc 		= !empty($form['desc']) ? $form['desc'] : '';
-			$news->sort 		= !empty($form['sort']) ? $form['sort'] : 1;
-			$news->type 		= !empty($form['type']) ? $form['type'] : 0;
 
 			if ($news->upLoadFile('img_url')) {
 				$fields[] = 'img_url';
@@ -91,7 +87,7 @@ class NewsController extends BaseController
 		}
 
 		if (empty($form['seo_name'])) {
-			$error = 'Không thể để trống đường dẫn';
+			$error = 'Đường dẫn không thể để trống';
 			return false;
 		}
 

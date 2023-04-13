@@ -27,7 +27,9 @@
 					{{ item.area }} m<sup>2</sup>
 				{% endif %}
 			</p>
-			<p class="card-text">{{ item.short_desc }}</p>
+			<p class="card-text short-desc-line">
+				{{ item.short_desc }}
+			</p>
 		</div>
 	</div>
 </div>

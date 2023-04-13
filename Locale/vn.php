@@ -16,4 +16,6 @@ $langArr = [
 	'price' 		=> 'Giá',
 	'feature_bds' 	=> 'Đặc điểm bất động sản',
 	'describe'		=> 'Miêu tả',
+	'legally'		=> 'Pháp lý',
+	'please_contact' => 'Liên hệ',
 ];

@@ -44,6 +44,18 @@ class RealEstate extends BaseModel
 	const TYPE_RENT = 2;
 	const TYPE_PURCHASE = 3;
 
+	public static function afterSelect($obj)
+	{
+		if (empty($obj['price'])) {
+			$obj['price'] = l('please_contact');
+		}
+
+		return $obj;
+	}
+
+	/**
+	 * Chuyển id địa chỉ thành text 
+	 */
 	public function buildAddressRealEstate()
 	{
 		$province = Province::getNameById($this->province_id);

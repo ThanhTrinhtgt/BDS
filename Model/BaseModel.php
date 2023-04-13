@@ -27,11 +27,6 @@ class BaseModel extends \stdClass
 		$this->mapDataToObject($data);
 	}
 
-	public function afterSelect($data = [])
-	{
-		
-	}
-
 	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
 		if (!empty($_FILES) && !empty($_FILES[$field])) {
@@ -42,7 +37,7 @@ class BaseModel extends \stdClass
 			$fileName = $_FILES[$field]['name'];
 			$tmp_name = $_FILES[$field]['tmp_name'];
 
-			if (is_array($_FILES[$field])) {
+			if (is_array($_FILES[$field]['name'])) {
 				$fileName = $_FILES[$field]['name'][0];
 				$tmp_name = $_FILES[$field]['tmp_name'][0];
 
@@ -59,7 +54,7 @@ class BaseModel extends \stdClass
 				mkdir($app->pathImage . '/'.static::$table, 0777, true);
 			}
 
-			if (!empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
+			if (!empty($_FILES[$field]) && !empty($_FILES[$field]['name']) && is_array($_FILES[$field]['name'])) {
 				$sortMulti = 0;
 
 				foreach ($_FILES[$field]['name'] as $key => $img_name) {
@@ -138,6 +133,39 @@ class BaseModel extends \stdClass
 				$data[static::$fieldImgageMulti] : [];
 			}
 		}
+	}
+
+	public static function mapSelect($row)
+	{
+		$obj = [];
+
+		foreach (static::$fields as $field) {
+			if (isset($row[$field])) {
+				if ($field == 'img_url') {
+					if (static::$table == Images::$table) {
+						if (!empty($row['module'])) {
+							$row[$field] = static::buildImageUrl($row['module'], $row[$field]);
+						} 
+					} else {
+						$row[$field] = static::buildImageUrl(static::$table, $row[$field]);
+					}
+				}
+
+
+				$obj[$field] = $row[$field];
+			}
+
+			if (static::$isBuildSeoName && isset($row['seo_name'])) {
+				$obj['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
+			}
+		}
+
+		return static::afterSelect($obj);
+	}
+
+	public static function afterSelect($obj)
+	{
+		return $obj;
 	}
 
 	public function save($fields = [], &$error = '')
@@ -313,41 +341,27 @@ class BaseModel extends \stdClass
 		if ($q) {
 			while($row = mysqli_fetch_assoc($q)) {
 				$item = [];
-				
-				foreach (static::$fields as $field) {
-					if (isset($row[$field])) {
-						if ($field == 'img_url') {
-							if (static::$table == Images::$table) {
-								if (!empty($row['module'])) {
-									$row[$field] = self::buildImageUrl($row['module'], $row[$field]);
-								} 
-							} else {
-								$row[$field] = self::buildImageUrl(static::$table, $row[$field]);
-							}
-						}
 
-
-						$item[$field] = $row[$field];
-					}
-
-					if (static::$isBuildSeoName && isset($row['seo_name'])) {
-						$item['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
-					}
-				}
-
-				$data[] = $item;
+				$data[] = static::mapSelect($row);
 			}
 
 
 			if ($multiImg && static::$isMultileImage) {
 				foreach ($data as $k => $v) {
-					$imgs = Images::selectAll([
+					$limitMulti = 0;
+					$optionImg = [
 						'where' => [
 							'id_object' => $v['id'],
 							'module' => static::$table
 						],
 						'select' => ['id', 'img_url']
-					]);
+					];
+
+					if (!empty($query['multiImgLimit'])) {
+						$optionImg['limit'] = $query['multiImgLimit'];
+					}
+
+					$imgs = Images::selectAll($optionImg);
 
 					$data[$k][static::$fieldImgageMulti] = [];
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2023 at 04:39 AM
+-- Generation Time: Apr 13, 2023 at 09:52 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -157,6 +157,21 @@ CREATE TABLE `node` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `project`
+--
+
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL,
+  `name` varchar(254) NOT NULL,
+  `seo_name` varchar(254) NOT NULL,
+  `short_desc` varchar(500) NOT NULL,
+  `desc` text NOT NULL,
+  `img_url` varchar(254) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `province`
 --
 
@@ -261,6 +276,12 @@ ALTER TABLE `node`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `province`
 --
 ALTER TABLE `province`
@@ -316,6 +337,12 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `node`
 --
 ALTER TABLE `node`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

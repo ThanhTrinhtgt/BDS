@@ -4,7 +4,7 @@
 
 <div class='form-group'>
 	<h3>{{ data.name }}</h3>
-	<p>{{ data.address }}</p>
+	<p><i class="fas fa fa-location-dot"></i>&nbsp;{{ data.address }}</p>
 </div>
 
 <div class="card">

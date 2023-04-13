@@ -13,7 +13,7 @@ class RealEstateController extends BaseController
 		$this->templateName = 'index';
 		$this->setDefaultData();
 
-		$realestate = RealEstate::select([], true);
+		$realestate = RealEstate::select(['multiImg' => true, 'multiImgLimit' => 3], true);
 
 		$this->set('data', $realestate);
 	}
@@ -37,9 +37,9 @@ class RealEstateController extends BaseController
 			'multiImg' => true,
 		]);
 
-		if (!empty($realestate->id)) {
+		if (!empty($realestate['id'])) {
 			$list_hot = RealEstate::selectAll([
-				'where' => ['id_not_in' => [$realestate->id], 'feature' => RealEstate::FEATURE_HOT],
+				'where' => ['id_not_in' => [$realestate['id']],],
 				'limit' => 5
 			]);
 		}

@@ -8,3 +8,8 @@
 	font-family: "Noto Serif Sinhala";
 	src: url("../font/NotoSerifSinhala-VariableFont_wdth,wght.ttf");
 }
+
+@font-face {
+	font-family: "OpenSans";
+	src: url("../font/OpenSans-VariableFont_wdth,wght.ttf");
+}
