@@ -112,5 +112,5 @@ function l($key)
 		return $langArr[$key];
 	}
 
-	return '';
+	return $key;
 }

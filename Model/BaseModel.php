@@ -346,13 +346,16 @@ class BaseModel extends \stdClass
 							'id_object' => $v['id'],
 							'module' => static::$table
 						],
-						'select' => ['img_url']
+						'select' => ['id', 'img_url']
 					]);
 
 					$data[$k][static::$fieldImgageMulti] = [];
 
 					foreach ($imgs as $img) {
-						$data[$k][static::$fieldImgageMulti][] = $img['img_url'];
+						$data[$k][static::$fieldImgageMulti][] = [
+							'id' => $img['id'],
+							'img_url' => self::buildImageUrl(static::$table, $img['img_url']),
+						];
 					}
 				}
 			}

@@ -40,10 +40,16 @@ userCore.fn = userCore.prototype = {
 		});
 	},
 
-	setupSlide(target, config) {
+	setupSlide(target, config, ismount) {
 		config = $.extend({}, config);
 
-		new Splide(target, config).mount();
+		let slide = new Splide(target, config);
+
+		if (ismount == undefined || ismount == true) {
+			slide.mount();
+		}
+
+		return slide;
 	},
 
 	typingInput($dom, arr_text, n, k)

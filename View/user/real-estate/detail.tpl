@@ -14,5 +14,29 @@
 {% endblock %}
 
 {% block contentJs %}
-    
+	let mailSlide = core.setupSlide('#main-carousel', {
+	    type      : 'fade',
+	    rewind    : true,
+	    pagination: false,
+	    arrows    : false,
+  	}, false);
+
+    let thumbnails = core.setupSlide('#thumbnail-carousel', {
+		fixedWidth  : 100,
+		fixedHeight : 60,
+		gap         : 10,
+		rewind      : true,
+		pagination  : false,
+		isNavigation: true,
+		breakpoints : {
+			600: {
+			  fixedWidth : 60,
+			  fixedHeight: 44,
+			},	
+		},
+	}, false);
+
+	mailSlide.sync( thumbnails );
+	mailSlide.mount();
+	thumbnails.mount();
 {% endblock %}

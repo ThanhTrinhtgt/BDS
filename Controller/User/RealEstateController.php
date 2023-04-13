@@ -33,7 +33,8 @@ class RealEstateController extends BaseController
 
 		/** @var RealEstate $realestate */
 		$realestate = RealEstate::select([
-			'where' => ['seo_name' => $seo_name]
+			'where' => ['seo_name' => $seo_name],
+			'multiImg' => true,
 		]);
 
 		if (!empty($realestate->id)) {

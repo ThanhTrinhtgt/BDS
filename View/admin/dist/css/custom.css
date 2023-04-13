@@ -6,3 +6,13 @@
 	width: 150px;
 	height: auto;
 }
+
+.img-max-parent {
+	max-width: 100%;
+	height: auto;
+}
+
+.box-frame-img {
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
+	border: solid 1px #dee2e6;
+}

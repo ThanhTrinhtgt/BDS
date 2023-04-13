@@ -55,7 +55,7 @@ class RealEstateController extends BaseController
 		$list_type    = RealEstate::getListType();
 		$list_feature = RealEstate::getListFeature();
 		$list_contact = Contact::selectAll();
-
+//pr($obj);
 		$this->set('data', $obj);
 		$this->set('list_type', $list_type);
 		$this->set('list_feature', $list_feature);
