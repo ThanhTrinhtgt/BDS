@@ -2,14 +2,16 @@
 	<div class='row m-0'>
 		<div class='col-8 p-0'>
 			<a href='{{ item.url }}' class="text-decoration-none">
-				<img src="{{ item.img_url }}" class="card-img-top" alt="{{ item.name }}">
+				<img src="{{ item.img_url }}" class="card-img-top bd-tr-radius-0" alt="{{ item.name }}">
 			</a>
 		</div>
 
 		<div class='col-4 d-flex flex-column p-0 m-0'>
 		{% if item.img_multi is not empty %}
-			{% for img in item.img_multi %}
-				<div class='flex-1 bg-img-real-estate' style='background-image: url("{{ img.img_url }}")'></div>
+			{% for key, img in item.img_multi %}
+				<div class='flex-1 bg-img-real-estate {% if key == 0 %}card-img-top bd-tl-radius-0{% endif %}' 
+					style='background-image: url("{{ img.img_url }}")'>
+				</div>
 			{% endfor %}
 		{% endif %}
 		</div>
@@ -17,7 +19,7 @@
 
 	<div class="card-body p2">
 		<a href='{{ item.url }}' class="text-decoration-none">
-			<h3 class="title-real-estate">
+			<h3 class="title-real-estate m-0">
 				{{ item.name }}
 				{% if item.type == 1 %}    
 				    <span class="badge bg-primary">{{ l('new_news') }}</span>
@@ -74,7 +76,7 @@
 		</div>
 
 		<div class="short-desc-real-estate short-desc-line">
-			{{ item.short_desc }}
+			<i>{{ item.short_desc }}</i>
 		</div>
 	</div>
 </div>

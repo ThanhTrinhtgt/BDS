@@ -14,6 +14,7 @@ class RealEstate extends BaseModel
 		'seo_name', 
 		'short_desc', 
 		'desc', 
+		'project_id',
 		'province_id', 
 		'district_id', 
 		'ward_id', 
@@ -130,7 +131,7 @@ class RealEstate extends BaseModel
 				case 'id_not_in':
 					$strIds = implode(',', $value);
 
-					return ' id NOT IN (' .$strIds. ')';
+					return ' id NOT IN (-1' .!empty($strIds) ? ",$strIds" : $strIds . ')';
 
 				default:
 					return "`$field` = '$value'";

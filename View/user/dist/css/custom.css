@@ -8,7 +8,7 @@
 body {
 	font-family: 'OpenSans';
 	overflow-x: hidden;
-	background-color: rgba(242,242,242,0.5);
+	background-color: rgba(242,242,242,0.1);
 	font-size: 13px;
 	color: #2C2C2C;
 }
@@ -50,7 +50,7 @@ body > #head {
 }
 
 body > #content {
-	margin-top: 70px;
+	margin-top: 10px;
 }
 
 .color-red {
@@ -170,10 +170,38 @@ a {
 }
 
 .bg-img-real-estate {
-	background-size: contain; 
+	background-size: cover; 
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
 a:hover {
 	color: #999;
+}
+
+.bd-tl-radius-0 {
+	border-top-left-radius: 0;
+}
+
+.bd-tr-radius-0 {
+	border-top-right-radius: 0;
+}
+
+.bd-br-radius-0 {
+	border-bottom-right-radius: 0;
+}
+
+.bd-bl-radius-0 {
+	border-bottom-left-radius: 0;
+}
+
+#searchbar {
+	background: rgba(255, 255, 255, 1);
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
+	padding: 10px 15px;
+	margin: 10px 0;
+}
+
+.form-control, .btn {
+	font-size: 13px;
 }

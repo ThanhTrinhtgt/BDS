@@ -1,10 +1,11 @@
 <div class='mb-3'>
-	{% include "user/real-estate/splider.tpl" with {'data' : data} %}
+	{% include "user/element/real-estate/splider.tpl" with {'data' : data} %}
 </div>
 
 <div class='form-group'>
 	<h3>{{ data.name }}</h3>
-	<p><i class="fas fa fa-location-dot"></i>&nbsp;{{ data.address }}</p>
+	<span><i class="fas fa fa-location-dot"></i>&nbsp;{{ data.address }}</span>
+	<span class='float-end'><i class="fas fa-map"></i>&nbsp;{{ data.project_name }}</span>
 </div>
 
 <div class="card">

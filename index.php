@@ -9,13 +9,17 @@ include_once 'Core/init.php';
 
 use BDS\Core\Router;
 use BDS\Core\App;
+use BDS\Core\View;
 
 $router = new Router();
+$view   = new View();
 $app    = App::getInstance();
+
+$router->detectModule();
 
 $app->router = $router;
 
-$router->render();
+$view->render($router->title, $router->data_render);
 
 mysqli_close($app->db);
 ?>

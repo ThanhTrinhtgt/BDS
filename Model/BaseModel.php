@@ -30,8 +30,6 @@ class BaseModel extends \stdClass
 	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
 		if (!empty($_FILES) && !empty($_FILES[$field])) {
-			$this->deleteCurrentImage($field, $table_name);
-
 			$app      = App::getInstance();
 
 			$fileName = $_FILES[$field]['name'];
@@ -46,6 +44,10 @@ class BaseModel extends \stdClass
 
 			if (empty($table_name)) {
 				$table_name = static::$table;
+			}
+
+			if (!empty($fileName) && !empty($tmp_name)) {
+				$this->deleteCurrentImage($field, $table_name);
 			}
 
 			$this->$field = time() . '_' . Helper::removeSpecialChar($fileName);
@@ -217,7 +219,7 @@ class BaseModel extends \stdClass
 			} elseif (!empty(mysqli_error($app->db))) {
 				$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 			} else {
-				$error = 'Có thể data không thay đổi nên update thất bại';
+				$error = 'SQL error: ' . mysqli_error($app->db);
 			}
 			
 
@@ -271,7 +273,7 @@ class BaseModel extends \stdClass
 		if (!empty(mysqli_error($app->db))) {
 			$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 		} else {
-			$error = 'Có thể data không thay đổi nên update thất bại';
+			$error = 'SQL error: ' . mysqli_error($app->db);
 		}
 		
 
@@ -295,7 +297,7 @@ class BaseModel extends \stdClass
 
 		if (!empty($query)) {
 			if (!empty($query['select'])) {
-				$query['select'] = (new self)->checkSpecialFieldSelect($query['select']);
+				$query['select'] = array_merge(static::$specialField, $query['select']);
 				$select = '';
 
 				foreach ($query['select'] as $field) {
@@ -368,7 +370,7 @@ class BaseModel extends \stdClass
 					foreach ($imgs as $img) {
 						$data[$k][static::$fieldImgageMulti][] = [
 							'id' => $img['id'],
-							'img_url' => self::buildImageUrl(static::$table, $img['img_url']),
+							'img_url' => $img['img_url'],
 						];
 					}
 				}
@@ -407,11 +409,6 @@ class BaseModel extends \stdClass
 		}
 
 		return false;
-	}
-
-	public function checkSpecialFieldSelect($fields = [])
-	{
-		return array_merge(static::$specialField, $fields);
 	}
 
 	protected static function bindWhere($field, $value)

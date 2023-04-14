@@ -35,11 +35,27 @@
         <div class="col-9">
             <select class='form-control bds-field-form' name='feature'>
                 <option value='0'>Tin thường</option>
-                {% for list_feature in list_feature %}
-                    {% if data.feature is not empty and data.feature == list_feature.value %}
-                        <option value='{{ list_feature.value }}' selected>{{ list_feature.name }}</option>
+                {% for feature in list_feature %}
+                    {% if data.feature is not empty and data.feature == feature.value %}
+                        <option value='{{ feature.value }}' selected>{{ feature.name }}</option>
                     {% else%}
-                        <option value='{{ list_feature.value }}'>{{ list_feature.name }}</option>
+                        <option value='{{ feature.value }}'>{{ feature.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12 p-1"></div>
+        
+        <div class="col-3">Dự án</div>
+        <div class="col-9">
+            <select class='form-control bds-field-form' name='project_id'>
+                <option value='0'>Chọn dự án</option>
+                {% for project in list_project %}
+                    {% if data.project_id is not empty and data.project_id == project.id %}
+                        <option value='{{ project.id }}' selected>{{ project.name }}</option>
+                    {% else%}
+                        <option value='{{ project.id }}'>{{ project.name }}</option>
                     {% endif %}
                 {% endfor %}
             </select>

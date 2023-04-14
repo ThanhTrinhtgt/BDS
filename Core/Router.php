@@ -49,16 +49,16 @@ class Router
 		],
 	];
 
-	protected $route 	    = '';
-	protected $arr_route    = [];
-	protected $args    		= [];
-	protected $module       = 'User'; #User || Admin
-	protected $controller   = '';
-	protected $action  	    = '';
-	protected $data_render  = [];
-	protected $templateName = '';
-	protected $renderPath   = '';
-	protected $title 		= '';
+	public $route 	    = '';
+	public $arr_route    = [];
+	public $args    		= [];
+	public $module       = 'User'; #User || Admin
+	public $controller   = '';
+	public $action  	    = '';
+	public $data_render  = [];
+	public $templateName = '';
+	public $renderPath   = '';
+	public $title 		= '';
 
 	public $menu_rewrite = [
 		self::MENU_TIN_RAO => 'real-estate',
@@ -112,47 +112,6 @@ class Router
 		return $path;
 	}
 
-	public function render()
-	{
-		$this->detectModule();
-
-		if (substr($this->action, -4, 4) == 'Json') {
-			$this->renderJson();
-		} else {
-			$loader = new FilesystemLoader('View');
-			$app    = App::getInstance();
-			$twig   = new \Twig\Environment($loader, ['cache' => false]);
-
-			$protocol = 'http://';
-			$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
-
-			$data   = array_merge([
-				'title' => $this->title, 
-				'realPath' => $realPath,
-				'domain' => $app->domain,
-			], $this->data_render);
-
-			$twig->addFunction(new TwigFunction('l', function () {
-				$argList = func_get_args();
-				$text = array_shift($argList);
-
-				return sprintf(l($text), ...$argList);
-			}));
-
-			$html = $twig->render($this->getTemplateName(), $data);
-
-			echo $html;
-		}
-	}
-
-	public function renderJson()
-	{
-		$json = array_merge(['code' => 404, 'message' => 'Undefined!'], $this->data_render);
-		
-		echo json_encode($json);
-		exit;
-	}
-
 	private function getTemplateName()
 	{
 		$basicPath = strtolower($this->module) . '/' . strtolower($this->renderPath);
@@ -168,7 +127,7 @@ class Router
 		return '404.tpl';
 	}
 
-	private function detectModule()
+	public function detectModule()
 	{
 		$class = "BDS\\Controller\\" .$this->module. "\\" .$this->controller. "Controller";
 

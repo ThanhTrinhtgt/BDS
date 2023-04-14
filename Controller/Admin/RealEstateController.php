@@ -7,6 +7,7 @@ use BDS\Model\Contact;
 use BDS\Model\Province;
 use BDS\Model\District;
 use BDS\Model\Ward;
+use BDS\Model\Project;
 use BDS\Core\App;
 
 class RealEstateController extends BaseController
@@ -32,7 +33,6 @@ class RealEstateController extends BaseController
 		$this->templateName = 'detail';
 		$this->title = 'Thêm mới';
 
-		$list_province = Province::selectAll();
 		$list_district = [];
 		$list_ward = [];
 
@@ -55,13 +55,14 @@ class RealEstateController extends BaseController
 		$list_type    = RealEstate::getListType();
 		$list_feature = RealEstate::getListFeature();
 		$list_contact = Contact::selectAll();
-//pr($obj);
+
 		$this->set('data', $obj);
 		$this->set('list_type', $list_type);
 		$this->set('list_feature', $list_feature);
 		$this->set('list_contact', $list_contact);
-		$this->set('list_province', $list_province);
+		$this->set('list_province', Province::selectAll());
 		$this->set('list_district', $list_district);
+		$this->set('list_project', Project::selectAll(['select' => ['id', 'name']]));
 		$this->set('list_ward', $list_ward);
 	}
 
@@ -78,7 +79,11 @@ class RealEstateController extends BaseController
 
 		if ($this->validateForm($form, $error)) {
 			$obj = new RealEstate(!empty($form['id']) ? $form['id'] : 0);
-			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 'sort', 'type', 'feature', 'contact_id', 'province_id', '', 'district_id', 'ward_id', 'address_no', 'address'];
+			$fields = ['id', 'name', 'seo_name', 'short_desc', 'desc', 'price', 'unit', 
+				'unit_area', 'legally', 'area', 'num_bedroom', 'num_toilet', 'num_floor', 
+				'sort', 'type', 'feature', 'contact_id', 'province_id', '', 'district_id', 
+				'ward_id', 'address_no', 'address', 'project_id'
+			];
 
 			$obj->name 		 = $form['name'];
 			$obj->seo_name 	 = $form['seo_name'];
@@ -95,6 +100,7 @@ class RealEstateController extends BaseController
 			$obj->num_toilet  = !empty($form['num_toilet']) ? $form['num_toilet'] : 0;
 			$obj->num_floor   = !empty($form['num_floor']) ? $form['num_floor'] : 0;
 
+			$obj->project_id    = !empty($form['project_id']) ? $form['project_id'] : 0;
 			$obj->province_id 	= $form['province_id'];
 			$obj->district_id  	= $form['district_id'];
 			$obj->ward_id  		= $form['ward_id'];
@@ -135,6 +141,8 @@ class RealEstateController extends BaseController
 		if (empty($form['seo_name'])) {
 			$error = 'Không thể để trống đường dẫn';
 			return false;
+		} else {
+
 		}
 
 		if (empty($form['province_id'])) {
