@@ -3,59 +3,106 @@ namespace BDS\Controller\User;
 
 use BDS\Controller\User\BaseController;
 use BDS\Core\SimpleXLSX;
+use BDS\Core\Helper;
+use Orhanerday\OpenAi\OpenAi;
 
 class TestController extends BaseController
 {
+	const API_KEY = "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";
+	const TOKEN_BOT_VIPPRO 		= '5286304355:AAF0l3zJiaqllH2qIu5WvCggC4qdJ4-IUNc';
+	const ID_THANHTRINH    		= '632356941';
+	const api_link 				= 'https://api.telegram.org/bot';
+
 	public function index()
 	{
-		$path = dirname(__DIR__).'\User\Export_PA_TruyenNhan_1681611137.xlsx';
-		if ( $xlsx = SimpleXLSX::parse($path) ) {
-		    $excel = $xlsx->rows();
-		    $result = [];
+		$request = json_decode(file_get_contents('php://input'), true);
+		
+		$message   = $request['message'];
+		$chat      = $message['chat'];
+		$mess      = $message['text'];
+		$from      = $message['from'];
+		$chatId    = $chat['id'];
+		$chatType  = $chat['type'];
+		$entities  = ($chatType == 'supergroup' && !empty($message['entities'])) || $chatType == 'private' ? true : false;
 
+		/*$content = file_get_contents('php://input')." $entities \n";
+				$filename = 'thanh.txt';
+				file_put_contents($filename, $content, FILE_APPEND);
+				chmod($filename, 0664);*/
 
-		    foreach ($excel as $k => $data) {
-		    	if ($k == 0) {
-		    		continue;
-		    	}
-		    	//pr($data, true);
-		    	$MaTD = $data[8];
-		    	$maCQT = $data[4];
-		    	$mst = $data[5];
-		    	$shd = (int)$data[2];
+		if ($entities) {
+			$curl = curl_init();    // create cURL session
 
-		    	if (!in_array($mst, [3703070172, 1801699920, 3703053314])) {
-		    		//echo "update invoices set code='$MaTD', code_cqt='$maCQT', status=3  WHERE no='$shd' and status =1 and created_at >= '2023-04-16 00:00:00';<br/>";
-		    		echo "update invoices set code='$MaTD', status=2 WHERE no='$shd' and status =1 and created_at >= '2023-04-16 00:00:00';<br/>";
-		    	}
+			$apikey = self::API_KEY; // login to https://beta.openai.com/account/api-keys and create an API KEY
 
-		    	/*
+			$url = "https://api.openai.com/v1/completions";
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_POST, true);
 
+			$headers = array( // cUrl headers (-H)
+			    "Content-Type: application/json",
+			    "Authorization: Bearer $apikey"
+			);
 
-$('.tvan-list-report tbody > tr').each((k, item) => {
-    let $tr = $(item);
-    let shd  = $tr.find('>td')[2].innerHTML.replace(/\s/ig, '');
-    let mst  = $tr.find('>td')[5].innerHTML.replace(/\s/ig, '');
-    let macqt  = $tr.find('>td')[4].innerHTML.replace(/\s/ig, '');
-    let matd  = $tr.find('>td')[8].innerHTML.replace(/\s/ig, '');
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-    if (mst != 3703070172 && mst != 1801699920 && mst != 3703053314) {
-        console.log("update invoices set code='"+matd+"', code_cqt='"+macqt+"', status=3  WHERE no='"+shd+"' and status =1 and created_at >= '2023-04-16 00:00:00';");        
-    }
+			$mess = !empty($mess) ? $mess : 'Xin chào';
 
-})
-		    	*/
+			$data = array( // cUrl data
+			    "model" => 'text-davinci-003', // gpt-3.5-turbo     text-davinci-003
+			    //"messages" => ["role" => "user", "content" => $mess],
+			    "prompt" => $mess, // choose your prompt (what you ask the AI)
+			    "temperature" => 0.7,   // temperature = creativity (higher value => greater creativity in your promts)
+			    "max_tokens" => 1000     // max amount of tokens to use per request
+			);
 
-		    }
-exit;
-		   	//print_r(implode(";\n", $result));
-		} else {
-		    echo SimpleXLSX::parseError();
+			curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+
+			$response = curl_exec($curl);   
+			
+			$response = json_decode($response, true);   // extract json from response
+
+			$generated_text = $response['choices'][0]['text'];  // extract first response from json
+
+			echo $generated_text;   // output response
+
+		
+			if ($this->sendTelegram($generated_text, $chatId)) {
+				/*$content = "send thanh cong \n";
+				$filename = 'thanh.txt';
+				file_put_contents($filename, $content, FILE_APPEND);
+				chmod($filename, 0664);*/
+			}
+
+			curl_close($curl);      // close cURL session
 		}
+	}
 
+	public function sendTelegram($mess, $chatId)
+	{
+		$url = self::api_link . self::TOKEN_BOT_VIPPRO . "/sendMessage";
 
-		/*pr(dirname(__DIR__).'\User\Export_PA_TruyenNhan_1681611137.xlsx', true);
-		$f = fopen(dirname(__DIR__).'\User\Export_PA_TruyenNhan_1681611137.xlsx', 'r');
-		pr($f);*/
+	    $data = array(
+	    	'parse_mode' => 'HTML',
+	    	'chat_id'    => !empty($chatId) ? $chatId : self::ID_THANHTRINH,
+	    	'text'		 => $mess
+	    );
+
+	    $ch = curl_init();
+
+	    $optArray = array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => array(
+            	'Contet-Type: application/x-ww-form-urlencoded'),
+            CURLOPT_POSTFIELDS => http_build_query($data)
+	    );
+
+	    curl_setopt_array($ch, $optArray);
+	    $result = curl_exec($ch);
+	    curl_close($ch);
+
+	    return true;
 	}
 }

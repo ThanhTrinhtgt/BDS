@@ -8,14 +8,14 @@
 		<h4>{{ contact.name }}</h4>
 		<h5>{{ contact.phone }}</h5>
 	</div>
+{% endif %}
 
-	{% if list_hot is not empty %}
-	<div class='form-group box-border-radius mt-3 p-2'>
-		{% for item in list_hot %}
-			<h4>
-				<a href='{{ item.url }}'>{{ item.name }}</a>
-			</h4>
-		{% endfor %}
-	</div>
-	{% endif %}
+{% if list_hot is not empty %}
+<div class='form-group box-border-radius mt-3 p-2'>
+	{% for item in list_hot %}
+		<label>
+			<a href='{{ item.url }}'>{{ item.name }}</a>
+		</label>
+	{% endfor %}
+</div>
 {% endif %}

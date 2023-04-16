@@ -3,67 +3,192 @@ namespace BDS\Model;
 
 use BDS\Core\App;
 use BDS\Core\Router;
+use BDS\Core\Helper;
 
 class BaseModel extends \stdClass
 {
-	public static $table;
-	public static $fields;
-	public static $isBuildSeoName = true;
+	public static $table 			= '';
+	public static $fields 			= [];
+	public static $isBuildSeoName 	= true;
+	public static $fieldImage 		= 'img_url';
+	public static $fieldImgageMulti = 'img_multi';
+	public static $specialField 	= [];
+	public static $isMultileImage 	= false;
 	
 	public function __construct($id = 0)
 	{
 		$data = [];
 		
 		if (!empty($id) && $id > 0) {
-			$data = static::select(['where' => ['id' => $id]]);
+			$data = static::select(['where' => ['id' => $id], 'multiImg' => true]);
 
 		}
 
 		$this->mapDataToObject($data);
 	}
 
-	public function afterSelect($data = [])
-	{
-		
-	}
-
 	public function upLoadFile($field = 'img_url', $table_name = '')
 	{
-		if (!empty($_FILES) && !empty($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
-			$app = App::getInstance();
-			$this->$field = time() . '_' . $_FILES[$field]['name'];
+		if (!empty($_FILES) && !empty($_FILES[$field])) {
+			$app      = App::getInstance();
 
-			if (!is_dir($app->pathImage . '/'.static::$table)) {
-				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			$fileName = $_FILES[$field]['name'];
+			$tmp_name = $_FILES[$field]['tmp_name'];
+
+			if (is_array($_FILES[$field]['name'])) {
+				$fileName = $_FILES[$field]['name'][0];
+				$tmp_name = $_FILES[$field]['tmp_name'][0];
+
+				unset($_FILES[$field]['name'][0]);
 			}
 
 			if (empty($table_name)) {
 				$table_name = static::$table;
 			}
 
-			return move_uploaded_file($_FILES[$field]['tmp_name'], $app->pathImage . '/'. $table_name . '/' . $this->$field);
+			if (!empty($fileName) && !empty($tmp_name)) {
+				$this->deleteCurrentImage($field, $table_name);
+			}
+
+			$this->$field = time() . '_' . Helper::removeSpecialChar($fileName);
+
+			if (!is_dir($app->pathImage . '/'.static::$table)) {
+				mkdir($app->pathImage . '/'.static::$table, 0777, true);
+			}
+
+			if (!empty($_FILES[$field]) && !empty($_FILES[$field]['name']) && is_array($_FILES[$field]['name'])) {
+				$sortMulti = 0;
+
+				foreach ($_FILES[$field]['name'] as $key => $img_name) {
+					$tmp_name_multi = $_FILES[$field]['tmp_name'][$key];
+					$url_multi = time() . '_' . Helper::removeSpecialChar($img_name);
+
+					$imgMultiObj = new Images();
+
+					$imgMultiObj->id_object = $this->id;
+					$imgMultiObj->img_url    = $url_multi;
+					$imgMultiObj->module    = $table_name;
+					$imgMultiObj->sort      = $sortMulti;
+
+					move_uploaded_file($tmp_name_multi, $app->pathImage . '/'. $table_name . '/' . $url_multi);
+					$sortMulti++;
+
+					$imgMultiObj->save();
+				}
+			}
+
+			$url = $app->pathImage . '/'. $table_name . '/' . $this->$field;
+
+			return move_uploaded_file($tmp_name, $url);
 		}
 
 		return false;
 	}
 
+	public function deleteCurrentImage($field = '', $table_name)
+	{
+		if (empty($table_name)) {
+			$table_name = static::$table;
+		}
+
+		$app = App::getInstance();
+		$img = $this->$field;
+		$img = substr($img, 1);
+
+		if (!empty($img) && file_exists($img)) {
+			unlink($img);
+		}
+
+		$images = Images::selectAll([
+			'where' => [
+				'id_object' => $this->id,
+				'module'	=> $table_name,
+			],
+			'select' => ['id', 'module', 'img_url'],
+		]);
+
+		foreach ($images as $img) {
+			$url = substr($img['img_url'], 1);
+
+			if (file_exists($url)) {
+				unlink($url);
+			}
+
+			$newObj = new Images();
+			$newObj->id = $img['id'];
+			$newObj->delete();
+		}
+	}
+
 	public function mapDataToObject($data = [])
 	{
-		foreach (static::$fields as $field) {
-			$this->$field = !empty($data) && isset($data[$field]) ? SafeData($data[$field], false) : '';
+
+		if (!empty(static::$fields)) {
+			foreach (static::$fields as $field) {
+				$this->$field = !empty($data) && isset($data[$field]) ? $data[$field] : '';
+			}
+
+			if (static::$isMultileImage) {
+				$fieldMultiImg = static::$fieldImgageMulti;
+
+				$this->$fieldMultiImg = !empty($data) && !empty($data[static::$fieldImgageMulti]) ? 
+				$data[static::$fieldImgageMulti] : [];
+			}
 		}
+	}
+
+	public static function mapSelect($row)
+	{
+		$obj = [];
+
+		foreach (static::$fields as $field) {
+			if (isset($row[$field])) {
+				if ($field == 'img_url') {
+					if (static::$table == Images::$table) {
+						if (!empty($row['module'])) {
+							$row[$field] = static::buildImageUrl($row['module'], $row[$field]);
+						} 
+					} else {
+						$row[$field] = static::buildImageUrl(static::$table, $row[$field]);
+					}
+				}
+
+
+				$obj[$field] = $row[$field];
+			}
+
+			if (static::$isBuildSeoName && isset($row['seo_name'])) {
+				$obj['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
+			}
+		}
+
+		return static::afterSelect($obj);
+	}
+
+	public static function afterSelect($obj)
+	{
+		return $obj;
 	}
 
 	public function save($fields = [], &$error = '')
 	{
 		$app    = App::getInstance();
 		$result = true;
-
+		
+		if (empty($fields)) {
+			$fields = static::$fields;
+		}
+		
 		$arr_dif = array_diff($fields, static::$fields);
 		$fields  = !empty($arr_dif) ? array_diff($fields, $arr_dif) : $fields;
+		$fieldImage = static::$fieldImage;
 
 		if (!empty($this->id) && $this->id > 0) {
 			$fields['id'] = $this->id;
+
+			if (!empty($fieldImage) && $this->upLoadFile($fieldImage)) {
+				$fields[] = $fieldImage;
+			}
 
 			return $this->update($fields, [], $error);
 		} else {
@@ -84,11 +209,17 @@ class BaseModel extends \stdClass
 			$q = mysqli_query($app->db, "INSERT INTO `".static::$table."`($val_field) VALUES($val_value)");
 
 			if (mysqli_affected_rows($app->db) > 0) {
-				return true;
+				$this->id = mysqli_insert_id($app->db);
+
+				if (!empty($fieldImage) && $this->upLoadFile($fieldImage)) {
+					return $this->update([$fieldImage], [], $error);
+				}
+
+				return $this->id;
 			} elseif (!empty(mysqli_error($app->db))) {
 				$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 			} else {
-				$error = 'Có thể data không thay đổi nên update thất bại';
+				$error = 'SQL error: ' . mysqli_error($app->db);
 			}
 			
 
@@ -142,7 +273,7 @@ class BaseModel extends \stdClass
 		if (!empty(mysqli_error($app->db))) {
 			$error = __FILE__ . '(Function `' . __FUNCTION__ . '`): ' . mysqli_error($app->db);
 		} else {
-			$error = 'Có thể data không thay đổi nên update thất bại';
+			$error = 'SQL error: ' . mysqli_error($app->db);
 		}
 		
 
@@ -162,9 +293,11 @@ class BaseModel extends \stdClass
 		$where   = '';
 		$orderby = '';
 		$limit   = 20;
+		$multiImg = isset($query['multiImg']) ? $query['multiImg'] : false;
 
 		if (!empty($query)) {
 			if (!empty($query['select'])) {
+				$query['select'] = array_merge(static::$specialField, $query['select']);
 				$select = '';
 
 				foreach ($query['select'] as $field) {
@@ -210,23 +343,37 @@ class BaseModel extends \stdClass
 		if ($q) {
 			while($row = mysqli_fetch_assoc($q)) {
 				$item = [];
-				
-				foreach (static::$fields as $field) {
-					if (isset($row[$field])) {
-						if ($field == 'img_url') {
-							$row[$field] = $app->realpathImage . '/' . static::$table . '/' . $row[$field];
-						}
+
+				$data[] = static::mapSelect($row);
+			}
 
 
-						$item[$field] = $row[$field];
+			if ($multiImg && static::$isMultileImage) {
+				foreach ($data as $k => $v) {
+					$limitMulti = 0;
+					$optionImg = [
+						'where' => [
+							'id_object' => $v['id'],
+							'module' => static::$table
+						],
+						'select' => ['id', 'img_url']
+					];
+
+					if (!empty($query['multiImgLimit'])) {
+						$optionImg['limit'] = $query['multiImgLimit'];
 					}
 
-					if (static::$isBuildSeoName && isset($row['seo_name'])) {
-						$item['url'] = '/' . Router::reRewriteRouter(static::$table) . '/'. $row['seo_name'];
+					$imgs = Images::selectAll($optionImg);
+
+					$data[$k][static::$fieldImgageMulti] = [];
+
+					foreach ($imgs as $img) {
+						$data[$k][static::$fieldImgageMulti][] = [
+							'id' => $img['id'],
+							'img_url' => $img['img_url'],
+						];
 					}
 				}
-
-				$data[] = $item;
 			}
 		} elseif (!$isMultiple) {
 			$data[0] = [];
@@ -247,6 +394,23 @@ class BaseModel extends \stdClass
 		return $data;
 	}
 
+	public function delete()
+	{
+		$id = $this->id;
+
+		if (!empty($id)) {
+			$app   = App::getInstance();
+
+			$q = mysqli_query($app->db, "DELETE FROM `".static::$table."` WHERE `id` = '$id' LIMIT 1");
+
+			if (mysqli_affected_rows($app->db) > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected static function bindWhere($field, $value)
 	{
 		if (in_array($field, static::$fields)) {
@@ -262,5 +426,12 @@ class BaseModel extends \stdClass
 		}
 		
 		return '';
+	}
+
+	protected static function buildImageUrl($module, $name)
+	{
+		$app = App::getInstance();
+
+		return $app->realpathImage . '/' . $module . '/' . $name;
 	}
 }

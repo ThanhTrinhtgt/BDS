@@ -27,6 +27,10 @@ class ComposerStaticInita2d7bf955b711281e95b1775cdf877b1
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'O' => 
+        array (
+            'Orhanerday\\OpenAi\\' => 18,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -49,6 +53,10 @@ class ComposerStaticInita2d7bf955b711281e95b1775cdf877b1
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Orhanerday\\OpenAi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/orhanerday/open-ai/src',
         ),
     );
 

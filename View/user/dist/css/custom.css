@@ -1,17 +1,20 @@
 /*Chung*/
 
 :root {
-  --link-color: #000;
+  --link-color: #2C2C2C;
+  --bs-link-hover-color-rgb: #999;
 }
 
 body {
-	font-family: 'Noto Serif Sinhala';
+	font-family: 'OpenSans';
 	overflow-x: hidden;
-	background-color: rgba(242,242,242,0.5);
+	background-color: rgba(242,242,242,0.1);
+	font-size: 13px;
+	color: #2C2C2C;
 }
 
 h1, h2, h3, h4, h5, label {
-	font-family: 'Noto Serif Sinhala';
+	/*font-family: 'Noto Serif Sinhala';*/
 }
 
 #footer {
@@ -43,11 +46,11 @@ body > #head {
 	height: auto;*/
 	background: rgba(255, 255, 255, 1);
 	z-index: 100;
-	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04)
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
 }
 
 body > #content {
-	margin-top: 70px;
+	margin-top: 10px;
 }
 
 .color-red {
@@ -97,8 +100,9 @@ a {
 	font-size: 16px;
 }
 
-.item-box-shadow {
-	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);	
+.item-box-shadow {	
+	box-sizing: border-box;
+    box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
 }
 
 #menu:not( .mm-menu ) {
@@ -111,4 +115,93 @@ a {
 
 .transition-smooth {
 	transition: 0.3s ease-in-out;
+}
+
+.title-real-estate {
+	font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    letter-spacing: -.2px;
+    color: #2C2C2C;
+    text-transform: uppercase;
+}
+
+.short-desc-real-estate {
+	font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
+    color: #505050;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+    -webkit-line-clamp: 2;
+}
+
+.badge {
+	line-height: 12px;
+    font-size: 9px;
+}
+
+.text-price {
+	font-size: 16px;
+    line-height: 26px;
+    font-weight: bold;
+    color: #E03C31;
+    line-height: 26px;
+}
+
+.cursor-help {
+	cursor: help;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.short-desc-line {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;  
+	overflow: hidden;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.bg-img-real-estate {
+	background-size: cover; 
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+a:hover {
+	color: #999;
+}
+
+.bd-tl-radius-0 {
+	border-top-left-radius: 0;
+}
+
+.bd-tr-radius-0 {
+	border-top-right-radius: 0;
+}
+
+.bd-br-radius-0 {
+	border-bottom-right-radius: 0;
+}
+
+.bd-bl-radius-0 {
+	border-bottom-left-radius: 0;
+}
+
+#searchbar {
+	background: rgba(255, 255, 255, 1);
+	box-shadow: 0px 4px 6px 0px rgba(44,44,44,0.04);
+	padding: 10px 15px;
+	margin: 10px 0;
+}
+
+.form-control, .btn {
+	font-size: 13px;
 }

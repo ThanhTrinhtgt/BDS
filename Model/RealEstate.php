@@ -14,6 +14,7 @@ class RealEstate extends BaseModel
 		'seo_name', 
 		'short_desc', 
 		'desc', 
+		'project_id',
 		'province_id', 
 		'district_id', 
 		'ward_id', 
@@ -34,6 +35,7 @@ class RealEstate extends BaseModel
 		'contact_id',
 		'date_create',
 	];
+	public static $isMultileImage = true;
 
 	const FEATURE_NEW = 1;
 	const FEATURE_HOT = 2;
@@ -43,6 +45,18 @@ class RealEstate extends BaseModel
 	const TYPE_RENT = 2;
 	const TYPE_PURCHASE = 3;
 
+	public static function afterSelect($obj)
+	{
+		if (empty($obj['price'])) {
+			$obj['price'] = l('please_contact');
+		}
+
+		return $obj;
+	}
+
+	/**
+	 * Chuyển id địa chỉ thành text 
+	 */
 	public function buildAddressRealEstate()
 	{
 		$province = Province::getNameById($this->province_id);
@@ -88,23 +102,23 @@ class RealEstate extends BaseModel
 		];
 	}
 
-	public function getType()
+	public static function getType($type)
 	{
 		$list = static::getListType();
 
-		if (!empty($list[$this->type])) {
-			return $list[$this->type];
+		if (!empty($list[$type])) {
+			return $list[$type];
 		}
 
 		return $list[self::TYPE_SELL];
 	}
 
-	public function getFeature()
+	public static function getFeature($feature)
 	{
 		$list = static::getListFeature();
 
-		if (!empty($list[$this->feature])) {
-			return $list[$this->feature];
+		if (!empty($list[$feature])) {
+			return $list[$feature];
 		}
 
 		return ['name' => 'N/A', 'value' => 0];
@@ -117,7 +131,7 @@ class RealEstate extends BaseModel
 				case 'id_not_in':
 					$strIds = implode(',', $value);
 
-					return ' id NOT IN (' .$strIds. ')';
+					return ' id NOT IN (-1' .!empty($strIds) ? ",$strIds" : $strIds . ')';
 
 				default:
 					return "`$field` = '$value'";

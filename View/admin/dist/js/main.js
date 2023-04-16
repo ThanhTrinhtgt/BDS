@@ -202,7 +202,7 @@ BDScore.fn = BDScore.prototype = {
 			text =  text.toLowerCase();
 		}
 
-		text = text.replace(/(\s)+/ig, "-");
+		text = text.replace(/(\s)+/ig, "-").replace(/[~!@#$%^&*()_+=|\\{}[\]\'\";:<>?\/,.]/ig, '');
 
 		return text;
 	},

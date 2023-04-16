@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig": "^2.0",
-        "phpmailer/phpmailer": "^6.7"
+        "phpmailer/phpmailer": "^6.7",
+        "orhanerday/open-ai": "^4.7"
     }
 }

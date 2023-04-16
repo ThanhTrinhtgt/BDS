@@ -64,6 +64,10 @@ class NewsController extends BaseController
 					'code' => 200,
 					'message' => 'Lưu thông tin thành công'
 				];
+
+				if ($news->upLoadFile('img_url')) {
+					$news->save(['img_url']);
+				}
 			} else {
 				$respone['message'] = $error;
 			}

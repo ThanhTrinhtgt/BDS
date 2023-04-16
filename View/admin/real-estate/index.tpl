@@ -14,8 +14,9 @@
                 <tr>
                     <th>STT</th>
                     <th>Tiêu đề</th>
-                    <th></th>
-                    <th>Miêu tả</th>
+                    <th>Ảnh</th>
+                    <th>Loại</th>
+                    <th>Đặc điểm</th>
                     <th>Tác vụ</th>
                 </tr>
             </thead>
@@ -34,7 +35,10 @@
                         <img class='img-review-mini' src='{{ item.img_url }}'/>
                     </td>
                     <td>
-                        {{ item.short_desc }}
+                        {{ item.type_name }}
+                    </td>
+                    <td>
+                        {{ item.feature_name }}
                     </td>
                     <td class="text-center">
                         <a class="btn btn-info btn-sm" href='/admin/real-estate/edit/{{ item.id }}'>

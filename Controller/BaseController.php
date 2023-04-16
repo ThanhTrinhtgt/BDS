@@ -24,8 +24,9 @@ class BaseController extends \stdClass
 	public function setDefaultData()
 	{
 		$this->post = SafeData($_POST);
-		$this->get = SafeData($_GET);
+		$this->get  = SafeData($_GET);
 		$this->json = SafeData(json_decode(file_get_contents("php://input"), true));
+		$this->file = SafeImage($_FILES);
 	}	
 
 	public function renderJson($response = [])
