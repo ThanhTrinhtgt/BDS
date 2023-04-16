@@ -15,7 +15,8 @@ class App
 
 		// Check connection
 		if (!$this->db) {
-		  die("Connection failed: " . mysqli_connect_error());exit;
+		  die("Connection failed: " . mysqli_connect_error());
+		  exit;
 		}
 	}
 

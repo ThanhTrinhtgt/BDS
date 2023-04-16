@@ -119,7 +119,7 @@ class Router
 			$app    = App::getInstance();
 			$twig   = new \Twig\Environment($loader, ['cache' => false]);
 
-			$protocol = 'http://';
+			$protocol = 'https://';
 			$realPath = $protocol . $_SERVER['SERVER_NAME']. '/View';
 
 			$data   = array_merge([

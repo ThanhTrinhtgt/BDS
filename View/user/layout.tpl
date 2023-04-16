@@ -16,6 +16,7 @@
     <body>
         <div id="head">
             <div id='content-head'>
+                <a href='/admin'>Admin</a>
                 {% include "user/element/menu.tpl" with {'list_menu' : list_menu, 'logo': logo} %}    
             </div>
         </div>

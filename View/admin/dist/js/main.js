@@ -54,7 +54,11 @@ BDScore.fn = BDScore.prototype = {
 				if (inputSeoName != undefined && inputName != undefined) {
 					let newSeoName = inputName.val();
 					
-					inputSeoName.val(self.convertAscii(newSeoName, true));
+					newSeoName = self.convertAscii(newSeoName, true);
+
+					newSeoName = newSeoName.replace(/[~`\!@#$%^&*()_\\|{}[\];\'\"<>/?,.]/gi, '');
+
+					inputSeoName.val(newSeoName);
 				}
 			}
 		});
